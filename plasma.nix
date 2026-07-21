@@ -7,7 +7,7 @@
 
     workspace = {
       clickItemTo = "open";
-      colorScheme = "CatppuccinMocha";
+      colorScheme = "BreezeDark";
       theme = "breeze-dark";
       iconTheme = "Papirus-Dark";
       cursor = {
@@ -99,8 +99,6 @@
   };
 
   home.packages = with pkgs; [
-    qt6Packages.qtstyleplugin-kvantum
-
     papirus-icon-theme
     bibata-cursors
 
@@ -127,11 +125,6 @@
     wayland-utils
   ];
 
-  xdg.configFile."Kvantum/kvantum.kvconfig".text = ''
-    [General]
-    theme=CatppuccinMocha
-  '';
-
   gtk = {
     enable = true;
     theme = {
@@ -145,14 +138,6 @@
     iconTheme = {
       name = "Papirus-Dark";
       package = pkgs.papirus-icon-theme;
-    };
-  };
-
-  qt = {
-    enable = true;
-    platformTheme.name = "qtct";
-    style = {
-      name = "kvantum";
     };
   };
 
