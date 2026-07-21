@@ -77,6 +77,24 @@
         "MinimizeWindow" = "Meta+Down";
       };
     };
+
+    panels = [
+      {
+        location = "bottom";
+        height = 44;
+        floating = true;
+        opacity = "adaptive";
+        hiding = "none";
+        widgets = [
+          "org.kde.plasma.kickoff"
+          "org.kde.plasma.icontasks"
+          "org.kde.plasma.margins-separator"
+          "org.kde.plasma.systemtray"
+          "org.kde.plasma.digitalclock"
+          "org.kde.plasma.showdesktop"
+        ];
+      }
+    ];
   };
 
   programs.konsole = {
