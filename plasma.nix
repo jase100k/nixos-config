@@ -86,7 +86,14 @@
         opacity = "adaptive";
         hiding = "none";
         widgets = [
-          "org.kde.plasma.kickoff"
+          {
+            name = "org.kde.plasma.kickoff";
+            config = {
+              General = {
+                icon = "nix-snowflake-white";
+              };
+            };
+          }
           "org.kde.plasma.icontasks"
           "org.kde.plasma.margins-separator"
           "org.kde.plasma.systemtray"
