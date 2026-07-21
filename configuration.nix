@@ -26,7 +26,7 @@
   networking.networkmanager.enable = true;
 
   # Time zone
-  time.timeZone = "America/New_York";
+  time.timeZone = "Australia/Melbourne";
 
   # User account
   users.users.jason = {

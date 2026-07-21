@@ -1,6 +1,10 @@
 { config, pkgs, ... }:
 
 {
+  imports = [
+    ./plasma.nix
+  ];
+
   home.username = "jason";
   home.homeDirectory = "/home/jason";
   home.stateVersion = "26.05";
@@ -28,7 +32,7 @@
     shellAliases = {
       ll = "ls -la";
       gs = "git status";
-      update = "sudo nixos-rebuild switch --flake /etc/nixos#gaming-pc";
+      update = "sudo nixos-rebuild switch --flake /etc/nixos#nixos-gaming";
       cleanup = "nix-collect-garbage -d";
       search = "nix search nixpkgs";
       nixcommit = "sudo git -C /etc/nixos add -A && sudo git -C /etc/nixos commit";
@@ -71,28 +75,7 @@
     withPython3 = false;
   };
 
-  # Alacritty terminal
-  programs.alacritty = {
-    enable = true;
-    settings = {
-      window = {
-        padding = {
-          x = 10;
-          y = 10;
-        };
-        opacity = 0.95;
-      };
-      font = {
-        size = 12.0;
-      };
-      colors = {
-        primary = {
-          background = "#1e1e2e";
-          foreground = "#cdd6f4";
-        };
-      };
-    };
-  };
+  # Alacritty is configured in plasma.nix
 
   # Browser (Firefox with gaming optimizations)
   programs.firefox = {
