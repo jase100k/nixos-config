@@ -1,0 +1,170 @@
+{ config, pkgs, ... }:
+
+{
+  home.username = "jason";
+  home.homeDirectory = "/home/jason";
+  home.stateVersion = "26.05";
+
+  # Cursor theme
+  home.pointerCursor = {
+    name = "Bibata-Modern-Classic";
+    package = pkgs.bibata-cursors;
+    size = 24;
+    enable = true;
+  };
+
+  # Let Home Manager manage itself
+  programs.home-manager.enable = true;
+
+  # Git configuration
+  programs.git = {
+    enable = true;
+    settings = { 
+    	user = {
+          name = "Jason";
+    	  email = "jason@example.com";
+	};
+      init.defaultBranch = "main";
+     };
+  };
+
+  # Zsh configuration
+  programs.zsh = {
+    enable = true;
+    autosuggestion.enable = true;
+    enableCompletion = true;
+    syntaxHighlighting.enable = true;
+    
+    shellAliases = {
+      ll = "ls -la";
+      gs = "git status";
+      update = "sudo nixos-rebuild switch --flake .#gaming-pc";
+      update-home = "home-manager switch --flake .#jason";
+      cleanup = "nix-collect-garbage -d";
+      search = "nix search nixpkgs";
+    };
+
+    oh-my-zsh = {
+      enable = true;
+      plugins = [ "git" "sudo" "history" "dir-iterator" ];
+      theme = "robbyrussell";
+    };
+  };
+
+  # Starship prompt
+  programs.starship = {
+    enable = true;
+    settings = {
+      add_newline = true;
+      character = {
+        success_symbol = "[❯](bold green)";
+        error_symbol = "[❯](bold red)";
+      };
+    };
+  };
+
+  # Tmux
+  programs.tmux = {
+    enable = true;
+    clock24 = true;
+    keyMode = "vi";
+    terminal = "tmux-256color";
+  };
+
+  # Neovim
+  programs.neovim = {
+    enable = true;
+    defaultEditor = true;
+    viAlias = true;
+    vimAlias = true;
+  };
+
+  # Alacritty terminal
+  programs.alacritty = {
+    enable = true;
+    settings = {
+      window = {
+        padding = {
+          x = 10;
+          y = 10;
+        };
+        opacity = 0.95;
+      };
+      font = {
+        size = 12.0;
+      };
+      colors = {
+        primary = {
+          background = "#1e1e2e";
+          foreground = "#cdd6f4";
+        };
+      };
+    };
+  };
+
+  # Browser (Firefox with gaming optimizations)
+  programs.firefox = {
+    enable = true;
+    profiles.default = {
+      settings = {
+        "media.ffmpeg.vaapi.enabled" = true;
+        "gfx.webrender.all" = true;
+        "layers.acceleration.force-enabled" = true;
+      };
+    };
+  };
+
+  # Discord
+  programs.discord = {
+    enable = true;
+  };
+
+  # MangoHud configuration
+  xdg.configFile."MangoHud/MangoHud.conf" = {
+    text = ''
+      # MangoHud configuration
+      fps
+      cpu_temp
+      gpu_temp
+      ram
+      vram
+      cpu_power
+      gpu_power
+      frame_timing
+      graph_temp
+      font_size=24
+      
+      # Colors
+      cpu_color=2E8B57
+      gpu_color=5F9EA0
+      vram_color=B8860B
+      ram_color=B22222
+    '';
+  };
+
+  # Gamescope wrapper
+  xdg.configFile."gamescope/gamescope.env" = {
+    text = ''
+      # Gamescope environment
+      MANGOHUD=1
+    '';
+  };
+
+  # Gamemode configuration
+  xdg.configFile."gamemode.ini" = {
+    text = ''
+      [general]
+      reaper_thread_count=4
+      renice=4
+      
+      [gpu]
+      apply_gpu_optimisations=accept-responsibility
+      gpu_device=0
+      amd_performance_level=high
+      
+      [cpu]
+      pin_current_process=1
+      restrict_governor_performance=1
+    '';
+  };
+}
