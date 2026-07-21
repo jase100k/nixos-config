@@ -3,10 +3,10 @@
 {
   programs.plasma = {
     enable = true;
+    overrideConfig = false;
 
     workspace = {
       clickItemTo = "open";
-      tooltipDelay = 1;
       colorScheme = "CatppuccinMocha";
       theme = "breeze-dark";
       iconTheme = "Papirus-Dark";
@@ -14,11 +14,7 @@
         theme = "Bibata-Modern-Classic";
         size = 24;
       };
-      windowDecorations = {
-        library = "org.kde.breeze";
-        theme = "Breeze";
-      };
-      widgetStyle = "Breeze";
+      wallpaper = "${pkgs.kdePackages.plasma-workspace-wallpapers}/share/wallpapers/Next/contents/images/2560x1440.png";
     };
 
     kwin = {
@@ -31,13 +27,8 @@
         translucency.enable = true;
         snapHelper.enable = true;
         minimization.animation = "magiclamp";
-        wobblyWindows.enable = false;
-        desktopSwitching = {
-          animation = "slide";
-        };
-        windowOpenClose = {
-          animation = "fade";
-        };
+        desktopSwitching.animation = "slide";
+        windowOpenClose.animation = "fade";
       };
       borderlessMaximizedWindows = true;
       virtualDesktops = {
@@ -46,7 +37,6 @@
       };
       titlebarButtons = {
         right = [ "minimize" "maximize" "close" ];
-        left = [ "keep-above-windows" ];
       };
     };
 
@@ -78,55 +68,6 @@
       };
     };
 
-    panels = [
-      {
-        location = "top";
-        height = 32;
-        screen = "all";
-        floating = true;
-        opacity = "adaptive";
-        widgets = [
-          {
-            name = "org.kde.plasma.kickoff";
-            config = {
-              General = {
-                icon = "nix-snowflake-white";
-              };
-            };
-          }
-          "org.kde.plasma.margins-separator"
-          {
-            name = "org.kde.plasma.icontasks";
-            config = {
-              General = {
-                launchers = [
-                  "applications:org.kde.dolphin.desktop"
-                  "applications:firefox.desktop"
-                  "applications:org.kde.kate.desktop"
-                  "applications:Alacritty.desktop"
-                  "applications:discord.desktop"
-                ];
-              };
-            };
-          }
-          "org.kde.plasma.margins-separator"
-          {
-            name = "org.kde.plasma.systemtray";
-          }
-          {
-            name = "org.kde.plasma.digitalclock";
-            config = {
-              Appearance = {
-                showDate = true;
-                dateFormat = "ddd MMM d";
-              };
-            };
-          }
-          "org.kde.plasma.showdesktop"
-        ];
-      }
-    ];
-
     shortcuts = {
       kwin = {
         "Overview" = "Meta+W";
@@ -136,42 +77,41 @@
         "MinimizeWindow" = "Meta+Down";
       };
     };
+  };
 
-    desktop = {
-      mouseActions = {
-        rightClick = "contextMenu";
-        middleClick = "paste";
+  programs.konsole = {
+    enable = true;
+    defaultProfile = "default";
+    profiles.default = {
+      name = "Catppuccin Mocha";
+      font = {
+        name = "JetBrains Mono";
+        size = 12;
       };
-    };
-
-    krunner = {
-      position = "center";
-      historyBehavior = "enableSuggestions";
+      colorScheme = "Catppuccin-Mocha";
+      extraConfig = {
+        "General" = {
+          "Blur" = true;
+          "Opacity" = 0.9;
+        };
+      };
     };
   };
 
-  # KDE rice packages
   home.packages = with pkgs; [
-    # Kvantum for app theming
     qt6Packages.qtstyleplugin-kvantum
 
-    # Icon themes
     papirus-icon-theme
-
-    # Cursor
     bibata-cursors
 
-    # Fonts
     jetbrains-mono
     ibm-plex
     noto-fonts
     noto-fonts-cjk-sans
     noto-fonts-color-emoji
 
-    # Catppuccin color schemes for KDE
     catppuccin-kde
 
-    # KDE packages
     kdePackages.dolphin
     kdePackages.kate
     kdePackages.spectacle
@@ -181,19 +121,17 @@
     kdePackages.discover
     kdePackages.filelight
     kdePackages.kdeconnect-kde
+    kdePackages.konsole
 
-    # Wayland utilities
     wl-clipboard
     wayland-utils
   ];
 
-  # Kvantum theme config
   xdg.configFile."Kvantum/kvantum.kvconfig".text = ''
     [General]
     theme=CatppuccinMocha
   '';
 
-  # GTK theme for consistency
   gtk = {
     enable = true;
     theme = {
@@ -210,7 +148,6 @@
     };
   };
 
-  # Qt theme
   qt = {
     enable = true;
     platformTheme.name = "qtct";
@@ -219,7 +156,6 @@
     };
   };
 
-  # Alacritty - Catppuccin Mocha full theme
   programs.alacritty = {
     enable = true;
     settings = {
@@ -260,16 +196,6 @@
           focused_match = {
             foreground = "#1e1e2e";
             background = "#a6e3a1";
-          };
-        };
-        hints = {
-          start = {
-            foreground = "#1e1e2e";
-            background = "#f9e2af";
-          };
-          end = {
-            foreground = "#1e1e2e";
-            background = "#f9e2af";
           };
         };
         normal = {
