@@ -8,7 +8,7 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "sd_mod" ];
+  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
@@ -18,16 +18,16 @@
       fsType = "btrfs";
     };
 
-  fileSystems."/nix" =
-    { device = "/dev/disk/by-uuid/1c9d1f8b-1e69-4f54-b47c-089d1e2dbb47";
-      fsType = "btrfs";
-      options = [ "subvol=nix" ];
-    };
-
   fileSystems."/home" =
     { device = "/dev/disk/by-uuid/1c9d1f8b-1e69-4f54-b47c-089d1e2dbb47";
       fsType = "btrfs";
       options = [ "subvol=home" ];
+    };
+
+  fileSystems."/nix" =
+    { device = "/dev/disk/by-uuid/1c9d1f8b-1e69-4f54-b47c-089d1e2dbb47";
+      fsType = "btrfs";
+      options = [ "subvol=nix" ];
     };
 
   fileSystems."/boot" =

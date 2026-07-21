@@ -5,27 +5,17 @@
   home.homeDirectory = "/home/jason";
   home.stateVersion = "26.05";
 
-  # Cursor theme
-  home.pointerCursor = {
-    name = "Bibata-Modern-Classic";
-    package = pkgs.bibata-cursors;
-    size = 24;
-    enable = true;
-  };
-
   # Let Home Manager manage itself
   programs.home-manager.enable = true;
 
   # Git configuration
   programs.git = {
     enable = true;
-    settings = { 
-    	user = {
-          name = "Jason";
-    	  email = "jason@example.com";
-	};
+    settings = {
+      user.name = "Jason";
+      user.email = "jase100k@protonmail.com";
       init.defaultBranch = "main";
-     };
+    };
   };
 
   # Zsh configuration
@@ -38,15 +28,15 @@
     shellAliases = {
       ll = "ls -la";
       gs = "git status";
-      update = "sudo nixos-rebuild switch --flake .#gaming-pc";
-      update-home = "home-manager switch --flake .#jason";
+      update = "sudo nixos-rebuild switch --flake /etc/nixos#gaming-pc";
       cleanup = "nix-collect-garbage -d";
       search = "nix search nixpkgs";
+      nixcommit = "sudo git -C /etc/nixos add -A && sudo git -C /etc/nixos commit";
     };
 
     oh-my-zsh = {
       enable = true;
-      plugins = [ "git" "sudo" "history" "dir-iterator" ];
+      plugins = [ "git" "sudo" "history" "dirhistory" ];
       theme = "robbyrussell";
     };
   };
@@ -77,6 +67,8 @@
     defaultEditor = true;
     viAlias = true;
     vimAlias = true;
+    withRuby = false;
+    withPython3 = false;
   };
 
   # Alacritty terminal
@@ -105,6 +97,7 @@
   # Browser (Firefox with gaming optimizations)
   programs.firefox = {
     enable = true;
+    configPath = ".mozilla/firefox";
     profiles.default = {
       settings = {
         "media.ffmpeg.vaapi.enabled" = true;

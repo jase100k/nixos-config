@@ -222,7 +222,6 @@
     libXrender
     libXxf86vm
     libxcb
-    zlib
   ];
 
   # Don't change this value
