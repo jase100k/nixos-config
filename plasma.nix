@@ -152,7 +152,7 @@
     enable = true;
     platformTheme.name = "qtct";
     style = {
-      name = "kvantum-dark";
+      name = "kvantum";
     };
   };
 
