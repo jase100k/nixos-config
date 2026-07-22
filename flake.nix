@@ -7,6 +7,16 @@
     # CachyOS kernel - do NOT override nixpkgs, needed for binary cache hits
     nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
 
+    # MangoWM - Wayland compositor
+    mangowm = {
+      url = "github:mangowm/mango";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # Noctalia v5 - Desktop shell (bar, launcher, notifications)
+    # Do NOT follows nixpkgs - required for binary cache hits
+    noctalia.url = "github:noctalia-dev/noctalia/cachix";
+
     # Home Manager for user-level configs
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -21,13 +31,19 @@
     };
   };
 
-  outputs = { self, nixpkgs, nix-cachyos-kernel, home-manager, plasma-manager, ... }@inputs: {
+  outputs = { self, nixpkgs, nix-cachyos-kernel, mangowm, noctalia, home-manager, plasma-manager, ... }@inputs: {
     nixosConfigurations.nixos-gaming = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = { inherit inputs; };
       modules = [
         ./configuration.nix
         ./hardware-configuration.nix
+
+        # MangoWM compositor
+        mangowm.nixosModules.mango
+
+        # Noctalia v5 desktop shell
+        noctalia.nixosModules.default
 
         home-manager.nixosModules.home-manager
         {
@@ -36,6 +52,7 @@
           home-manager.backupFileExtension = "hm-backup";
           home-manager.sharedModules = [
             inputs.plasma-manager.homeModules.plasma-manager
+            inputs.mangowm.hmModules.mango
           ];
           home-manager.users.jason = import ./home.nix;
         }

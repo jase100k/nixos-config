@@ -111,6 +111,8 @@
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
     auto-optimise-store = true;
+    extra-substituters = [ "https://noctalia.cachix.org" ];
+    extra-trusted-public-keys = [ "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4=" ];
   };
 
   # Garbage collection
@@ -178,6 +180,18 @@
 
   services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
+
+  # MangoWM - Wayland compositor (available as SDDM session)
+  programs.mango = {
+    enable = true;
+    addLoginEntry = true;
+  };
+
+  # Noctalia v5 - Desktop shell for MangoWM
+  programs.noctalia = {
+    enable = true;
+    recommendedServices.enable = true;
+  };
 
 
   # Flatpak support (for some games)

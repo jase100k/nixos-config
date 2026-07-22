@@ -141,4 +141,93 @@
       restrict_governor_performance=1
     '';
   };
+
+  # MangoWM - Wayland compositor config
+  wayland.windowManager.mango = {
+    enable = true;
+    autostart_sh = "noctalia &";
+    settings = {
+      # Blur (let Noctalia handle layer effects)
+      blur = 1;
+      blur_layer = 0;
+      blur_optimized = 1;
+      blur_params_num_passes = 2;
+      blur_params_radius = 5;
+      blur_params_noise = 0.02;
+      blur_params_brightness = 0.9;
+      blur_params_contrast = 0.9;
+      blur_params_saturation = 1.0;
+
+      # Shadows (let Noctalia handle layer shadows)
+      shadows = 1;
+      layer_shadows = 0;
+      shadow_only_floating = 0;
+      shadows_size = 4;
+      shadows_blur = 12;
+      shadows_position_x = 2;
+      shadows_position_y = 2;
+      shadowscolor = "0x000000ff";
+
+      # Tags
+      tagrule = [
+        "id:1,layout_name:tile"
+        "id:2,layout_name:scroller"
+        "id:3,layout_name:tile"
+      ];
+
+      # Keybindings
+      bind = [
+        "ALT,Return,spawn,alacritty"
+        "ALT,space,spawn,fuzzel"
+        "ALT,Q,killclient"
+        "SUPER,M,quit"
+        "SUPER,F,togglefullscreen"
+
+        # Noctalia IPC binds
+        "SUPER,space,spawn,noctalia msg panel-toggle launcher"
+        "SUPER,s,spawn,noctalia msg panel-toggle control-center"
+        "SUPER,comma,spawn,noctalia msg settings-toggle"
+
+        # Media keys
+        "NONE,XF86AudioRaiseVolume,spawn,wpctl set-volume @DEFAULT_SINK@ 5%+"
+        "NONE,XF86AudioLowerVolume,spawn,wpctl set-volume @DEFAULT_SINK@ 5%-"
+        "NONE,XF86AudioMute,spawn,wpctl set-mute @DEFAULT_SINK@ toggle"
+
+        # Tag switching
+        "CTRL,1,view,1"
+        "CTRL,2,view,2"
+        "CTRL,3,view,3"
+        "CTRL,4,view,4"
+        "CTRL,5,view,5"
+
+        # Move windows to tags
+        "ALT,1,tag,1"
+        "ALT,2,tag,2"
+        "ALT,3,tag,3"
+      ];
+
+      # Window rules for Steam games
+      windowrule = [
+        "isfullscreen:1,title:^(.*) - Steam$"
+      ];
+    };
+  };
+
+  # Fuzzel - Wayland-native launcher
+  programs.fuzzel = {
+    enable = true;
+    settings = {
+      main = {
+        font = "JetBrains Mono:size=12";
+        dpi = 0;
+      };
+      colors = {
+        background = "1e1e2eff";
+        text = "cdd6f4ff";
+        match = "a6e3a1ff";
+        selection = "89b4faff";
+        selection-text = "1e1e2eff";
+      };
+    };
+  };
 }
