@@ -96,26 +96,24 @@
   };
 
   # MangoHud configuration
-  xdg.configFile."MangoHud/MangoHud.conf" = {
-    text = ''
-      # MangoHud configuration
-      fps
-      cpu_temp
-      gpu_temp
-      ram
-      vram
-      cpu_power
-      gpu_power
-      frame_timing
-      graph_temp
-      font_size=24
-      
-      # Colors
-      cpu_color=2E8B57
-      gpu_color=5F9EA0
-      vram_color=B8860B
-      ram_color=B22222
-    '';
+  programs.mangohud = {
+    enable = true;
+    settings = {
+      fps = true;
+      cpu_temp = true;
+      gpu_temp = true;
+      ram = true;
+      vram = true;
+      cpu_power = true;
+      gpu_power = true;
+      frame_timing = true;
+      graph_temp = true;
+      font_size = 24;
+      cpu_color = "2E8B57";
+      gpu_color = "5F9EA0";
+      vram_color = "B8860B";
+      ram_color = "B22222";
+    };
   };
 
   # Gamescope wrapper

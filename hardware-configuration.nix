@@ -36,6 +36,12 @@
       options = [ "fmask=0077" "dmask=0077" ];
     };
 
+  fileSystems."/mnt/steam" =
+    { device = "/dev/disk/by-uuid/80054438-f6c7-4863-ae35-2313cb084c43";
+      fsType = "btrfs";
+      options = [ "subvol=@steam" "compress=zstd" "ssd" "discard=async" "nofail" ];
+    };
+
   swapDevices =
     [ { device = "/dev/disk/by-uuid/86a029b1-7a15-4b46-b157-ac57075b3e02"; }
     ];

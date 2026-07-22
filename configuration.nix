@@ -25,6 +25,15 @@
   networking.hostName = "nixos-gaming";
   networking.networkmanager.enable = true;
 
+  # Bluetooth
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
+
+  # Virtualisation (KVM/QEMU)
+  virtualisation.libvirtd.enable = true;
+  programs.virt-manager.enable = true;
+  virtualisation.spiceUSBRedirection.enable = true;
+
   # Time zone
   time.timeZone = "Australia/Melbourne";
 
@@ -32,7 +41,7 @@
   users.users.jason = {
     isNormalUser = true;
     description = "Jason";
-    extraGroups = [ "networkmanager" "wheel" "gamemode" "video" "input" ];
+    extraGroups = [ "networkmanager" "wheel" "gamemode" "video" "input" "libvirtd" ];
     shell = pkgs.zsh;
   };
 
@@ -51,9 +60,9 @@
     tmux
     unzip
     p7zip
+    usbutils
     
     # Gaming
-    steam
     steam-run
     steam-tui
     protontricks
@@ -64,10 +73,7 @@
     retroarch
     
     # Gaming utilities
-    gamemode
-    mangohud
     goverlay
-    gamescope
     
     # Performance monitoring
     radeontop
@@ -119,10 +125,24 @@
     enable = true;
     dedicatedServer.openFirewall = true;
     localNetworkGameTransfers.openFirewall = true;
+    remotePlay.openFirewall = true;
+    gamescopeSession.enable = true;
+    extraCompatPackages = with pkgs; [
+      proton-ge-bin
+    ];
+  };
+
+  # Gamescope
+  programs.gamescope = {
+    enable = true;
+    capSysNice = true;
   };
 
   # GameMode
   programs.gamemode.enable = true;
+
+  # Steam hardware (controllers, Index, etc.)
+  hardware.steam-hardware.enable = true;
 
   # AMD GPU
   boot.initrd.kernelModules = [ "amdgpu" ];
@@ -197,8 +217,7 @@
     MOZ_ENABLE_WAYLAND = "1";
     EDITOR = "nvim";
     VISUAL = "nvim";
-    GAMEMODE_RUN = "1";
-    MANGOHUD = "1";
+    RADV_TEX_ANISO = "16";
   };
 
   # Enable nix-ld for running unpatched binaries
