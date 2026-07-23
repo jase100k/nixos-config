@@ -182,11 +182,12 @@
 
       # Keybindings
       bind = [
+        # Core
         "ALT,Return,spawn,alacritty"
         "ALT,space,spawn,fuzzel"
         "ALT,Q,killclient"
         "SUPER,M,quit"
-        "SUPER,F,togglefullscreen"
+        "ALT,r,reload_config"
 
         # Noctalia IPC binds
         "SUPER,space,spawn,noctalia msg panel-toggle launcher"
@@ -198,7 +199,52 @@
         "NONE,XF86AudioLowerVolume,spawn,wpctl set-volume @DEFAULT_SINK@ 5%-"
         "NONE,XF86AudioMute,spawn,wpctl set-mute @DEFAULT_SINK@ toggle"
 
+        # Focus (vim-style)
+        "ALT,h,focusdir,left"
+        "ALT,l,focusdir,right"
+        "ALT,j,focusdir,down"
+        "ALT,k,focusdir,up"
+        "SUPER,Tab,focusstack,next"
+        "SUPER,u,focuslast"
+
+        # Swap window (vim-style)
+        "SUPER+SHIFT,h,exchange_client,left"
+        "SUPER+SHIFT,l,exchange_client,right"
+        "SUPER+SHIFT,j,exchange_client,down"
+        "SUPER+SHIFT,k,exchange_client,up"
+
+        # Move floating window (vim-style)
+        "CTRL+SHIFT,h,movewin,-50,+0"
+        "CTRL+SHIFT,l,movewin,+50,+0"
+        "CTRL+SHIFT,j,movewin,+0,+50"
+        "CTRL+SHIFT,k,movewin,+0,-50"
+
+        # Resize floating window (vim-style)
+        "CTRL+ALT,h,resizewin,-50,+0"
+        "CTRL+ALT,l,resizewin,+50,+0"
+        "CTRL+ALT,j,resizewin,+0,+50"
+        "CTRL+ALT,k,resizewin,+0,-50"
+
+        # Window states
+        "ALT,f,togglefullscreen"
+        "ALT,a,togglemaximizescreen"
+        "ALT,backslash,togglefloating"
+        "ALT+SHIFT,f,togglefakefullscreen"
+        "SUPER,g,toggleglobal"
+        "SUPER,i,minimized"
+        "SUPER+SHIFT,I,restore_minimized"
+        "SUPER,o,toggleoverlay"
+        "ALT,z,toggle_scratchpad"
+        "ALT,Tab,toggleoverview"
+
         # Tag switching
+        "SUPER,Left,viewtoleft"
+        "SUPER,Right,viewtoright"
+        "CTRL,Left,viewtoleft_have_client"
+        "CTRL,Right,viewtoright_have_client"
+        "CTRL+SUPER,Left,tagtoleft"
+        "CTRL+SUPER,Right,tagtoright"
+
         "CTRL,1,view,1"
         "CTRL,2,view,2"
         "CTRL,3,view,3"
@@ -209,6 +255,35 @@
         "ALT,1,tag,1"
         "ALT,2,tag,2"
         "ALT,3,tag,3"
+        "ALT,4,tag,4"
+        "ALT,5,tag,5"
+
+        # Layout switching
+        "ALT,t,setlayout,tile"
+        "ALT,s,setlayout,scroller"
+        "SUPER,n,switch_layout"
+
+        # Scroller
+        "ALT,e,set_proportion,1.0"
+        "SUPER,x,switch_proportion_preset"
+
+        # Screenshots
+        "ALT,p,spawn_shell,g=$(slurp -d) && [ -n \"$g\" ] && grim -g \"$g\" $HOME/Pictures/Screenshots/$(date +%Y%m%d%H%M%S).png"
+        "ALT+SHIFT,p,spawn_shell,grim $HOME/Pictures/Screenshots/$(date +%Y%m%d%H%M%S).png"
+        "ALT+CTRL,p,spawn_shell,f=$(mktemp -t shot-XXXXXX.png) && grim \"$f\" && wl-copy < \"$f\" && rm -f \"$f\""
+      ];
+
+      # Scroll to switch tags
+      axisbind = [
+        "SUPER,UP,viewtoleft_have_client"
+        "SUPER,DOWN,viewtoright_have_client"
+      ];
+
+      # Mouse bindings
+      mousebind = [
+        "SUPER,btn_left,moveresize,curmove"
+        "SUPER,btn_right,moveresize,curresize"
+        "NONE,btn_middle,togglemaximizescreen"
       ];
 
       # Window rules for Steam games

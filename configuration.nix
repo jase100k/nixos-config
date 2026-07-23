@@ -78,6 +78,13 @@
     # Graphics
     vlc
     mpv
+
+    # Screenshot tools
+    grim
+    slurp
+    wl-clipboard
+    satty
+    wayfreeze
     
 
     
@@ -104,8 +111,8 @@
     auto-optimise-store = true;
     cores = 16;
     trusted-users = [ "root" "jason" ];
-    extra-substituters = [ "https://cache.cachyos.org" "https://noctalia.cachix.org" ];
-    extra-trusted-public-keys = [ "cache.cachyos.org-1:Ch86rHgmRwMxJfNlJnLf24g9d0r+6tCROjD/0nJXVLs=" "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4=" ];
+    extra-substituters = [ "https://noctalia.cachix.org" ];
+    extra-trusted-public-keys = [ "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4=" ];
   };
 
   # Garbage collection
