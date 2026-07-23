@@ -1,2 +1,29 @@
+# Nix build results
 result
 result-*
+
+# Secrets and sensitive files
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+secrets/
+*.secret
+*.env
+.env*
+
+
+
+# OS/editor
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Nix
+result/
+.direnv/
