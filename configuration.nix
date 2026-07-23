@@ -79,6 +79,9 @@
     vlc
     mpv
 
+    # Wayland utilities
+    wlr-randr
+
     # Screenshot tools
     grim
     slurp

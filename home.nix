@@ -180,6 +180,11 @@
         "id:3,layout_name:tile"
       ];
 
+      # Monitor config - Dell S3422DWG 144Hz
+      monitorrule = [
+        "name:DP-2,width:3440,height:1440,refresh:144,x:0,y:0,scale:1,vrr:1"
+      ];
+
       # Keybindings
       bind = [
         # Core
