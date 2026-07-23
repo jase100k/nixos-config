@@ -150,7 +150,12 @@
   # MangoWM - Wayland compositor config
   wayland.windowManager.mango = {
     enable = true;
-    autostart_sh = "noctalia &";
+    autostart_sh = ''
+      noctalia &
+      sleep 1 && alacritty &
+      sleep 2 && floorp &
+      sleep 3 && steam &
+    '';
     settings = {
       # Blur (let Noctalia handle layer effects)
       blur = 1;
