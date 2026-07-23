@@ -193,8 +193,9 @@
     recommendedServices.enable = true;
   };
 
-
-  # Flatpak support (for some games)
+  # Override plasma6's mkDefault so SDDM shows the session selector
+  # (lets user choose between Plasma and MangoWM at login)
+  services.displayManager.defaultSession = lib.mkForce null;
   services.flatpak.enable = true;
   xdg.portal = {
     enable = true;

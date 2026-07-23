@@ -39,7 +39,7 @@
   fileSystems."/mnt/steam" =
     { device = "/dev/disk/by-uuid/80054438-f6c7-4863-ae35-2313cb084c43";
       fsType = "btrfs";
-      options = [ "subvol=@steam" "compress=zstd" "ssd" "discard=async" "nofail" ];
+      options = [ "subvol=@steam" "compress=zstd" "ssd" "discard=async" "nofail" "x-systemd.device-timeout=5s" ];
     };
 
   swapDevices =
