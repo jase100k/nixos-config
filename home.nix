@@ -12,6 +12,11 @@
   # Let Home Manager manage itself
   programs.home-manager.enable = true;
 
+  home.packages = with pkgs; [
+    brave
+    floorp-bin
+  ];
+
   # Git configuration
   programs.git = {
     enable = true;

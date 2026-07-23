@@ -1,10 +1,6 @@
 { config, pkgs, lib, inputs, ... }:
 
 {
-  imports = [
-    ./hardware-configuration.nix
-  ];
-
   # CachyOS kernel overlay
   nixpkgs.overlays = [ inputs.nix-cachyos-kernel.overlays.pinned ];
 
@@ -17,8 +13,7 @@
   
   # Kernel parameters for gaming
   boot.kernelParams = [
-    "mitigations=off"
-    "preempt=full"
+    "mitigations=off" # Security trade-off for gaming performance
   ];
 
   # Network
@@ -54,7 +49,6 @@
     curl
     git
     vim
-    neovim
     htop
     btop
     tmux
@@ -85,9 +79,7 @@
     vlc
     mpv
     
-    # Browsers
-    brave
-    floorp-bin
+
     
     # Development (optional)
     gcc
@@ -96,7 +88,6 @@
     
     # Misc
     fastfetch
-    screenfetch
 
     # Cursor themes
     xcursor-themes
@@ -111,8 +102,10 @@
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
     auto-optimise-store = true;
-    extra-substituters = [ "https://noctalia.cachix.org" ];
-    extra-trusted-public-keys = [ "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4=" ];
+    cores = 16;
+    trusted-users = [ "root" "jason" ];
+    extra-substituters = [ "https://cache.cachyos.org" "https://noctalia.cachix.org" ];
+    extra-trusted-public-keys = [ "cache.cachyos.org-1:Ch86rHgmRwMxJfNlJnLf24g9d0r+6tCROjD/0nJXVLs=" "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4=" ];
   };
 
   # Garbage collection
@@ -217,7 +210,7 @@
   # Power management
   powerManagement = {
     enable = true;
-    cpuFreqGovernor = "performance";
+    cpuFreqGovernor = "schedutil";
   };
 
   # ZRAM for better memory management
