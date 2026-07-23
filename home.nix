@@ -178,6 +178,8 @@
         "id:1,layout_name:tile"
         "id:2,layout_name:scroller"
         "id:3,layout_name:tile"
+        "id:4,layout_name:tile"
+        "id:5,layout_name:tile"
       ];
 
       # Monitor config - Dell S3422DWG 144Hz
@@ -294,6 +296,18 @@
       # Window rules for Steam games
       windowrule = [
         "isfullscreen:1,title:^(.*) - Steam$"
+
+        # Tag 1 - terminals
+        "tags:1,appid:^Alacritty$"
+        "tags:1,appid:^org.kde.konsole$"
+
+        # Tag 2 - web browsers
+        "tags:2,appid:^floorp$"
+        "tags:2,appid:^io.github.Aylur.floorp$"
+
+        # Tag 3 - steam
+        "tags:3,appid:^steam$"
+        "tags:3,appid:^steam_app$"
       ];
     };
   };
