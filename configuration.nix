@@ -1,8 +1,11 @@
 { config, pkgs, lib, inputs, ... }:
 
 {
-  # CachyOS kernel overlay
-  nixpkgs.overlays = [ inputs.nix-cachyos-kernel.overlays.pinned ];
+  # CachyOS kernel overlay + Millennium Steam overlay
+  nixpkgs.overlays = [
+    inputs.nix-cachyos-kernel.overlays.pinned
+    inputs.millennium.overlays.default
+  ];
 
   # Boot loader
   boot.loader.systemd-boot.enable = true;
@@ -125,9 +128,10 @@
     options = "--delete-older-than 7d";
   };
 
-  # Gaming optimizations
+  # Gaming optimizations (Millennium-Enhanced Steam)
   programs.steam = {
     enable = true;
+    package = pkgs.millennium-steam;
     dedicatedServer.openFirewall = true;
     localNetworkGameTransfers.openFirewall = true;
     remotePlay.openFirewall = true;

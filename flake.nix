@@ -19,6 +19,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Millennium - Steam client modding framework (DO NOT follows nixpkgs - pinned for Bun FOD)
+    millennium.url = "github:SteamClientHomebrew/Millennium?dir=packages/nix";
+
     # Noctalia v5 - Desktop shell (bar, launcher, notifications)
     # Do NOT follows nixpkgs - required for binary cache hits
     noctalia.url = "github:noctalia-dev/noctalia/cachix";
@@ -37,7 +40,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, nix-cachyos-kernel, mangowm, niri, noctalia, home-manager, plasma-manager, ... }@inputs: {
+  outputs = { self, nixpkgs, nix-cachyos-kernel, mangowm, niri, millennium, noctalia, home-manager, plasma-manager, ... }@inputs: {
     nixosConfigurations.nixos-gaming = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = { inherit inputs; };
