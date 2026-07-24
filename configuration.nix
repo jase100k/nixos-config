@@ -89,6 +89,7 @@
     grim
     slurp
     wl-clipboard
+    xclip
     satty
     wayfreeze
     

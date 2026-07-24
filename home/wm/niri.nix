@@ -206,9 +206,9 @@
         "Mod+BracketLeft".action.consume-or-expel-window-left = [];
         "Mod+BracketRight".action.consume-or-expel-window-right = [];
 
-        "Alt+P".action.spawn = [ "sh" "-c" "g=$(slurp -d) && [ -n \"$g\" ] && grim -g \"$g\" $HOME/Pictures/Screenshots/$(date +%Y%m%d%H%M%S).png" ];
-        "Alt+Shift+P".action.spawn = [ "sh" "-c" "grim $HOME/Pictures/Screenshots/$(date +%Y%m%d%H%M%S).png" ];
-        "Alt+Ctrl+P".action.spawn = [ "sh" "-c" "f=$(mktemp -t shot-XXXXXX.png) && grim \"$f\" && wl-copy < \"$f\" && rm -f \"$f\"" ];
+        "Alt+P".action.spawn = [ "sh" "-c" "g=$(slurp -d) && [ -n \"$g\" ] && f=$HOME/Pictures/Screenshots/$(date +%Y%m%d%H%M%S).png && grim -g \"$g\" \"$f\" && wl-copy < \"$f\" && cat \"$f\" | xclip -selection clipboard -t image/png" ];
+        "Alt+Shift+P".action.spawn = [ "sh" "-c" "f=$HOME/Pictures/Screenshots/$(date +%Y%m%d%H%M%S).png && grim \"$f\" && wl-copy < \"$f\" && cat \"$f\" | xclip -selection clipboard -t image/png" ];
+        "Alt+Ctrl+P".action.spawn = [ "sh" "-c" "f=$(mktemp -t shot-XXXXXX.png) && grim \"$f\" && wl-copy < \"$f\" && cat \"$f\" | xclip -selection clipboard -t image/png && rm -f \"$f\"" ];
 
         "Mod+O".action.spawn = [ "sh" "-c" "noctalia msg window-switcher" ];
 

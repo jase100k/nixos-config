@@ -44,4 +44,6 @@
       restrict_governor_performance=1
     '';
   };
+
+  xdg.configFile."millennium/config.json".source = ./millennium-config.json;
 }

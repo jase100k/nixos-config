@@ -5,7 +5,7 @@
     [theme]
     mode = "dark"
     source = "builtin"
-    builtin = "Catppuccin"
+    builtin = "Ayu"
 
     [theme.templates]
     enable_community_templates = true
