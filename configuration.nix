@@ -182,6 +182,7 @@
   };
 
   services.displayManager.sddm.enable = true;
+  services.displayManager.sessionPackages = [ inputs.niri.packages.x86_64-linux.niri-stable ];
   services.desktopManager.plasma6.enable = true;
 
   # MangoWM - Wayland compositor (available as SDDM session)
@@ -190,7 +191,7 @@
     addLoginEntry = true;
   };
 
-  # Noctalia v5 - Desktop shell for MangoWM
+  # Noctalia v5 - Desktop shell for MangoWM and Niri
   programs.noctalia = {
     enable = true;
     recommendedServices.enable = true;

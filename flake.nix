@@ -3,13 +3,19 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    
+
     # CachyOS kernel - do NOT override nixpkgs, needed for binary cache hits
     nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
 
     # MangoWM - Wayland compositor
     mangowm = {
       url = "github:mangowm/mango";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # Niri - Scrollable tiling Wayland compositor
+    niri = {
+      url = "github:sodiboo/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -31,7 +37,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, nix-cachyos-kernel, mangowm, noctalia, home-manager, plasma-manager, ... }@inputs: {
+  outputs = { self, nixpkgs, nix-cachyos-kernel, mangowm, niri, noctalia, home-manager, plasma-manager, ... }@inputs: {
     nixosConfigurations.nixos-gaming = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = { inherit inputs; };
@@ -50,11 +56,13 @@
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.backupFileExtension = "hm-backup";
+          home-manager.extraSpecialArgs = { inherit inputs; };
           home-manager.sharedModules = [
             inputs.plasma-manager.homeModules.plasma-manager
             inputs.mangowm.hmModules.mango
+            inputs.niri.homeModules.niri
           ];
-          home-manager.users.jason = import ./home.nix;
+          home-manager.users.jason = import ./home;
         }
       ];
     };
