@@ -1,79 +1,117 @@
 { pkgs, ... }:
 
 {
-  programs.firefox = {
-    enable = true;
-    configPath = ".mozilla/firefox";
-    profiles.default = {
-      settings = {
-        "media.ffmpeg.vaapi.enabled" = true;
-        "gfx.webrender.all" = true;
-        "layers.acceleration.force-enabled" = true;
-      };
-    };
-  };
-
-  home.activation.floorpChrome = ''
-    find ~/.floorp -mindepth 1 -maxdepth 1 -type d -name '*.default' | while read profile; do
+  home.activation.floorpTheme = ''
+    profile="$(find ~/.floorp -mindepth 1 -maxdepth 1 -type d -name '*.default' | head -1)"
+    if [ -n "$profile" ]; then
       mkdir -p "$profile/chrome"
+
       cat > "$profile/chrome/userChrome.css" << 'UACHROME'
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --uc-theme-bg: #0b1019;
-        --uc-theme-bg-secondary: #121820;
-        --uc-theme-fg: #bfbdb6;
-        --uc-theme-accent: #ffcc66;
-        --uc-theme-accent2: #39bae6;
-        --uc-theme-accent3: #ffb454;
-        --uc-theme-border: #1f2733;
-        --uc-theme-highlight: #273747;
-      }
-    }
+:root {
+  --toolbar-bgcolor: #0b1019 !important;
+  --toolbar-color: #bfbdb6 !important;
+  --toolbar-bordercolor: #1f2733 !important;
+  --toolbarbutton-hover-background: #273747 !important;
+  --toolbarbutton-active-background: #273747 !important;
+  --lwt-accent-color: #0b1019 !important;
+  --lwt-text-color: #bfbdb6 !important;
+  --tab-selected-color: #bfbdb6 !important;
+  --toolbar-field-background-color: #121820 !important;
+  --toolbar-field-color: #bfbdb6 !important;
+  --toolbar-field-border-color: #1f2733 !important;
+  --toolbar-field-focus-border-color: #ffcc66 !important;
+  --sidebar-bgcolor: #0b1019 !important;
+  --sidebar-text-color: #bfbdb6 !important;
+  --sidebar-border-color: #1f2733 !important;
+  --bookmark-text-color: #bfbdb6 !important;
+  --chrome-content-separator-color: #1f2733 !important;
+}
 
-    #TabsToolbar {
-      background: var(--uc-theme-bg) !important;
-    }
+#nav-bar,
+#PersonalToolbar,
+#TabsToolbar,
+#sidebar-box,
+#browser-bottombox,
+toolbar[type="menubar"] {
+  background-color: #0b1019 !important;
+  color: #bfbdb6 !important;
+  border-color: #1f2733 !important;
+}
 
-    .tab-background {
-      background: var(--uc-theme-bg-secondary) !important;
-      border: 1px solid var(--uc-theme-border) !important;
-      border-radius: 8px !important;
-      margin: 2px 4px !important;
-    }
+#PersonalToolbar .toolbarbutton-text,
+#PersonalToolbar .bookmark-item .toolbarbutton-icon,
+#PersonalToolbar toolbarbutton {
+  color: #bfbdb6 !important;
+  fill: #bfbdb6 !important;
+}
 
-    .tab-background[selected="true"] {
-      background: var(--uc-theme-highlight) !important;
-      border-color: var(--uc-theme-accent) !important;
-    }
+#sidebar-box {
+  background: #0b1019 !important;
+}
 
-    .tab-label {
-      color: var(--uc-theme-fg) !important;
-    }
+#sidebar-header {
+  background: #121820 !important;
+  color: #bfbdb6 !important;
+}
 
-    #nav-bar {
-      background: var(--uc-theme-bg) !important;
-      border-bottom: 1px solid var(--uc-theme-border) !important;
-    }
+#sidebar {
+  background: #0b1019 !important;
+  color: #bfbdb6 !important;
+}
 
-    #urlbar {
-      background: var(--uc-theme-bg-secondary) !important;
-      border: 1px solid var(--uc-theme-border) !important;
-      border-radius: 8px !important;
-      color: var(--uc-theme-fg) !important;
-    }
+.tabbrowser-tab {
+  color: #bfbdb6 !important;
+}
 
-    #urlbar[focused="true"] {
-      border-color: var(--uc-theme-accent) !important;
-    }
+.tab-background {
+  background: #121820 !important;
+  border: 1px solid #1f2733 !important;
+  border-radius: 8px !important;
+  margin: 2px 4px !important;
+}
 
-    .sidebar-box {
-      background: var(--uc-theme-bg) !important;
-    }
+.tab-background[selected="true"] {
+  background: #273747 !important;
+  border-color: #ffcc66 !important;
+}
 
-    #sidebar-header {
-      background: var(--uc-theme-bg-secondary) !important;
-    }
-    UACHROME
-    done
+#urlbar {
+  background: #121820 !important;
+  border: 1px solid #1f2733 !important;
+  border-radius: 8px !important;
+  color: #bfbdb6 !important;
+}
+
+#urlbar[focused="true"] {
+  border-color: #ffcc66 !important;
+}
+
+#status-bar {
+  background: #0b1019 !important;
+  color: #bfbdb6 !important;
+}
+
+#back-button > .toolbarbutton-icon,
+#forward-button > .toolbarbutton-icon {
+  fill: #bfbdb6 !important;
+}
+UACHROME
+
+      cat > "$profile/chrome/userContent.css" << 'UACSS'
+@-moz-document url-prefix(about:), url-prefix(moz-extension://) {
+  body, html {
+    background-color: #0b1019 !important;
+    color: #bfbdb6 !important;
+  }
+}
+UACSS
+
+      cat > "$profile/user.js" << 'USERJS'
+user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
+user_pref("svg.context-properties.content.enabled", true);
+user_pref("design.interface", "proton");
+user_pref("extensions.activeThemeID", "default-theme@mozilla.org");
+USERJS
+    fi
   '';
 }
