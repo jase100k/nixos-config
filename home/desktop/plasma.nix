@@ -176,10 +176,12 @@
         opacity = 0.92;
         blur = true;
         decorations = "None";
-        corner_radius = 12;
       };
       font = {
-        family = "JetBrains Mono";
+        normal = {
+          family = "JetBrains Mono";
+          style = "Regular";
+        };
         size = 12.0;
       };
       colors = {
