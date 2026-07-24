@@ -143,16 +143,16 @@
       ];
 
       binds = {
-        "Mod+Return".action.spawn = [ "alacritty" ];
-        "Mod+D".action.spawn = [ "fuzzel" ];
-        "Mod+Q".action.close-window = [];
-        "Mod+Shift+E".action.quit = [];
-        "Mod+Shift+R".action.spawn = [ "sh" "-c" "niri msg action reload-config" ];
+        "Alt+Return".action.spawn = [ "alacritty" ];
+        "Alt+Space".action.spawn = [ "fuzzel" ];
+        "Alt+Q".action.close-window = [];
+        "Mod+M".action.quit = [];
+        "Alt+R".action.spawn = [ "sh" "-c" "niri msg action reload-config" ];
 
         "Mod+Space".action.spawn = [ "sh" "-c" "noctalia msg panel-toggle launcher" ];
         "Mod+S".action.spawn = [ "sh" "-c" "noctalia msg panel-toggle control-center" ];
         "Mod+Comma".action.spawn = [ "sh" "-c" "noctalia msg settings-toggle" ];
-        "Alt+Tab".action.spawn = [ "sh" "-c" "noctalia msg window-switcher" ];
+        "Alt+Tab".action.toggle-overview = [];
 
         "XF86AudioRaiseVolume".action.spawn = [ "sh" "-c" "wpctl set-volume @DEFAULT_SINK@ 5%+" ];
         "XF86AudioLowerVolume".action.spawn = [ "sh" "-c" "wpctl set-volume @DEFAULT_SINK@ 5%-" ];
@@ -160,10 +160,10 @@
         "XF86MonBrightnessUp".action.spawn = [ "sh" "-c" "noctalia msg brightness-up" ];
         "XF86MonBrightnessDown".action.spawn = [ "sh" "-c" "noctalia msg brightness-down" ];
 
-        "Mod+H".action.focus-column-left = [];
-        "Mod+L".action.focus-column-right = [];
-        "Mod+J".action.focus-window-down = [];
-        "Mod+K".action.focus-window-up = [];
+        "Alt+H".action.focus-column-left = [];
+        "Alt+L".action.focus-column-right = [];
+        "Alt+J".action.focus-window-down = [];
+        "Alt+K".action.focus-window-up = [];
         "Mod+U".action.focus-workspace-down = [];
         "Mod+I".action.focus-workspace-up = [];
 
@@ -214,7 +214,7 @@
         "Alt+Shift+P".action.spawn = [ "sh" "-c" "grim $HOME/Pictures/Screenshots/$(date +%Y%m%d%H%M%S).png" ];
         "Alt+Ctrl+P".action.spawn = [ "sh" "-c" "f=$(mktemp -t shot-XXXXXX.png) && grim \"$f\" && wl-copy < \"$f\" && rm -f \"$f\"" ];
 
-        "Mod+O".action.toggle-overview = [];
+        "Mod+O".action.spawn = [ "sh" "-c" "noctalia msg window-switcher" ];
 
         "Super+Alt+L".action.spawn = [ "sh" "-c" "swaylock" ];
       };
