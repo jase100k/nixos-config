@@ -7,6 +7,10 @@
     source = "builtin"
     builtin = "Catppuccin"
 
+    [theme.templates]
+    enable_community_templates = true
+    community_ids = ["steam"]
+
     [wallpaper]
     enabled = true
     fill_mode = "crop"
