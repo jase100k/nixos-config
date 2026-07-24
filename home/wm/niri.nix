@@ -38,6 +38,7 @@
       layout = {
         default-column-width.proportion = 0.5;
         center-focused-column = "on-overflow";
+        background-color = "transparent";
         preset-column-widths = [
           { proportion = 0.33333; }
           { proportion = 0.5; }
@@ -131,11 +132,6 @@
       ];
 
       layer-rules = [
-        {
-          matches = [{ namespace = "^noctalia-backdrop$"; }];
-          place-within-backdrop = true;
-        }
-
         {
           matches = [{ namespace = "^noctalia-wallpaper$"; }];
           place-within-backdrop = true;

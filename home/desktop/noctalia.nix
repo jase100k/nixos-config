@@ -13,8 +13,6 @@
     transition_on_startup = false
 
     [backdrop]
-    enabled = true
-    blur_intensity = 0.5
-    tint_intensity = 0.3
+    enabled = false
   '';
 }
