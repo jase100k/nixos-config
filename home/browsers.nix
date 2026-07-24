@@ -6,25 +6,60 @@
     if [ -n "$profile" ]; then
       mkdir -p "$profile/chrome"
 
-      cat > "$profile/chrome/userChrome.css" << 'UACHROME'
+      PALETTE_DIR="$HOME/.local/state/noctalia/community-palettes"
+      CATALOG="$PALETTE_DIR/.catalog/palettes.json"
+      SETTINGS="$HOME/.local/state/noctalia/settings.toml"
+
+      PALETTE_NAME=""
+      if [ -f "$SETTINGS" ]; then
+        PALETTE_NAME=$(grep '^community_palette' "$SETTINGS" | head -1 | sed 's/^community_palette[[:space:]]*=[[:space:]]*"\(.*\)"/\1/')
+        if [ -z "$PALETTE_NAME" ]; then
+          PALETTE_NAME=$(grep '^builtin' "$SETTINGS" | head -1 | sed 's/^builtin[[:space:]]*=[[:space:]]*"\(.*\)"/\1/')
+        fi
+      fi
+
+      PALETTE_JSON=""
+      if [ -n "$PALETTE_NAME" ] && [ -f "$CATALOG" ]; then
+        PALETTE_JSON=$(jq -r --arg name "$PALETTE_NAME" '.[] | select(.name == $name) | .dark // empty' "$CATALOG" 2>/dev/null)
+      fi
+
+      if [ -z "$PALETTE_JSON" ]; then
+        PALETTE_JSON='{"primary":"#39BAE6","secondary":"#AAD94C","tertiary":"#E6B450","error":"#D95757","surface":"#0B0E14","surfaceVariant":"#1E222A"}'
+      fi
+
+      SURFACE=$(echo "$PALETTE_JSON" | jq -r '.surface // "#0B0E14"')
+      SURFACE_VAR=$(echo "$PALETTE_JSON" | jq -r '.surfaceVariant // "#1E222A"')
+      PRIMARY=$(echo "$PALETTE_JSON" | jq -r '.primary // "#39BAE6"')
+
+      R=$(printf '%d' "0x$(echo "$SURFACE" | cut -c2-3)")
+      G=$(printf '%d' "0x$(echo "$SURFACE" | cut -c4-5)")
+      B=$(printf '%d' "0x$(echo "$SURFACE" | cut -c6-7)")
+      LUMA=$(( (R * 299 + G * 587 + B * 114) / 1000 ))
+      if [ "$LUMA" -lt 128 ]; then
+        FG="#D1D1C7"
+      else
+        FG="#1e1e2e"
+      fi
+
+      cat > "$profile/chrome/userChrome.css" << UACHROME
 :root {
-  --toolbar-bgcolor: #0b1019 !important;
-  --toolbar-color: #bfbdb6 !important;
-  --toolbar-bordercolor: #1f2733 !important;
-  --toolbarbutton-hover-background: #273747 !important;
-  --toolbarbutton-active-background: #273747 !important;
-  --lwt-accent-color: #0b1019 !important;
-  --lwt-text-color: #bfbdb6 !important;
-  --tab-selected-color: #bfbdb6 !important;
-  --toolbar-field-background-color: #121820 !important;
-  --toolbar-field-color: #bfbdb6 !important;
-  --toolbar-field-border-color: #1f2733 !important;
-  --toolbar-field-focus-border-color: #ffcc66 !important;
-  --sidebar-bgcolor: #0b1019 !important;
-  --sidebar-text-color: #bfbdb6 !important;
-  --sidebar-border-color: #1f2733 !important;
-  --bookmark-text-color: #bfbdb6 !important;
-  --chrome-content-separator-color: #1f2733 !important;
+  --toolbar-bgcolor: $SURFACE !important;
+  --toolbar-color: $FG !important;
+  --toolbar-bordercolor: $SURFACE_VAR !important;
+  --toolbarbutton-hover-background: $SURFACE_VAR !important;
+  --toolbarbutton-active-background: $SURFACE_VAR !important;
+  --lwt-accent-color: $SURFACE !important;
+  --lwt-text-color: $FG !important;
+  --tab-selected-color: $FG !important;
+  --toolbar-field-background-color: $SURFACE_VAR !important;
+  --toolbar-field-color: $FG !important;
+  --toolbar-field-border-color: $SURFACE_VAR !important;
+  --toolbar-field-focus-border-color: $PRIMARY !important;
+  --sidebar-bgcolor: $SURFACE !important;
+  --sidebar-text-color: $FG !important;
+  --sidebar-border-color: $SURFACE_VAR !important;
+  --bookmark-text-color: $FG !important;
+  --chrome-content-separator-color: $SURFACE_VAR !important;
 }
 
 #nav-bar,
@@ -33,75 +68,75 @@
 #sidebar-box,
 #browser-bottombox,
 toolbar[type="menubar"] {
-  background-color: #0b1019 !important;
-  color: #bfbdb6 !important;
-  border-color: #1f2733 !important;
+  background-color: $SURFACE !important;
+  color: $FG !important;
+  border-color: $SURFACE_VAR !important;
 }
 
 #PersonalToolbar .toolbarbutton-text,
 #PersonalToolbar .bookmark-item .toolbarbutton-icon,
 #PersonalToolbar toolbarbutton {
-  color: #bfbdb6 !important;
-  fill: #bfbdb6 !important;
+  color: $FG !important;
+  fill: $FG !important;
 }
 
 #sidebar-box {
-  background: #0b1019 !important;
+  background: $SURFACE !important;
 }
 
 #sidebar-header {
-  background: #121820 !important;
-  color: #bfbdb6 !important;
+  background: $SURFACE_VAR !important;
+  color: $FG !important;
 }
 
 #sidebar {
-  background: #0b1019 !important;
-  color: #bfbdb6 !important;
+  background: $SURFACE !important;
+  color: $FG !important;
 }
 
 .tabbrowser-tab {
-  color: #bfbdb6 !important;
+  color: $FG !important;
 }
 
 .tab-background {
-  background: #121820 !important;
-  border: 1px solid #1f2733 !important;
+  background: $SURFACE_VAR !important;
+  border: 1px solid $SURFACE_VAR !important;
   border-radius: 8px !important;
   margin: 2px 4px !important;
 }
 
 .tab-background[selected="true"] {
-  background: #273747 !important;
-  border-color: #ffcc66 !important;
+  background: $SURFACE_VAR !important;
+  border-color: $PRIMARY !important;
 }
 
 #urlbar {
-  background: #121820 !important;
-  border: 1px solid #1f2733 !important;
+  background: $SURFACE_VAR !important;
+  border: 1px solid $SURFACE_VAR !important;
   border-radius: 8px !important;
-  color: #bfbdb6 !important;
+  color: $FG !important;
 }
 
 #urlbar[focused="true"] {
-  border-color: #ffcc66 !important;
+  border-color: $PRIMARY !important;
 }
 
 #status-bar {
-  background: #0b1019 !important;
-  color: #bfbdb6 !important;
+  background: $SURFACE !important;
+  color: $FG !important;
 }
 
 #back-button > .toolbarbutton-icon,
 #forward-button > .toolbarbutton-icon {
-  fill: #bfbdb6 !important;
+  fill: $FG !important;
 }
 UACHROME
 
-      cat > "$profile/chrome/userContent.css" << 'UACSS'
+      cat > "$profile/chrome/userContent.css" << UACSS
 @-moz-document url-prefix(about:), url-prefix(moz-extension://) {
   body, html {
-    background-color: #0b1019 !important;
-    color: #bfbdb6 !important;
+    background-color: $SURFACE !important;
+    color: $FG !important;
   }
 }
 UACSS

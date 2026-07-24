@@ -21,5 +21,6 @@
   home.packages = with pkgs; [
     brave
     floorp-bin
+    jq
   ];
 }
