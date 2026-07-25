@@ -154,8 +154,15 @@
   # Steam hardware (controllers, Index, etc.)
   hardware.steam-hardware.enable = true;
 
-  # AMD GPU
+  # AMD GPU & NTSYNC Kernel Module (Fast Wine/Proton Sync)
   boot.initrd.kernelModules = [ "amdgpu" ];
+  boot.kernelModules = [ "ntsync" ];
+
+  # Global Gaming & Wayland Environment Variables
+  environment.sessionVariables = {
+    WINE_NTSYNC = "1";
+    PROTON_ENABLE_WAYLAND = "1";
+  };
 
   # OpenGL / Vulkan
   hardware.graphics = {
