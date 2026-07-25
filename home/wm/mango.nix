@@ -132,10 +132,11 @@
         "ALT,e,set_proportion,1.0"
         "SUPER,x,switch_proportion_preset"
 
-        # Screenshots
-        "ALT,p,spawn_shell,g=$(slurp -d) && [ -n \"$g\" ] && grim -g \"$g\" $HOME/Pictures/Screenshots/$(date +%Y%m%d%H%M%S).png"
-        "ALT+SHIFT,p,spawn_shell,grim $HOME/Pictures/Screenshots/$(date +%Y%m%d%H%M%S).png"
-        "ALT+CTRL,p,spawn_shell,f=$(mktemp -t shot-XXXXXX.png) && grim \"$f\" && wl-copy < \"$f\" && rm -f \"$f\""
+        # Screenshots (Wayland grim + slurp + satty + wl-clipboard)
+        "ALT,p,spawn_shell,mkdir -p $HOME/Pictures/Screenshots && g=$(slurp) && [ -n \"$g\" ] && f=$HOME/Pictures/Screenshots/$(date +%Y%m%d%H%M%S).png && grim -g \"$g\" \"$f\" && wl-copy --type image/png < \"$f\""
+        "ALT+SHIFT,p,spawn_shell,mkdir -p $HOME/Pictures/Screenshots && f=$HOME/Pictures/Screenshots/$(date +%Y%m%d%H%M%S).png && grim \"$f\" && wl-copy --type image/png < \"$f\""
+        "ALT+CTRL,p,spawn_shell,f=$(mktemp -t shot-XXXXXX.png) && grim \"$f\" && wl-copy --type image/png < \"$f\" && rm -f \"$f\""
+        "SUPER+SHIFT,s,spawn_shell,mkdir -p $HOME/Pictures/Screenshots && g=$(slurp) && [ -n \"$g\" ] && grim -g \"$g\" - | satty --filename - --output-filename $HOME/Pictures/Screenshots/$(date +%Y%m%d%H%M%S).png"
       ];
 
       # Scroll to switch tags

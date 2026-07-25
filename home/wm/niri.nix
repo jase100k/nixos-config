@@ -206,9 +206,12 @@
         "Mod+BracketLeft".action.consume-or-expel-window-left = [];
         "Mod+BracketRight".action.consume-or-expel-window-right = [];
 
-        "Alt+P".action.spawn = [ "sh" "-c" "g=$(slurp -d) && [ -n \"$g\" ] && f=$HOME/Pictures/Screenshots/$(date +%Y%m%d%H%M%S).png && grim -g \"$g\" \"$f\" && wl-copy < \"$f\" && cat \"$f\" | xclip -selection clipboard -t image/png" ];
-        "Alt+Shift+P".action.spawn = [ "sh" "-c" "f=$HOME/Pictures/Screenshots/$(date +%Y%m%d%H%M%S).png && grim \"$f\" && wl-copy < \"$f\" && cat \"$f\" | xclip -selection clipboard -t image/png" ];
-        "Alt+Ctrl+P".action.spawn = [ "sh" "-c" "f=$(mktemp -t shot-XXXXXX.png) && grim \"$f\" && wl-copy < \"$f\" && cat \"$f\" | xclip -selection clipboard -t image/png && rm -f \"$f\"" ];
+        # Screenshots (Wayland grim + slurp + satty + wl-clipboard)
+        "Print".action.screenshot = [];
+        "Alt+P".action.spawn = [ "sh" "-c" "mkdir -p $HOME/Pictures/Screenshots && g=$(slurp) && [ -n \"$g\" ] && f=$HOME/Pictures/Screenshots/$(date +%Y%m%d%H%M%S).png && grim -g \"$g\" \"$f\" && wl-copy --type image/png < \"$f\"" ];
+        "Alt+Shift+P".action.spawn = [ "sh" "-c" "mkdir -p $HOME/Pictures/Screenshots && f=$HOME/Pictures/Screenshots/$(date +%Y%m%d%H%M%S).png && grim \"$f\" && wl-copy --type image/png < \"$f\"" ];
+        "Alt+Ctrl+P".action.spawn = [ "sh" "-c" "f=$(mktemp -t shot-XXXXXX.png) && grim \"$f\" && wl-copy --type image/png < \"$f\" && rm -f \"$f\"" ];
+        "Super+Shift+S".action.spawn = [ "sh" "-c" "mkdir -p $HOME/Pictures/Screenshots && g=$(slurp) && [ -n \"$g\" ] && grim -g \"$g\" - | satty --filename - --output-filename $HOME/Pictures/Screenshots/$(date +%Y%m%d%H%M%S).png" ];
 
         "Mod+O".action.spawn = [ "sh" "-c" "noctalia msg window-switcher" ];
 

@@ -13,6 +13,7 @@
 
     [shell]
     niri_overview_type_to_launch_enabled = true
+    time_format = "{:%H:%M %d/%m/%Y}"
 
     [[control_center.shortcuts]]
     type = "wifi"
