@@ -30,6 +30,9 @@
       SURFACE=$(echo "$PALETTE_JSON" | jq -r '.surface // "#0B0E14"')
       SURFACE_VAR=$(echo "$PALETTE_JSON" | jq -r '.surfaceVariant // "#1E222A"')
       PRIMARY=$(echo "$PALETTE_JSON" | jq -r '.primary // "#39BAE6"')
+      SECONDARY=$(echo "$PALETTE_JSON" | jq -r '.secondary // "#AAD94C"')
+      TERTIARY=$(echo "$PALETTE_JSON" | jq -r '.tertiary // "#E6B450"')
+      ERROR=$(echo "$PALETTE_JSON" | jq -r '.error // "#D95757"')
 
       R=$(printf '%d' "0x$(echo "$SURFACE" | cut -c2-3)")
       G=$(printf '%d' "0x$(echo "$SURFACE" | cut -c4-5)")
@@ -43,6 +46,7 @@
 
       cat > "$profile/chrome/userChrome.css" << UACHROME
 :root {
+  /* Main Colors */
   --toolbar-bgcolor: $SURFACE !important;
   --toolbar-color: $FG !important;
   --toolbar-bordercolor: $SURFACE_VAR !important;
@@ -50,18 +54,42 @@
   --toolbarbutton-active-background: $SURFACE_VAR !important;
   --lwt-accent-color: $SURFACE !important;
   --lwt-text-color: $FG !important;
-  --tab-selected-color: $FG !important;
+
+  /* Address Bar (URL Bar) Noctalia Variables */
   --toolbar-field-background-color: $SURFACE_VAR !important;
+  --toolbar-field-focus-background-color: $SURFACE_VAR !important;
   --toolbar-field-color: $FG !important;
+  --toolbar-field-focus-color: $FG !important;
   --toolbar-field-border-color: $SURFACE_VAR !important;
   --toolbar-field-focus-border-color: $PRIMARY !important;
+  --lwt-toolbar-field-background-color: $SURFACE_VAR !important;
+  --lwt-toolbar-field-focus-background-color: $SURFACE_VAR !important;
+  --lwt-toolbar-field-color: $FG !important;
+  --lwt-toolbar-field-focus-color: $FG !important;
+  --urlbar-box-background: $SURFACE_VAR !important;
+  --urlbar-box-bgcolor: $SURFACE_VAR !important;
+
+  /* Tabs & Sidebar */
+  --tab-selected-color: $FG !important;
   --sidebar-bgcolor: $SURFACE !important;
   --sidebar-text-color: $FG !important;
   --sidebar-border-color: $SURFACE_VAR !important;
   --bookmark-text-color: $FG !important;
   --chrome-content-separator-color: $SURFACE_VAR !important;
+
+  /* Popups & Panels */
+  --panel-background: $SURFACE !important;
+  --panel-color: $FG !important;
+  --panel-border-color: $SURFACE_VAR !important;
 }
 
+/* Global Selection */
+::selection {
+  background-color: $PRIMARY !important;
+  color: $SURFACE !important;
+}
+
+/* Toolbars & Nav */
 #nav-bar,
 #PersonalToolbar,
 #TabsToolbar,
@@ -80,45 +108,74 @@ toolbar[type="menubar"] {
   fill: $FG !important;
 }
 
-#sidebar-box {
+/* Sidebar */
+#sidebar-box, #sidebar {
   background: $SURFACE !important;
+  color: $FG !important;
 }
-
 #sidebar-header {
   background: $SURFACE_VAR !important;
   color: $FG !important;
 }
 
-#sidebar {
-  background: $SURFACE !important;
-  color: $FG !important;
-}
-
+/* Tabs */
 .tabbrowser-tab {
   color: $FG !important;
 }
-
 .tab-background {
   background: $SURFACE_VAR !important;
   border: 1px solid $SURFACE_VAR !important;
   border-radius: 8px !important;
   margin: 2px 4px !important;
 }
-
 .tab-background[selected="true"] {
   background: $SURFACE_VAR !important;
   border-color: $PRIMARY !important;
 }
 
-#urlbar {
-  background: $SURFACE_VAR !important;
-  border: 1px solid $SURFACE_VAR !important;
+/* Address Bar (URL Bar) */
+#urlbar,
+#urlbar-background,
+#urlbar-input-container {
+  background-color: $SURFACE_VAR !important;
   border-radius: 8px !important;
   color: $FG !important;
 }
-
-#urlbar[focused="true"] {
+#urlbar-background {
+  border: 1px solid $SURFACE_VAR !important;
+}
+#urlbar[focused="true"] > #urlbar-background,
+#urlbar[breakout][breakout-extend] > #urlbar-background {
+  background-color: $SURFACE_VAR !important;
   border-color: $PRIMARY !important;
+}
+#urlbar-input,
+.urlbar-input-box {
+  color: $FG !important;
+  background-color: transparent !important;
+}
+
+/* URL Bar Suggestions Dropdown */
+.urlbarView {
+  background-color: $SURFACE !important;
+  color: $FG !important;
+  border: 1px solid $SURFACE_VAR !important;
+  border-radius: 8px !important;
+}
+.urlbarView-row[selected] {
+  background-color: $SURFACE_VAR !important;
+}
+.urlbarView-highlight {
+  color: $PRIMARY !important;
+}
+
+/* Security Lock Icon */
+#identity-box[pageproxystate="valid"].verifiedDomain #identity-icon,
+#identity-box[pageproxystate="valid"].chromeUI #identity-icon {
+  fill: $SECONDARY !important;
+}
+#identity-box.not-secure #identity-icon {
+  fill: $ERROR !important;
 }
 
 #status-bar {

@@ -223,7 +223,7 @@
     {
       name = "Canon";
       deviceUri = "ipp://192.168.11.220/ipp/print";
-      model = "everywhere";
+      model = "drv:///cupsfilters.drv/pwgrast.ppd";
       description = "Canon Network Printer";
     }
   ];
