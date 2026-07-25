@@ -144,9 +144,6 @@ toolbar[type="menubar"] {
   border-radius: 8px !important;
   color: $FG !important;
 }
-#urlbar-background {
-  border: 1px solid $SURFACE_VAR !important;
-}
 
 /* Active / Open / Focused / Breakout Popup State */
 #urlbar[open],
@@ -156,8 +153,11 @@ toolbar[type="menubar"] {
 #urlbar[breakout][breakout-extend] {
   --urlbar-open-background: $SURFACE_VAR !important;
   --urlbar-box-background: $SURFACE_VAR !important;
+  --toolbar-field-focus-background-color: $SURFACE_VAR !important;
+  --lwt-toolbar-field-focus-background-color: $SURFACE_VAR !important;
 }
 
+#urlbar-background,
 #urlbar[open] > #urlbar-background,
 #urlbar[open="true"] > #urlbar-background,
 #urlbar[focused] > #urlbar-background,
@@ -165,22 +165,29 @@ toolbar[type="menubar"] {
 #urlbar[breakout][breakout-extend] > #urlbar-background {
   background-color: $SURFACE_VAR !important;
   background: $SURFACE_VAR !important;
+  border: 1px solid $SURFACE_VAR !important;
+}
+
+#urlbar[open] > #urlbar-background,
+#urlbar[open="true"] > #urlbar-background,
+#urlbar[focused] > #urlbar-background,
+#urlbar[focused="true"] > #urlbar-background,
+#urlbar[breakout][breakout-extend] > #urlbar-background {
   border-color: $PRIMARY !important;
 }
 
+/* Force all inner elements of the input box to be transparent */
+#urlbar *,
 #urlbar-input-container,
-#urlbar-input-container[focus-within],
-#urlbar[open] #urlbar-input-container,
-#urlbar[focused] #urlbar-input-container {
+#urlbar-input-container *,
+.urlbar-input-box,
+.urlbar-input-box *,
+#urlbar-input,
+#urlbar-input:focus,
+#urlbar-input[focused] {
   background-color: transparent !important;
   background: transparent !important;
   color: $FG !important;
-}
-
-#urlbar-input,
-.urlbar-input-box {
-  color: $FG !important;
-  background-color: transparent !important;
 }
 
 /* Text selection / highlight inside address bar input */
@@ -248,7 +255,9 @@ UACSS
 user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
 user_pref("svg.context-properties.content.enabled", true);
 user_pref("design.interface", "proton");
-user_pref("extensions.activeThemeID", "default-theme@mozilla.org");
+user_pref("extensions.activeThemeID", "firefox-compact-dark@mozilla.org");
+user_pref("ui.systemUsesDarkTheme", 1);
+user_pref("layout.css.prefers-color-scheme.content-override", 0);
 USERJS
     fi
   '';
