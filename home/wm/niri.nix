@@ -150,7 +150,7 @@
         "Alt+Space".action.spawn = [ "fuzzel" ];
         "Alt+Q".action.close-window = [];
         "Mod+M".action.quit = [];
-        "Alt+R".action.spawn = [ "sh" "-c" "niri msg action reload-config" ];
+        "Alt+R".action.load-config-file = [];
 
         "Mod+Space".action.spawn = [ "sh" "-c" "noctalia msg panel-toggle launcher" ];
         "Mod+S".action.spawn = [ "sh" "-c" "noctalia msg panel-toggle control-center" ];
