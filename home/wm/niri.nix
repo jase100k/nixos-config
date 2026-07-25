@@ -5,7 +5,7 @@
 
   programs.niri = {
     enable = true;
-    package = inputs.niri.packages.${pkgs.system}.niri-stable;
+    package = inputs.niri.packages.${pkgs.stdenv.hostPlatform.system}.niri-stable;
 
     settings = {
       prefer-no-csd = true;

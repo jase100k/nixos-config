@@ -22,8 +22,8 @@
     brave
     floorp-bin
     jq
-    inputs.antigravity-nix.packages.${pkgs.system}.default
-    inputs.antigravity-nix.packages.${pkgs.system}.google-antigravity-ide
-    inputs.antigravity-nix.packages.${pkgs.system}.google-antigravity-cli
+    inputs.antigravity-nix.packages.${pkgs.stdenv.hostPlatform.system}.default
+    inputs.antigravity-nix.packages.${pkgs.stdenv.hostPlatform.system}.google-antigravity-ide
+    inputs.antigravity-nix.packages.${pkgs.stdenv.hostPlatform.system}.google-antigravity-cli
   ];
 }
