@@ -125,10 +125,11 @@
     # Misc
     fastfetch
 
-    # GTK / Qt Theming (Noctalia integration)
+    # GTK / Qt & Browser Theming (Noctalia integration)
     adw-gtk3
     nwg-look
     vesktop
+    pywalfox-native
 
     # Cursor themes
     xcursor-themes
