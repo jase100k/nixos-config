@@ -11,8 +11,8 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # Gaming kernel - CachyOS BORE Scheduler + LTO + x86_64-v3 (Ryzen 5700X3D)
-  boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-bore-lto-x86_64-v3;
+  # Gaming kernel - CachyOS latest pre-built kernel (BORE + NTSYNC + Cachix binary hit)
+  boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest;
   
   # Kernel parameters for gaming (CachyOS + AMD Ryzen 5700X3D + RDNA3)
   boot.kernelParams = [
