@@ -1,11 +1,18 @@
 { pkgs, ... }:
 
 {
+  home.packages = [
+    pkgs.starship
+  ];
+
   programs.zsh = {
     enable = true;
     autosuggestion.enable = true;
     enableCompletion = true;
     syntaxHighlighting.enable = true;
+    initExtra = ''
+      eval "$(starship init zsh)"
+    '';
 
     shellAliases = {
       ll = "ls -la";
@@ -19,17 +26,6 @@
     oh-my-zsh = {
       enable = true;
       plugins = [ "git" "sudo" "history" "dirhistory" ];
-    };
-  };
-
-  programs.starship = {
-    enable = true;
-    settings = {
-      add_newline = true;
-      character = {
-        success_symbol = "[❯](bold green)";
-        error_symbol = "[❯](bold red)";
-      };
     };
   };
 
