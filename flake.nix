@@ -26,6 +26,12 @@
     # Do NOT follows nixpkgs - required for binary cache hits
     noctalia.url = "github:noctalia-dev/noctalia/cachix";
 
+    # Google Antigravity - agentic IDE/CLI
+    antigravity-nix = {
+      url = "github:jacopone/antigravity-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Home Manager for user-level configs
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -40,7 +46,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, nix-cachyos-kernel, mangowm, niri, millennium, noctalia, home-manager, plasma-manager, ... }@inputs: {
+  outputs = { self, nixpkgs, nix-cachyos-kernel, mangowm, niri, millennium, noctalia, antigravity-nix, home-manager, plasma-manager, ... }@inputs: {
     nixosConfigurations.nixos-gaming = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = { inherit inputs; };

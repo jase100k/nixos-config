@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   imports = [
@@ -22,5 +22,8 @@
     brave
     floorp-bin
     jq
+    inputs.antigravity-nix.packages.${pkgs.system}.default
+    inputs.antigravity-nix.packages.${pkgs.system}.google-antigravity-ide
+    inputs.antigravity-nix.packages.${pkgs.system}.google-antigravity-cli
   ];
 }
