@@ -125,6 +125,11 @@
     # Misc
     fastfetch
 
+    # GTK / Qt Theming (Noctalia integration)
+    adw-gtk3
+    nwg-look
+    vesktop
+
     # Cursor themes
     xcursor-themes
     bibata-cursors
@@ -311,6 +316,7 @@
   # System-wide environment variables
   environment.sessionVariables = {
     QT_QPA_PLATFORM = "wayland";
+    QT_QPA_PLATFORMTHEME = "gtk3";
     MOZ_ENABLE_WAYLAND = "1";
     EDITOR = "nvim";
     VISUAL = "nvim";
