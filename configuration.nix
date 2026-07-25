@@ -19,6 +19,7 @@
     "mitigations=off"                 # Security trade-off for gaming performance
     "amd_pstate=active"               # AMD P-State EPP driver for Ryzen 5700X3D 3D V-Cache
     "amdgpu.ppfeaturemask=0xffffffff" # Unlock full AMD GPU power management & tuning
+    "transparent_hugepage=madvise"    # 2MB Hugepages for game heap allocators (jemalloc/mimalloc)
   ];
 
   # CachyOS Sysctl Kernel Optimizations for Low Latency Gaming
@@ -86,6 +87,7 @@
     
     # Performance monitoring
     radeontop
+    lact # Linux AMDGPU Controller (GPU monitoring, fan control, power cap)
     
     # Audio
     pavucontrol
@@ -201,6 +203,14 @@
     alsa.support32Bit = true;
     pulse.enable = true;
     jack.enable = true;
+    extraConfig.pipewire."92-low-latency" = {
+      "context.properties" = {
+        "default.clock.rate" = 48000;
+        "default.clock.quantum" = 64;
+        "default.clock.min-quantum" = 32;
+        "default.clock.max-quantum" = 512;
+      };
+    };
   };
 
   # Disable PulseAudio (using PipeWire instead)
@@ -279,9 +289,13 @@
     cpuFreqGovernor = "schedutil";
   };
 
+  # Linux AMDGPU Controller Service (LACT)
+  services.lact.enable = true;
+
   # ZRAM for better memory management
   zramSwap = {
     enable = true;
+    algorithm = "zstd";
     memoryPercent = 50;
   };
 
