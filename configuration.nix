@@ -14,10 +14,22 @@
   # Gaming kernel - CachyOS optimized kernel
   boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest;
   
-  # Kernel parameters for gaming
+  # Kernel parameters for gaming (CachyOS + AMD Ryzen 5700X3D + RDNA3)
   boot.kernelParams = [
-    "mitigations=off" # Security trade-off for gaming performance
+    "mitigations=off"                 # Security trade-off for gaming performance
+    "amd_pstate=active"               # AMD P-State EPP driver for Ryzen 5700X3D 3D V-Cache
+    "amdgpu.ppfeaturemask=0xffffffff" # Unlock full AMD GPU power management & tuning
   ];
+
+  # CachyOS Sysctl Kernel Optimizations for Low Latency Gaming
+  boot.kernel.sysctl = {
+    "vm.max_map_count" = 2147483642;          # Needed for UE5 / StarCitizen / AAA games
+    "vm.swappiness" = 10;                     # Avoid premature RAM swapping
+    "vm.dirty_background_ratio" = 5;          # Smooth background I/O
+    "vm.dirty_ratio" = 10;
+    "net.core.default_qdisc" = "fq_codel";    # CachyOS low-latency queueing
+    "net.ipv4.tcp_congestion_control" = "bbr"; # BBR network congestion control
+  };
 
   # Network
   networking.hostName = "nixos-gaming";
@@ -162,6 +174,8 @@
   environment.sessionVariables = {
     WINE_NTSYNC = "1";
     PROTON_ENABLE_WAYLAND = "1";
+    AMD_VULKAN_ICD = "RADV";                  # High-performance Mesa RADV Vulkan driver
+    RADV_PERFTEST = "gpl,nggc";              # RDNA3 GeometryShader & GPL shader pre-caching
   };
 
   # OpenGL / Vulkan
