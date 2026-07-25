@@ -11,8 +11,8 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # Gaming kernel - CachyOS optimized kernel
-  boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest;
+  # Gaming kernel - CachyOS BORE Scheduler + LTO + x86_64-v3 (Ryzen 5700X3D)
+  boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-bore-lto-x86_64-v3;
   
   # Kernel parameters for gaming (CachyOS + AMD Ryzen 5700X3D + RDNA3)
   boot.kernelParams = [
@@ -130,8 +130,14 @@
     auto-optimise-store = true;
     cores = 16;
     trusted-users = [ "root" "jason" ];
-    extra-substituters = [ "https://noctalia.cachix.org" ];
-    extra-trusted-public-keys = [ "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4=" ];
+    extra-substituters = [
+      "https://noctalia.cachix.org"
+      "https://cachyos.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
+      "cachyos.cachix.org-1:95b2C3UaaPJUGlGLM22sm6lR4n9wVUqBLVn86uu03j8="
+    ];
   };
 
   # Garbage collection
