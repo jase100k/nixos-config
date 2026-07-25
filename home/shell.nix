@@ -10,7 +10,7 @@
     autosuggestion.enable = true;
     enableCompletion = true;
     syntaxHighlighting.enable = true;
-    initExtra = ''
+    initContent = ''
       eval "$(starship init zsh)"
     '';
 
