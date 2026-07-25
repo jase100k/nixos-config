@@ -45,16 +45,23 @@
           { proportion = 0.66667; }
           { proportion = 1.0; }
         ];
-        gaps = 4;
+        gaps = 8;
+
+        focus-ring = {
+          enable = true;
+          width = 2;
+          active.color = "#cba6f7";
+          inactive.color = "#313244";
+        };
 
         shadow = {
           enable = true;
-          color = "#00000080";
+          color = "#00000066";
           offset = {
             x = 2;
-            y = 2;
+            y = 4;
           };
-          softness = 12;
+          softness = 16;
         };
       };
 

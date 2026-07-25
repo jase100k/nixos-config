@@ -19,7 +19,6 @@
     oh-my-zsh = {
       enable = true;
       plugins = [ "git" "sudo" "history" "dirhistory" ];
-      theme = "robbyrussell";
     };
   };
 

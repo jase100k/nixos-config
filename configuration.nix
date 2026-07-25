@@ -58,6 +58,14 @@
 
   programs.zsh.enable = true;
 
+  # Fonts
+  fonts.packages = with pkgs; [
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.fira-code
+    inter
+    roboto
+  ];
+
   # System packages
   environment.systemPackages = with pkgs; [
     # Core utilities
