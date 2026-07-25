@@ -146,81 +146,93 @@
       ];
 
       binds = {
+        # Core Applications & Launchers (Both Super and Alt work)
+        "Super+Return".action.spawn = [ "alacritty" ];
         "Alt+Return".action.spawn = [ "alacritty" ];
+        "Super+Space".action.spawn = [ "fuzzel" ];
         "Alt+Space".action.spawn = [ "fuzzel" ];
+        "Super+Q".action.close-window = [];
         "Alt+Q".action.close-window = [];
-        "Mod+M".action.quit = [];
+        "Super+M".action.quit = [];
         "Alt+R".action.spawn = [ "sh" "-c" "niri msg action load-config-file && notify-send 'Niri' 'Configuration reloaded!'" ];
 
+        # Noctalia IPC Binds
         "Mod+Space".action.spawn = [ "sh" "-c" "noctalia msg panel-toggle launcher" ];
         "Mod+S".action.spawn = [ "sh" "-c" "noctalia msg panel-toggle control-center" ];
         "Mod+Comma".action.spawn = [ "sh" "-c" "noctalia msg settings-toggle" ];
+        "Mod+O".action.spawn = [ "sh" "-c" "noctalia msg window-switcher" ];
         "Alt+Tab".action.toggle-overview = [];
 
+        # Media & Hardware Keys
         "XF86AudioRaiseVolume".action.spawn = [ "sh" "-c" "wpctl set-volume @DEFAULT_SINK@ 5%+" ];
         "XF86AudioLowerVolume".action.spawn = [ "sh" "-c" "wpctl set-volume @DEFAULT_SINK@ 5%-" ];
         "XF86AudioMute".action.spawn = [ "sh" "-c" "wpctl set-mute @DEFAULT_SINK@ toggle" ];
         "XF86MonBrightnessUp".action.spawn = [ "sh" "-c" "noctalia msg brightness-up" ];
         "XF86MonBrightnessDown".action.spawn = [ "sh" "-c" "noctalia msg brightness-down" ];
 
+        # Focus Navigation (Vim-style H/J/K/L & Arrow keys)
+        "Super+H".action.focus-column-left = [];
         "Alt+H".action.focus-column-left = [];
+        "Super+L".action.focus-column-right = [];
         "Alt+L".action.focus-column-right = [];
+        "Super+J".action.focus-window-down = [];
         "Alt+J".action.focus-window-down = [];
+        "Super+K".action.focus-window-up = [];
         "Alt+K".action.focus-window-up = [];
-        "Mod+U".action.focus-workspace-down = [];
-        "Mod+I".action.focus-workspace-up = [];
+        "Super+Left".action.focus-column-left = [];
+        "Super+Right".action.focus-column-right = [];
 
-        "Mod+Shift+H".action.move-column-left = [];
-        "Mod+Shift+L".action.move-column-right = [];
-        "Mod+Shift+J".action.move-window-down = [];
-        "Mod+Shift+K".action.move-window-up = [];
+        # Move Window / Column (Vim-style Shift+H/J/K/L)
+        "Super+Shift+H".action.move-column-left = [];
+        "Alt+Shift+H".action.move-column-left = [];
+        "Super+Shift+L".action.move-column-right = [];
+        "Alt+Shift+L".action.move-column-right = [];
+        "Super+Shift+J".action.move-window-down = [];
+        "Alt+Shift+J".action.move-window-down = [];
+        "Super+Shift+K".action.move-window-up = [];
+        "Alt+Shift+K".action.move-window-up = [];
 
-        "Mod+Ctrl+H".action.move-column-left = [];
-        "Mod+Ctrl+J".action.move-window-down = [];
-        "Mod+Ctrl+K".action.move-window-up = [];
-        "Mod+Ctrl+L".action.move-column-right = [];
-
+        # Window States (Fullscreen, Maximize, Floating)
+        "Super+F".action.fullscreen-window = [];
         "Alt+F".action.fullscreen-window = [];
         "Mod+F".action.maximize-column = [];
-        "Mod+V".action.toggle-window-floating = [];
-        "Mod+Shift+F".action.fullscreen-window = [];
+        "Super+V".action.toggle-window-floating = [];
+        "Alt+V".action.toggle-window-floating = [];
 
-        "Mod+1".action.focus-workspace = "term";
-        "Mod+2".action.focus-workspace = "web";
-        "Mod+3".action.focus-workspace = "gaming";
-        "Mod+4".action.focus-workspace = 4;
-        "Mod+5".action.focus-workspace = 5;
+        # Workspaces (Focus 1..5)
+        "Super+1".action.focus-workspace = "term";
+        "Super+2".action.focus-workspace = "web";
+        "Super+3".action.focus-workspace = "gaming";
+        "Super+4".action.focus-workspace = 4;
+        "Super+5".action.focus-workspace = 5;
+        "Alt+1".action.focus-workspace = "term";
+        "Alt+2".action.focus-workspace = "web";
+        "Alt+3".action.focus-workspace = "gaming";
+        "Alt+4".action.focus-workspace = 4;
+        "Alt+5".action.focus-workspace = 5;
 
-        "Ctrl+1".action.focus-workspace = "term";
-        "Ctrl+2".action.focus-workspace = "web";
-        "Ctrl+3".action.focus-workspace = "gaming";
-        "Ctrl+4".action.focus-workspace = 4;
-        "Ctrl+5".action.focus-workspace = 5;
+        # Move Window to Workspace 1..5
+        "Super+Shift+1".action.move-window-to-workspace = "term";
+        "Super+Shift+2".action.move-window-to-workspace = "web";
+        "Super+Shift+3".action.move-window-to-workspace = "gaming";
+        "Super+Shift+4".action.move-window-to-workspace = 4;
+        "Super+Shift+5".action.move-window-to-workspace = 5;
+        "Alt+Shift+1".action.move-window-to-workspace = "term";
+        "Alt+Shift+2".action.move-window-to-workspace = "web";
+        "Alt+Shift+3".action.move-window-to-workspace = "gaming";
 
-        "Alt+1".action.move-window-to-workspace = "term";
-        "Alt+2".action.move-window-to-workspace = "web";
-        "Alt+3".action.move-window-to-workspace = "gaming";
-        "Alt+4".action.move-window-to-workspace = 4;
-        "Alt+5".action.move-window-to-workspace = 5;
-
-        "Mod+Left".action.focus-column-left = [];
-        "Mod+Right".action.focus-column-right = [];
-
+        # Column Sizing & Preset Resizing
         "Alt+Minus".action.set-column-width = "-10%";
         "Alt+Equal".action.set-column-width = "+10%";
-        "Mod+R".action.switch-preset-column-width = [];
+        "Super+R".action.switch-preset-column-width = [];
+        "Alt+R_Shift".action.switch-preset-column-width = [];
 
-        "Mod+BracketLeft".action.consume-or-expel-window-left = [];
-        "Mod+BracketRight".action.consume-or-expel-window-right = [];
-
-        # Screenshots (Wayland grim + slurp + satty + wl-clipboard)
+        # Screenshots (No Print key required! Super+Shift+S, Super+P, Alt+P, Print)
         "Print".action.screenshot = [];
-        "Alt+P".action.spawn = [ "sh" "-c" "mkdir -p $HOME/Pictures/Screenshots && g=$(slurp) && [ -n \"$g\" ] && f=$HOME/Pictures/Screenshots/$(date +%Y%m%d%H%M%S).png && grim -g \"$g\" \"$f\" && wl-copy --type image/png < \"$f\"" ];
-        "Alt+Shift+P".action.spawn = [ "sh" "-c" "mkdir -p $HOME/Pictures/Screenshots && f=$HOME/Pictures/Screenshots/$(date +%Y%m%d%H%M%S).png && grim \"$f\" && wl-copy --type image/png < \"$f\"" ];
-        "Alt+Ctrl+P".action.spawn = [ "sh" "-c" "f=$(mktemp -t shot-XXXXXX.png) && grim \"$f\" && wl-copy --type image/png < \"$f\" && rm -f \"$f\"" ];
         "Super+Shift+S".action.spawn = [ "sh" "-c" "mkdir -p $HOME/Pictures/Screenshots && g=$(slurp) && [ -n \"$g\" ] && grim -g \"$g\" - | satty --filename - --output-filename $HOME/Pictures/Screenshots/$(date +%Y%m%d%H%M%S).png" ];
-
-        "Mod+O".action.spawn = [ "sh" "-c" "noctalia msg window-switcher" ];
+        "Super+P".action.spawn = [ "sh" "-c" "mkdir -p $HOME/Pictures/Screenshots && g=$(slurp) && [ -n \"$g\" ] && f=$HOME/Pictures/Screenshots/$(date +%Y%m%d%H%M%S).png && grim -g \"$g\" \"$f\" && wl-copy --type image/png < \"$f\"" ];
+        "Alt+P".action.spawn = [ "sh" "-c" "mkdir -p $HOME/Pictures/Screenshots && g=$(slurp) && [ -n \"$g\" ] && f=$HOME/Pictures/Screenshots/$(date +%Y%m%d%H%M%S).png && grim -g \"$g\" \"$f\" && wl-copy --type image/png < \"$f\"" ];
+        "Super+Shift+P".action.spawn = [ "sh" "-c" "mkdir -p $HOME/Pictures/Screenshots && f=$HOME/Pictures/Screenshots/$(date +%Y%m%d%H%M%S).png && grim \"$f\" && wl-copy --type image/png < \"$f\"" ];
 
         "Super+Alt+L".action.spawn = [ "sh" "-c" "swaylock" ];
       };
