@@ -68,6 +68,9 @@
   --lwt-toolbar-field-focus-color: $FG !important;
   --urlbar-box-background: $SURFACE_VAR !important;
   --urlbar-box-bgcolor: $SURFACE_VAR !important;
+  --urlbar-open-background: $SURFACE_VAR !important;
+  --urlbar-box-focus-background: $SURFACE_VAR !important;
+  --urlbarView-highlight-background: $SURFACE_VAR !important;
 
   /* Tabs & Sidebar */
   --tab-selected-color: $FG !important;
@@ -144,26 +147,69 @@ toolbar[type="menubar"] {
 #urlbar-background {
   border: 1px solid $SURFACE_VAR !important;
 }
+
+/* Active / Open / Focused / Breakout Popup State */
+#urlbar[open],
+#urlbar[open="true"],
+#urlbar[focused],
+#urlbar[focused="true"],
+#urlbar[breakout][breakout-extend] {
+  --urlbar-open-background: $SURFACE_VAR !important;
+  --urlbar-box-background: $SURFACE_VAR !important;
+}
+
+#urlbar[open] > #urlbar-background,
+#urlbar[open="true"] > #urlbar-background,
+#urlbar[focused] > #urlbar-background,
 #urlbar[focused="true"] > #urlbar-background,
 #urlbar[breakout][breakout-extend] > #urlbar-background {
   background-color: $SURFACE_VAR !important;
+  background: $SURFACE_VAR !important;
   border-color: $PRIMARY !important;
 }
+
+#urlbar-input-container,
+#urlbar-input-container[focus-within],
+#urlbar[open] #urlbar-input-container,
+#urlbar[focused] #urlbar-input-container {
+  background-color: transparent !important;
+  background: transparent !important;
+  color: $FG !important;
+}
+
 #urlbar-input,
 .urlbar-input-box {
   color: $FG !important;
   background-color: transparent !important;
 }
 
-/* URL Bar Suggestions Dropdown */
-.urlbarView {
+/* Text selection / highlight inside address bar input */
+#urlbar-input::selection,
+#urlbar-input::-moz-selection {
+  background-color: $PRIMARY !important;
+  color: $SURFACE !important;
+}
+
+/* URL Bar Suggestions Dropdown Popup */
+#urlbar-results,
+.urlbarView,
+.urlbarView-body-outer,
+.urlbarView-body-inner,
+.urlbarView-results {
   background-color: $SURFACE !important;
   color: $FG !important;
   border: 1px solid $SURFACE_VAR !important;
   border-radius: 8px !important;
 }
-.urlbarView-row[selected] {
+.urlbarView-row,
+.urlbarView-row-inner {
+  background-color: transparent !important;
+  color: $FG !important;
+}
+.urlbarView-row[selected],
+.urlbarView-row:hover {
   background-color: $SURFACE_VAR !important;
+  color: $FG !important;
 }
 .urlbarView-highlight {
   color: $PRIMARY !important;
