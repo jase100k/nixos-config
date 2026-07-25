@@ -8,6 +8,8 @@
     builtin = "Ayu"
 
     [theme.templates]
+    enable_builtin_templates = true
+    builtin_ids = ["kitty", "alacritty", "gtk", "starship", "niri", "mango", "btop", "cava"]
     enable_community_templates = true
     community_ids = ["steam", "pywalfox-beta4", "neovim"]
 
