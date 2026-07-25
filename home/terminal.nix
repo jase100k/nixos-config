@@ -49,4 +49,6 @@
       };
     };
   };
+
+  xdg.configFile."alacritty/alacritty.toml".force = true;
 }

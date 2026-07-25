@@ -50,5 +50,8 @@
     '';
   };
 
-  xdg.configFile."millennium/config.json".source = ./millennium-config.json;
+  xdg.configFile."millennium/config.json" = {
+    source = ./millennium-config.json;
+    force = true;
+  };
 }
