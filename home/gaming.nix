@@ -1,6 +1,11 @@
 { pkgs, ... }:
 
 {
+  home.packages = with pkgs; [
+    protonplus     # GTK4 GUI manager for downloading custom Proton builds (GE-Proton, Wine-GE, etc.)
+    protontricks   # Winetricks & DLL helper for Steam games
+  ];
+
   programs.mangohud = {
     enable = true;
     settings = {
