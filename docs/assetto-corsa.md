@@ -22,11 +22,11 @@ Assetto Corsa and Content Manager rely on Windows `.NET Framework 4.8`, WPF rend
 
 ---
 
-## 2. Home Manager Integration (`home/gaming.nix`)
+## 2. Flake & Home Manager Integration (`gaming-assetocorsa-fix`)
 
-The configuration in `home/gaming.nix` includes:
-- **`setup-assetto-corsa` CLI Tool**: Automatically checks and performs the executable swap and prefix symlink.
-- **Home Manager Activation Hook**: Automatically runs during `nixos-rebuild switch` / `update` to ensure `AssettoCorsa.exe` is Content Manager and `loginusers.vdf` is symlinked.
+The setup is encapsulated in the `gaming-assetocorsa-fix` sub-flake (`gaming-assetocorsa-fix/flake.nix`):
+- **`setup-assetto-corsa` CLI Tool**: Automatically checks if `Content Manager.exe` is present in the Assetto Corsa folder. If missing, it automatically downloads the latest release directly from `acstuff.ru` and extracts it, then performs the executable swap (backing up original launcher to `AssettoCorsa_original.exe`) and Wine prefix `loginusers.vdf` symlinking.
+- **Home Manager Module (`services.assetto-corsa-fix`)**: Configured in `home/gaming.nix` via `services.assetto-corsa-fix.enable = true;`. Automatically runs during `nixos-rebuild switch` / `home-manager switch`.
 
 ### Running Manually
 You can re-run the setup anytime by running:

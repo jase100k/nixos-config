@@ -145,6 +145,22 @@
         "type": "github"
       }
     },
+    "gaming-assetocorsa-fix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "path": "./gaming-assetocorsa-fix",
+        "type": "path"
+      },
+      "original": {
+        "path": "./gaming-assetocorsa-fix",
+        "type": "path"
+      },
+      "parent": []
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -458,6 +474,7 @@
     "root": {
       "inputs": {
         "antigravity-nix": "antigravity-nix",
+        "gaming-assetocorsa-fix": "gaming-assetocorsa-fix",
         "home-manager": "home-manager",
         "mangowm": "mangowm",
         "millennium": "millennium",

@@ -44,9 +44,15 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
+
+    # Assetto Corsa & Content Manager fix module
+    gaming-assetocorsa-fix = {
+      url = "path:./gaming-assetocorsa-fix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, nix-cachyos-kernel, mangowm, niri, millennium, noctalia, antigravity-nix, home-manager, plasma-manager, ... }@inputs: {
+  outputs = { self, nixpkgs, nix-cachyos-kernel, mangowm, niri, millennium, noctalia, antigravity-nix, home-manager, plasma-manager, gaming-assetocorsa-fix, ... }@inputs: {
     nixosConfigurations.nixos-gaming = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = { inherit inputs; };
@@ -70,6 +76,7 @@
             inputs.plasma-manager.homeModules.plasma-manager
             inputs.mangowm.hmModules.mango
             inputs.niri.homeModules.niri
+            inputs.gaming-assetocorsa-fix.homeManagerModules.default
           ];
           home-manager.users.jason = import ./home;
         }
