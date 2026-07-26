@@ -194,6 +194,7 @@
 
   # Global Gaming & Wayland Environment Variables
   environment.sessionVariables = {
+    STEAM_EXTRA_COMPAT_TOOLS_PATHS = "${pkgs.proton-ge-bin}";
     WINE_NTSYNC = "1";
     PROTON_ENABLE_WAYLAND = "1";
     AMD_VULKAN_ICD = "RADV";                  # High-performance Mesa RADV Vulkan driver
