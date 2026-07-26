@@ -14,6 +14,10 @@
       if [ -d "$AC_DIR" ]; then
         if [ -f "$AC_DIR/Content Manager.exe" ]; then
           if [ ! -f "$AC_DIR/AssettoCorsa.exe" ] || [ $(stat -c%s "$AC_DIR/AssettoCorsa.exe") -ne $(stat -c%s "$AC_DIR/Content Manager.exe") ]; then
+            if [ -f "$AC_DIR/AssettoCorsa.exe" ] && [ ! -f "$AC_DIR/AssettoCorsa_original.exe" ]; then
+              cp "$AC_DIR/AssettoCorsa.exe" "$AC_DIR/AssettoCorsa_original.exe"
+              echo "✓ Backed up original launcher to AssettoCorsa_original.exe"
+            fi
             rm -f "$AC_DIR/AssettoCorsa.exe"
             cp "$AC_DIR/Content Manager.exe" "$AC_DIR/AssettoCorsa.exe"
             chmod 755 "$AC_DIR/AssettoCorsa.exe"
@@ -49,6 +53,9 @@
       PREFIX_DIR="$HOME/.local/share/Steam/steamapps/compatdata/244210/pfx"
       if [ -d "$AC_DIR" ] && [ -f "$AC_DIR/Content Manager.exe" ]; then
         if [ ! -f "$AC_DIR/AssettoCorsa.exe" ] || [ $(stat -c%s "$AC_DIR/AssettoCorsa.exe") -ne $(stat -c%s "$AC_DIR/Content Manager.exe") ]; then
+          if [ -f "$AC_DIR/AssettoCorsa.exe" ] && [ ! -f "$AC_DIR/AssettoCorsa_original.exe" ]; then
+            cp "$AC_DIR/AssettoCorsa.exe" "$AC_DIR/AssettoCorsa_original.exe"
+          fi
           rm -f "$AC_DIR/AssettoCorsa.exe"
           cp "$AC_DIR/Content Manager.exe" "$AC_DIR/AssettoCorsa.exe"
           chmod 755 "$AC_DIR/AssettoCorsa.exe"
