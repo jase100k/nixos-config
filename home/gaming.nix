@@ -30,8 +30,13 @@
 
       if [ -d "$PREFIX_DIR" ]; then
         mkdir -p "$PREFIX_DIR/drive_c/Program Files (x86)/Steam/config/"
-        ln -sf "$HOME/.steam/root/config/loginusers.vdf" "$PREFIX_DIR/drive_c/Program Files (x86)/Steam/config/loginusers.vdf"
-        echo "✓ loginusers.vdf symlinked into Wine prefix"
+        VDF_LINK="$PREFIX_DIR/drive_c/Program Files (x86)/Steam/config/loginusers.vdf"
+        if [ ! -L "$VDF_LINK" ]; then
+          ln -sf "$HOME/.steam/root/config/loginusers.vdf" "$VDF_LINK"
+          echo "✓ loginusers.vdf symlinked into Wine prefix"
+        else
+          echo "✓ loginusers.vdf is already symlinked"
+        fi
       fi
 
       echo "Assetto Corsa Content Manager setup check complete!"
@@ -51,7 +56,10 @@
       fi
       if [ -d "$PREFIX_DIR" ]; then
         mkdir -p "$PREFIX_DIR/drive_c/Program Files (x86)/Steam/config/"
-        ln -sf "$HOME/.steam/root/config/loginusers.vdf" "$PREFIX_DIR/drive_c/Program Files (x86)/Steam/config/loginusers.vdf"
+        VDF_LINK="$PREFIX_DIR/drive_c/Program Files (x86)/Steam/config/loginusers.vdf"
+        if [ ! -L "$VDF_LINK" ]; then
+          ln -sf "$HOME/.steam/root/config/loginusers.vdf" "$VDF_LINK"
+        fi
       fi
     ''}
   '';
