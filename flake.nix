@@ -47,7 +47,7 @@
 
     # Assetto Corsa & Content Manager fix module
     gaming-assetocorsa-fix = {
-      url = "path:./gaming-assetocorsa-fix";
+      url = "path:./pkgs/gaming-assetocorsa-fix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -57,8 +57,7 @@
       system = "x86_64-linux";
       specialArgs = { inherit inputs; };
       modules = [
-        ./configuration.nix
-        ./hardware-configuration.nix
+        ./hosts/nixos-gaming
 
         # MangoWM compositor
         mangowm.nixosModules.mango
@@ -78,7 +77,7 @@
             inputs.niri.homeModules.niri
             inputs.gaming-assetocorsa-fix.homeManagerModules.default
           ];
-          home-manager.users.jason = import ./home;
+          home-manager.users.jason = import ./modules/home;
         }
       ];
     };

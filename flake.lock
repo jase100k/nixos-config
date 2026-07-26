@@ -152,11 +152,11 @@
         ]
       },
       "locked": {
-        "path": "./gaming-assetocorsa-fix",
+        "path": "./pkgs/gaming-assetocorsa-fix",
         "type": "path"
       },
       "original": {
-        "path": "./gaming-assetocorsa-fix",
+        "path": "./pkgs/gaming-assetocorsa-fix",
         "type": "path"
       },
       "parent": []
