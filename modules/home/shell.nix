@@ -42,11 +42,17 @@
       "truenas" = {
         hostname = "192.168.13.22";
         user = "root";
-        identityFile = "~/.ssh/id_ed25519";
+        identityFile = [
+          "~/.ssh/id_ed25519"
+          "~/.ssh/id_ed25519_lan"
+        ];
       };
       "192.168.13.22" = {
         user = "root";
-        identityFile = "~/.ssh/id_ed25519";
+        identityFile = [
+          "~/.ssh/id_ed25519"
+          "~/.ssh/id_ed25519_lan"
+        ];
       };
     };
   };
