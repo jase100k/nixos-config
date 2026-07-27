@@ -49,6 +49,12 @@
       options = [ "nfsvers=4" "nofail" "x-systemd.automount" "x-systemd.idle-timeout=600" "x-systemd.mount-timeout=10s" ];
     };
 
+  fileSystems."/mnt/win_sda3" =
+    { device = "/dev/sda3";
+      fsType = "ntfs3";
+      options = [ "ro" "nofail" "x-systemd.automount" "x-systemd.idle-timeout=600" "x-systemd.mount-timeout=5s" ];
+    };
+
   swapDevices =
     [ { device = "/dev/disk/by-uuid/86a029b1-7a15-4b46-b157-ac57075b3e02"; }
     ];
