@@ -3,6 +3,7 @@
 pkgs.writeShellScriptBin "setup-assetto-corsa" ''
   set -euo pipefail
   export WINEDEBUG="-all"
+  export WINETRICKS_SUPER_QUIET=1
 
   echo "=== 🏎️ Assetto Corsa Linux Setup Tool ==="
 
