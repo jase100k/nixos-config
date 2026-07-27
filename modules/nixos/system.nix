@@ -168,8 +168,6 @@
   # Disable PulseAudio (using PipeWire instead)
   services.pulseaudio.enable = false;
 
-  # NFS client
-  services.nfs-utils.enable = true;
 
   # Printing (CUPS)
   services.printing = {
