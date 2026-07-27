@@ -1,15 +1,6 @@
-{ pkgs, lib, ... }:
+{ pkgs, ... }:
 
 {
-  home.activation.sshConfigPermissions = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    if [ -L "$HOME/.ssh/config" ]; then
-      TARGET=$(readlink -f "$HOME/.ssh/config")
-      $DRY_RUN_CMD rm -f "$HOME/.ssh/config"
-      $DRY_RUN_CMD cp "$TARGET" "$HOME/.ssh/config"
-      $DRY_RUN_CMD chmod 600 "$HOME/.ssh/config"
-    fi
-  '';
-
   home.packages = [
     pkgs.starship
   ];
@@ -43,31 +34,5 @@
     clock24 = true;
     keyMode = "vi";
     terminal = "tmux-256color";
-  };
-
-  programs.ssh = {
-    enable = true;
-    matchBlocks = {
-      "truenas" = {
-        hostname = "192.168.13.22";
-        user = "root";
-        identityFile = [
-          "~/.ssh/id_ed25519_lan"
-          "~/.ssh/id_ed25519"
-        ];
-      };
-      "192.168.13.22" = {
-        user = "root";
-        identityFile = [
-          "~/.ssh/id_ed25519_lan"
-          "~/.ssh/id_ed25519"
-        ];
-      };
-      "github.com" = {
-        hostname = "github.com";
-        user = "git";
-        identityFile = "~/.ssh/id_ed25519";
-      };
-    };
   };
 }
