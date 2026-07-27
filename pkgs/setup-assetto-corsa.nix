@@ -135,7 +135,7 @@ for u_dir in userdata_dirs:
 
   # 8. Automatically configure Steam LaunchOptions for official Assetto Corsa entry (244210)
   echo "⚙️ Configuring Steam LaunchOptions for official Assetto Corsa entry..."
-  LAUNCH_OPTS="WINEDLLOVERRIDES=\"dwrite=n,b;uiautomationcore=b\" bash -c 'exec \"''${@//AssettoCorsa.exe/ContentManager.exe}\"' -- %command%"
+  LAUNCH_OPTS="WINEDLLOVERRIDES=\"dwrite=n,b;uiautomationcore=b\" bash -c 'exec \"\''${@//AssettoCorsa.exe/ContentManager.exe}\"' -- %command%"
   ${pkgs.python3}/bin/python3 -c '
 import os, glob, sys
 
