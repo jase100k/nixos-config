@@ -145,6 +145,10 @@ for u_dir in userdata_dirs:
   cat << 'LAUNCH_EOF'
    WINEDLLOVERRIDES="dwrite=n,b;uiautomationcore=b" bash -c 'exec "''${@//AssettoCorsa.exe/ContentManager.exe}"' -- %command%
 LAUNCH_EOF
+  echo ""
+  echo "📌 3. Content Manager Game Starter Mode (Crucial for Linux):"
+  echo "   In Content Manager: Settings -> Content Manager -> Drive (or General)"
+  echo "   Set 'Game Starter' to -> 'Tricky' (bypasses 'waiting for end of race' loop!)"
   echo "========================================================================="
   echo ""
   echo "✅ Setup complete! Restart Steam to see your new 'AC Content Manager' shortcut."
