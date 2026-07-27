@@ -43,6 +43,12 @@
       options = [ "subvol=@steam" "compress=zstd" "ssd" "discard=async" "nofail" "x-systemd.device-timeout=5s" ];
     };
 
+  fileSystems."/mnt/nas" =
+    { device = "192.168.13.22:/mnt/nfspool/ProxmoxTrueNAS/nfsshare";
+      fsType = "nfs";
+      options = [ "nfsvers=4" "nofail" "x-systemd.automount" "x-systemd.idle-timeout=600" "x-systemd.mount-timeout=10s" ];
+    };
+
   swapDevices =
     [ { device = "/dev/disk/by-uuid/86a029b1-7a15-4b46-b157-ac57075b3e02"; }
     ];
