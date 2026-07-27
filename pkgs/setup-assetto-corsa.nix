@@ -133,58 +133,19 @@ for u_dir in userdata_dirs:
     print(f"✓ Successfully generated AC Content Manager shortcut in {vdf_file}")
 ' "$AC_DIR" "$STEAMAPPS_DIR"
 
-  # 8. Automatically configure Steam LaunchOptions for official Assetto Corsa entry (244210)
-  echo "⚙️ Configuring Steam LaunchOptions for official Assetto Corsa entry..."
-  LAUNCH_OPTS="WINEDLLOVERRIDES=\"dwrite=n,b;uiautomationcore=b\" bash -c 'exec \"\''${@//AssettoCorsa.exe/ContentManager.exe}\"' -- %command%"
-  ${pkgs.python3}/bin/python3 -c '
-import os, glob, sys
-
-target_launch = sys.argv[1]
-
-vdf_files = set(glob.glob(os.path.expanduser("~/.local/share/Steam/userdata/*/config/localconfig.vdf")) +
-                glob.glob(os.path.expanduser("~/.steam/root/userdata/*/config/localconfig.vdf")))
-
-for fpath in vdf_files:
-    if not os.path.exists(fpath):
-        continue
-    with open(fpath, "r", encoding="utf-8", errors="ignore") as fp:
-        lines = fp.readlines()
-    
-    in_244210 = False
-    has_launch = False
-    modified = False
-    
-    for i, line in enumerate(lines):
-        if "\"244210\"" in line:
-            in_244210 = True
-            continue
-        if in_244210:
-            if "\"LaunchOptions\"" in line:
-                has_launch = True
-                if target_launch not in line:
-                    lines[i] = f"\t\t\t\t\t\"LaunchOptions\"\t\t\"{target_launch}\"\n"
-                    modified = True
-                break
-            if line.strip() == "}":
-                if not has_launch:
-                    lines.insert(i, f"\t\t\t\t\t\"LaunchOptions\"\t\t\"{target_launch}\"\n")
-                    modified = True
-                break
-    
-    if modified:
-        with open(fpath, "w", encoding="utf-8") as fp:
-            fp.writelines(lines)
-        print(f"✓ Steam LaunchOptions for Assetto Corsa (244210) updated in {fpath}")
-    else:
-        print(f"✓ Steam LaunchOptions for Assetto Corsa (244210) already up to date in {fpath}")
-' "$LAUNCH_OPTS"
-
-  # 9. Dynamically format Windows path for Content Manager prompt
+  # 8. Dynamically format Windows path and display copy-paste Steam launch options
   WIN_AC_PATH="Z:$(echo "$AC_DIR" | sed 's|/|\\|g')"
 
   echo ""
-  echo "📌 If Content Manager asks for the Assetto Corsa root directory, paste this exact Windows path:"
+  echo "========================================================================="
+  echo "📌 1. If Content Manager asks for the Assetto Corsa root directory, paste:"
   echo "   $WIN_AC_PATH"
   echo ""
-  echo "✅ Setup complete! Restart Steam to see your configured launch options and shortcuts."
+  echo "📌 2. Official Steam Launch Options (Properties -> General -> Launch Options):"
+  cat << 'LAUNCH_EOF'
+   WINEDLLOVERRIDES="dwrite=n,b;uiautomationcore=b" bash -c 'exec "''${@//AssettoCorsa.exe/ContentManager.exe}"' -- %command%
+LAUNCH_EOF
+  echo "========================================================================="
+  echo ""
+  echo "✅ Setup complete! Restart Steam to see your new 'AC Content Manager' shortcut."
 ''
