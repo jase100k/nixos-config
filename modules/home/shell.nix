@@ -1,6 +1,15 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
+  home.activation.sshConfigPermissions = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    if [ -L "$HOME/.ssh/config" ]; then
+      TARGET=$(readlink -f "$HOME/.ssh/config")
+      $DRY_RUN_CMD rm -f "$HOME/.ssh/config"
+      $DRY_RUN_CMD cp "$TARGET" "$HOME/.ssh/config"
+      $DRY_RUN_CMD chmod 600 "$HOME/.ssh/config"
+    fi
+  '';
+
   home.packages = [
     pkgs.starship
   ];
