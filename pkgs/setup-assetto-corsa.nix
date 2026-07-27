@@ -76,59 +76,60 @@ pkgs.writeShellScriptBin "setup-assetto-corsa" ''
 
   # 7. Generate Non-Steam Shortcut in Steam's shortcuts.vdf automatically
   echo "🎮 Managing Steam Non-Steam Shortcut..."
-  ${pkgs.python3}/bin/python3 -c "
-import os, glob, struct
+  ${pkgs.python3}/bin/python3 -c '
+import os, glob, struct, sys
 
-ac_dir = '''$AC_DIR'''
-compat_dir = '''$STEAMAPPS_DIR/compatdata/244210'''
-exe_path = os.path.join(ac_dir, 'ContentManager.exe')
-launch_opts = f'STEAM_COMPAT_DATA_PATH=\"{compat_dir}\" STEAM_COMPAT_APP_ID=244210 WINEDLLOVERRIDES=\"dwrite=n,b;uiautomationcore=b\" %command%'
+ac_dir = sys.argv[1]
+steamapps_dir = sys.argv[2]
+compat_dir = f"{steamapps_dir}/compatdata/244210"
+exe_path = os.path.join(ac_dir, "ContentManager.exe")
+launch_opts = f"STEAM_COMPAT_DATA_PATH=\"{compat_dir}\" STEAM_COMPAT_APP_ID=244210 WINEDLLOVERRIDES=\"dwrite=n,b;uiautomationcore=b\" %command%"
 
 def make_shortcut(idx):
     b = bytearray()
-    b.extend(b'\x00' + str(idx).encode('utf-8') + b'\x00')
+    b.extend(b"\x00" + str(idx).encode("utf-8") + b"\x00")
     for k, v in [
-        ('AppName', 'AC Content Manager'),
-        ('Exe', f'\"{exe_path}\"'),
-        ('StartDir', f'{ac_dir}/'),
-        ('icon', ''),
-        ('ShortcutPath', ''),
-        ('LaunchOptions', launch_opts)
+        ("AppName", "AC Content Manager"),
+        ("Exe", f"\"{exe_path}\""),
+        ("StartDir", f"{ac_dir}/"),
+        ("icon", ""),
+        ("ShortcutPath", ""),
+        ("LaunchOptions", launch_opts)
     ]:
-        b.extend(b'\x01' + k.encode('utf-8') + b'\x00' + v.encode('utf-8') + b'\x00')
-    for k, v in [('IsHidden', 0), ('AllowDesktopConfig', 1), ('AllowOverlay', 1), ('OpenVR', 0), ('Devkit', 0)]:
-        b.extend(b'\x02' + k.encode('utf-8') + b'\x00' + struct.pack('<I', v))
-    b.extend(b'\x01' + b'DevkitGameID\x00\x00')
-    b.extend(b'\x02' + b'DevkitOverrideAppID\x00' + struct.pack('<I', 0))
-    b.extend(b'\x02' + b'LastPlayTime\x00' + struct.pack('<I', 0))
-    b.extend(b'\x01' + b'FlatpakAppID\x00\x00')
-    b.extend(b'\x00tags\x00\x08\x08')
+        b.extend(b"\x01" + k.encode("utf-8") + b"\x00" + v.encode("utf-8") + b"\x00")
+    for k, v in [("IsHidden", 0), ("AllowDesktopConfig", 1), ("AllowOverlay", 1), ("OpenVR", 0), ("Devkit", 0)]:
+        b.extend(b"\x02" + k.encode("utf-8") + b"\x00" + struct.pack("<I", v))
+    b.extend(b"\x01" + b"DevkitGameID\x00\x00")
+    b.extend(b"\x02" + b"DevkitOverrideAppID\x00" + struct.pack("<I", 0))
+    b.extend(b"\x02" + b"LastPlayTime\x00" + struct.pack("<I", 0))
+    b.extend(b"\x01" + b"FlatpakAppID\x00\x00")
+    b.extend(b"\x00tags\x00\x08\x08")
     return bytes(b)
 
-userdata_dirs = set(glob.glob(os.path.expanduser('~/.local/share/Steam/userdata/*/config')) +
-                    glob.glob(os.path.expanduser('~/.steam/root/userdata/*/config')))
+userdata_dirs = set(glob.glob(os.path.expanduser("~/.local/share/Steam/userdata/*/config")) +
+                    glob.glob(os.path.expanduser("~/.steam/root/userdata/*/config")))
 
 for u_dir in userdata_dirs:
-    vdf_file = os.path.join(u_dir, 'shortcuts.vdf')
+    vdf_file = os.path.join(u_dir, "shortcuts.vdf")
     os.makedirs(u_dir, exist_ok=True)
     if os.path.exists(vdf_file):
-        with open(vdf_file, 'rb') as f:
+        with open(vdf_file, "rb") as f:
             data = f.read()
-        if b'Content Manager' in data or b'ContentManager' in data:
-            print(f'✓ Non-Steam shortcut already present in {vdf_file}')
+        if b"Content Manager" in data or b"ContentManager" in data:
+            print(f"✓ Non-Steam shortcut already present in {vdf_file}")
             continue
     else:
-        data = b'\x00shortcuts\x00\x08\x08'
+        data = b"\x00shortcuts\x00\x08\x08"
     
-    insert_pos = data.rfind(b'\x08')
+    insert_pos = data.rfind(b"\x08")
     if insert_pos == -1:
         insert_pos = len(data)
     
     new_data = data[:insert_pos] + make_shortcut(0) + data[insert_pos:]
-    with open(vdf_file, 'wb') as f:
+    with open(vdf_file, "wb") as f:
         f.write(new_data)
-    print(f'✓ Successfully generated AC Content Manager shortcut in {vdf_file}')
-"
+    print(f"✓ Successfully generated AC Content Manager shortcut in {vdf_file}")
+' "$AC_DIR" "$STEAMAPPS_DIR"
 
   # 8. Dynamically format Windows path for Content Manager prompt
   WIN_AC_PATH="Z:$(echo "$AC_DIR" | sed 's|/|\\|g')"
