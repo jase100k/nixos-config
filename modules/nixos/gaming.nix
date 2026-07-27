@@ -50,12 +50,12 @@
 
   # Simsonn Pedals (ddfd:6011 & ddfd vendor) udev rules for input & hidraw access
   services.udev.extraRules = ''
-    # Simsonn Pedals HID & Input permissions
+    # Simsonn Pedals HID & Input permissions and joystick classification
     SUBSYSTEM=="hidraw", ATTRS{idVendor}=="ddfd", MODE="0666", TAG+="uaccess"
     SUBSYSTEM=="usb", ATTRS{idVendor}=="ddfd", MODE="0666", TAG+="uaccess"
-    SUBSYSTEM=="input", ATTRS{idVendor}=="ddfd", MODE="0666", TAG+="uaccess"
-    KERNEL=="event*", ATTRS{idVendor}=="ddfd", MODE="0666", TAG+="uaccess"
-    KERNEL=="js*", ATTRS{idVendor}=="ddfd", MODE="0666", TAG+="uaccess"
+    SUBSYSTEM=="input", ATTRS{idVendor}=="ddfd", ENV{ID_INPUT_JOYSTICK}="1", ENV{ID_INPUT_ACCELEROMETER}="0", MODE="0666", TAG+="uaccess"
+    KERNEL=="event*", ATTRS{idVendor}=="ddfd", ENV{ID_INPUT_JOYSTICK}="1", ENV{ID_INPUT_ACCELEROMETER}="0", MODE="0666", TAG+="uaccess"
+    KERNEL=="js*", ATTRS{idVendor}=="ddfd", ENV{ID_INPUT_JOYSTICK}="1", ENV{ID_INPUT_ACCELEROMETER}="0", MODE="0666", TAG+="uaccess"
   '';
 
   # AMD GPU & NTSYNC Kernel Module (Fast Wine/Proton Sync)
