@@ -3,6 +3,7 @@
 {
   home.packages = [
     pkgs.starship
+    pkgs.openssh
   ];
 
   programs.zsh = {
