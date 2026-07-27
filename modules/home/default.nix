@@ -9,6 +9,7 @@
     ./browsers.nix
     ./messaging.nix
     ./gaming.nix
+    ./backup.nix
     ./wm
     ./desktop
   ];
