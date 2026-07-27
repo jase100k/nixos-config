@@ -9,7 +9,7 @@ pkgs.writeShellScriptBin "setup-assetto-corsa" ''
 
   echo "=== 🏎️ Assetto Corsa Linux Setup Tool ==="
 
-  # 1. Download Content Manager if missing
+  # 1. Download Content Manager if missing & create no-space executable link
   if [ -d "$AC_DIR" ]; then
     if [ ! -f "$AC_DIR/Content Manager.exe" ]; then
       echo "⬇️ Downloading latest Content Manager.exe..."
@@ -18,6 +18,10 @@ pkgs.writeShellScriptBin "setup-assetto-corsa" ''
       ${pkgs.unzip}/bin/unzip -o -q "$TMP_ZIP" "Content Manager.exe" -d "$AC_DIR"
       rm -f "$TMP_ZIP"
       echo "✓ Content Manager downloaded."
+    fi
+    if [ -f "$AC_DIR/Content Manager.exe" ] && [ ! -f "$AC_DIR/ContentManager.exe" ]; then
+      cp "$AC_DIR/Content Manager.exe" "$AC_DIR/ContentManager.exe"
+      echo "✓ Created ContentManager.exe (no space) executable."
     fi
   else
     echo "⚠️ Assetto Corsa directory not found at $AC_DIR"
@@ -50,5 +54,10 @@ pkgs.writeShellScriptBin "setup-assetto-corsa" ''
     echo "✓ Steam loginusers.vdf symlinked into Wine prefix."
   fi
 
+  # 5. Output Content Manager Game Directory for initial setup prompt
+  echo ""
+  echo "📌 If Content Manager asks for the Assetto Corsa root directory, paste this exact Windows path:"
+  echo "   Z:\\home\\$USER\\.local\\share\\Steam\\steamapps\\common\\assettocorsa"
+  echo ""
   echo "✅ Setup complete! Launch Content Manager using your Non-Steam shortcut."
 ''
