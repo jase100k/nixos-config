@@ -35,4 +35,19 @@
     keyMode = "vi";
     terminal = "tmux-256color";
   };
+
+  programs.ssh = {
+    enable = true;
+    matchBlocks = {
+      "truenas" = {
+        hostname = "192.168.13.22";
+        user = "root";
+        identityFile = "~/.ssh/id_ed25519";
+      };
+      "192.168.13.22" = {
+        user = "root";
+        identityFile = "~/.ssh/id_ed25519";
+      };
+    };
+  };
 }
