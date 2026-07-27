@@ -6,7 +6,7 @@
     inputs.millennium.overlays.default
   ];
 
-  # Gaming packages
+  # Gaming packages & input utilities
   environment.systemPackages = with pkgs; [
     steam-run
     steam-tui
@@ -18,6 +18,9 @@
     retroarch
     goverlay
     lact # Linux AMDGPU Controller (GPU monitoring, fan control, power cap)
+    evtest # Input event viewer for joysticks/pedals
+    jstest-gtk # GUI joystick & pedal tester/calibrator
+    oversteer # Steering wheel & pedal configuration tool
   ];
 
   # Gaming optimizations (Millennium-Enhanced Steam)
@@ -44,6 +47,16 @@
 
   # Steam hardware (controllers, Index, etc.)
   hardware.steam-hardware.enable = true;
+
+  # Simsonn Pedals (ddfd:6011 & ddfd vendor) udev rules for input & hidraw access
+  services.udev.extraRules = ''
+    # Simsonn Pedals HID & Input permissions
+    SUBSYSTEM=="hidraw", ATTRS{idVendor}=="ddfd", MODE="0666", TAG+="uaccess"
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="ddfd", MODE="0666", TAG+="uaccess"
+    SUBSYSTEM=="input", ATTRS{idVendor}=="ddfd", MODE="0666", TAG+="uaccess"
+    KERNEL=="event*", ATTRS{idVendor}=="ddfd", MODE="0666", TAG+="uaccess"
+    KERNEL=="js*", ATTRS{idVendor}=="ddfd", MODE="0666", TAG+="uaccess"
+  '';
 
   # AMD GPU & NTSYNC Kernel Module (Fast Wine/Proton Sync)
   boot.initrd.kernelModules = [ "amdgpu" ];

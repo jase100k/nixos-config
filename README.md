@@ -23,7 +23,8 @@ A modular, reproducible, high-performance NixOS configuration optimized for gami
   - **Niri**: Dynamic scrollable tiling Wayland compositor.
   - **KDE Plasma 6**: Fully declarative desktop setup via `plasma-manager`.
   - **Noctalia v5**: Modern desktop shell (status bar, launcher, notifications, dynamic pywalfox browser theming).
-- **Automated Fixes & Utilities**:
+- **Automated Fixes & Hardware Support**:
+  - **Simsonn Pedals (`ddfd:6011`)**: Pre-configured `udev` rules granting user-level `hidraw` and `input` event permissions, plus input test utilities (`evtest`, `jstest-gtk`, `oversteer`).
   - `gaming-assetocorsa-fix`: Custom sub-flake & Home Manager service (`setup-assetto-corsa`) that auto-downloads Content Manager, sets up executable replacement, and creates Wine prefix symlinks for Steam integration.
 
 ---

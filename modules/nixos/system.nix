@@ -104,6 +104,9 @@
     gnumake
     cmake
 
+    # NFS utilities
+    nfs-utils
+
     # Misc
     fastfetch
 
@@ -164,6 +167,9 @@
 
   # Disable PulseAudio (using PipeWire instead)
   services.pulseaudio.enable = false;
+
+  # NFS client
+  services.nfs-utils.enable = true;
 
   # Printing (CUPS)
   services.printing = {
