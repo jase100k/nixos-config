@@ -6,6 +6,7 @@
 
   home.packages = with pkgs; [
     (callPackage ../../pkgs/setup-assetto-corsa.nix {}) # On-demand CLI setup tool for Assetto Corsa & Content Manager
+    (callPackage ../../pkgs/setup-bakkesmod.nix {})     # On-demand CLI setup tool for Rocket League & BakkesMod
     protonplus     # GTK4 GUI manager for downloading custom Proton builds (GE-Proton, Wine-GE, etc.)
     protontricks   # Winetricks & DLL helper for Steam games
   ];
