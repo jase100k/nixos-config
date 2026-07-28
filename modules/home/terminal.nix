@@ -50,6 +50,10 @@
         };
         size = 11.0;
       };
+      scrolling = {
+        history = 10000;
+        multiplier = 3;
+      };
     };
   };
 
