@@ -54,6 +54,18 @@
         history = 10000;
         multiplier = 3;
       };
+      keyboard.bindings = [
+        { key = "PageUp"; mods = "Shift"; action = "ScrollPageUp"; }
+        { key = "PageDown"; mods = "Shift"; action = "ScrollPageDown"; }
+        { key = "Up"; mods = "Shift"; action = "ScrollLineUp"; }
+        { key = "Down"; mods = "Shift"; action = "ScrollLineDown"; }
+        { key = "Home"; mods = "Shift"; action = "ScrollToTop"; }
+        { key = "End"; mods = "Shift"; action = "ScrollToBottom"; }
+        { key = "Up"; mods = "Control|Shift"; action = "ScrollLineUp"; }
+        { key = "Down"; mods = "Control|Shift"; action = "ScrollLineDown"; }
+        { key = "PageUp"; mods = "Control|Shift"; action = "ScrollPageUp"; }
+        { key = "PageDown"; mods = "Control|Shift"; action = "ScrollPageDown"; }
+      ];
     };
   };
 
