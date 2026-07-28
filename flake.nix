@@ -57,6 +57,7 @@
       system = "x86_64-linux";
       specialArgs = { inherit inputs; };
       modules = [
+        { disabledModules = [ "programs/wayland/mango.nix" ]; }
         ./hosts/nixos-gaming
 
         # MangoWM compositor
