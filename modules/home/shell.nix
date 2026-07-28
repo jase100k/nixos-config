@@ -32,6 +32,7 @@
 
   programs.tmux = {
     enable = true;
+    mouse = true;
     clock24 = true;
     keyMode = "vi";
     terminal = "tmux-256color";
