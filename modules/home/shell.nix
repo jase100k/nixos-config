@@ -4,6 +4,8 @@
   home.packages = [
     pkgs.starship
     pkgs.openssh
+    pkgs.yazi
+    pkgs.orca-slicer
   ];
 
   programs.zsh = {
@@ -13,6 +15,16 @@
     syntaxHighlighting.enable = true;
     initContent = ''
       eval "$(starship init zsh)"
+
+      # Shell wrapper to CD into current directory when exiting Yazi with 'q'
+      function yy() {
+        local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+        yazi "$@" --cwd-file="$tmp"
+        if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+          builtin cd -- "$cwd"
+        fi
+        rm -f -- "$tmp"
+      }
     '';
 
     shellAliases = {
@@ -22,6 +34,7 @@
       cleanup = "nix-collect-garbage -d";
       search = "nix search nixpkgs";
       nixcommit = "sudo git -C /etc/nixos add -A && sudo git -C /etc/nixos commit";
+      orca-slicer = "GTK_THEME=Adwaita:dark orca-slicer";
     };
 
     oh-my-zsh = {

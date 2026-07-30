@@ -37,22 +37,10 @@
       options = [ "fmask=0077" "dmask=0077" ];
     };
 
-  fileSystems."/mnt/steam" =
-    { device = "/dev/disk/by-uuid/80054438-f6c7-4863-ae35-2313cb084c43";
+  fileSystems."/mnt/data" =
+    { device = "/dev/disk/by-uuid/21612913-b1a8-4b16-8eb6-9fd822535c77";
       fsType = "btrfs";
-      options = [ "subvol=@steam" "compress=zstd" "ssd" "discard=async" "nofail" "x-systemd.device-timeout=5s" ];
-    };
-
-  fileSystems."/mnt/nas" =
-    { device = "192.168.13.22:/mnt/nfspool/ProxmoxTrueNAS/nfsshare";
-      fsType = "nfs";
-      options = [ "nfsvers=4" "nofail" "x-systemd.automount" "x-systemd.idle-timeout=600" "x-systemd.mount-timeout=10s" ];
-    };
-
-  fileSystems."/mnt/win_sda3" =
-    { device = "/dev/sda3";
-      fsType = "ntfs3";
-      options = [ "ro" "nofail" "x-systemd.automount" "x-systemd.idle-timeout=600" "x-systemd.mount-timeout=5s" ];
+      options = [ "subvol=@data" "compress=zstd" "ssd" "discard=async" "noatime" "nofail" ];
     };
 
   swapDevices =
