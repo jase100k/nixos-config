@@ -18,19 +18,28 @@
       ExecStart = pkgs.writeShellScript "run-borg-backup" ''
         set -euo pipefail
 
+        # Allow Borg to operate cleanly if mount path was relocated (e.g. /mnt/data -> /mnt/nas)
+        export BORG_RELOCATED_REPO_ACCESS_IS_OK=1
+        export BORG_UNKNOWN_UNENCRYPTED_REPO_ACCESS_IS_OK=1
+
         REPO="/mnt/nas/backup/jason/borg-repo"
         EXCLUDES="$HOME/.config/borg/excludes"
 
-        # Check if NAS mount is accessible
-        if [ ! -d "/mnt/nas/backup" ]; then
-          echo "⚠️ /mnt/nas is not mounted! Skipping backup."
+        # Check if NAS repository path is mounted and accessible
+        if [ ! -d "$REPO" ]; then
+          echo "⚠️ Borg repository ($REPO) is not accessible! Skipping backup."
           exit 0
+        fi
+
+        EXCLUDE_ARGS=()
+        if [ -f "$EXCLUDES" ]; then
+          EXCLUDE_ARGS+=(--exclude-from "$EXCLUDES")
         fi
 
         echo "🚀 Starting Borg Nightly Backup..."
         ${pkgs.borgbackup}/bin/borg create \
           --stats \
-          --exclude-from "$EXCLUDES" \
+          "''${EXCLUDE_ARGS[@]}" \
           --exclude-if-present .nobackup \
           --exclude-caches \
           "$REPO::{now}" "$HOME"

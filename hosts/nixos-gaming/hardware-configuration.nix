@@ -37,12 +37,13 @@
       options = [ "fmask=0077" "dmask=0077" ];
     };
 
-  fileSystems."/mnt/data" =
+  fileSystems."/mnt/nas" =
     { device = "/dev/disk/by-uuid/21612913-b1a8-4b16-8eb6-9fd822535c77";
       fsType = "btrfs";
       options = [ "subvol=@data" "compress=zstd" "ssd" "discard=async" "noatime" "nofail" ];
     };
 
+  
   swapDevices =
     [ { device = "/dev/disk/by-uuid/86a029b1-7a15-4b46-b157-ac57075b3e02"; }
     ];
