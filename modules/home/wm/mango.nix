@@ -1,6 +1,13 @@
 { pkgs, ... }:
 
+let
+  mango-cheatsheet = pkgs.writeShellScriptBin "mango-cheatsheet" ''
+    printf "SUPER+Return: Terminal\nSUPER+Space: App Launcher\nSUPER+Q: Close Window\nSUPER+R: Reload Config\nSUPER+D: Noctalia Launcher\nSUPER+S: Control Center\nSUPER+Comma: Settings\nSUPER+F: Fullscreen\nSUPER+Backslash: Toggle Floating\nSUPER+H/J/K/L: Focus Window\nSUPER+1..5: Switch Tag" | ${pkgs.fuzzel}/bin/fuzzel --dmenu -p "Keybindings: " -w 50
+  '';
+in
 {
+  home.packages = [ mango-cheatsheet ];
+
   wayland.windowManager.mango = {
     enable = true;
 
@@ -63,7 +70,7 @@
         "SUPER,r,reload_config"
 
         # Keybindings Cheatsheet Launcher (SUPER + /)
-        "SUPER,slash,spawn_shell,printf 'SUPER+Return: Terminal\\nSUPER+Space: App Launcher\\nSUPER+Q: Close Window\\nSUPER+R: Reload Config\\nSUPER+D: Noctalia Launcher\\nSUPER+S: Control Center\\nSUPER+Comma: Settings\\nSUPER+F: Fullscreen\\nSUPER+Backslash: Toggle Floating\\nSUPER+H/J/K/L: Focus Window\\nSUPER+1..5: Switch Tag' | fuzzel --dmenu -p \"Keybindings: \" -w 50"
+        "SUPER,slash,spawn,mango-cheatsheet"
 
         # Noctalia IPC Binds
         "SUPER,d,spawn,noctalia msg panel-toggle launcher"
