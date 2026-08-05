@@ -70,7 +70,7 @@ in
         "SUPER,r,reload_config"
 
         # Keybindings Cheatsheet Launcher (SUPER + /)
-        "SUPER,slash,spawn,mango-cheatsheet"
+        "SUPER,slash,spawn,${mango-cheatsheet}/bin/mango-cheatsheet"
 
         # Noctalia IPC Binds
         "SUPER,d,spawn,noctalia msg panel-toggle launcher"
