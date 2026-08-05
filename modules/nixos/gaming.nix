@@ -21,6 +21,7 @@
     evtest # Input event viewer for joysticks/pedals
     jstest-gtk # GUI joystick & pedal tester/calibrator
     oversteer # Steering wheel & pedal configuration tool
+    moonlight-qt # Moonlight client
   ];
 
   # Gaming optimizations (Millennium-Enhanced Steam)
@@ -96,4 +97,15 @@
       { from = 27000; to = 27100; }
     ];
   };
+
+  # Sunshine game streaming host
+  services.sunshine = {
+    enable = true;
+    autoStart = true;
+    capSysAdmin = true; # Required for KMS capture / Wayland
+    openFirewall = true; # Open ports in firewall (TCP 47984, 47989, 48010; UDP 47998-48000, 48002, 48010)
+  };
+
+  # Enable uinput module for virtual input emulation
+  hardware.uinput.enable = true;
 }

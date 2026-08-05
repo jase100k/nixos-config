@@ -59,7 +59,7 @@
   users.users.jason = {
     isNormalUser = true;
     description = "Jason";
-    extraGroups = [ "networkmanager" "wheel" "gamemode" "video" "input" "libvirtd" "dialout" ];
+    extraGroups = [ "networkmanager" "wheel" "gamemode" "video" "input" "libvirtd" "dialout" "uinput" ];
     shell = pkgs.zsh;
   };
 
