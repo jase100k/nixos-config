@@ -63,7 +63,7 @@
         "SUPER,r,reload_config"
 
         # Keybindings Cheatsheet Launcher (SUPER + /)
-        "SUPER,slash,spawn_shell,echo -e 'SUPER+Return: Terminal\\nSUPER+Space: App Launcher\\nSUPER+Q: Close Window\\nSUPER+R: Reload Config\\nSUPER+D: Noctalia Launcher\\nSUPER+S: Control Center\\nSUPER+Comma: Noctalia Settings\\nSUPER+F: Fullscreen\\nSUPER+Backslash: Toggle Floating\\nSUPER+H/J/K/L: Focus Window\\nSUPER+SHIFT+H/J/K/L: Move Window\\nSUPER+1..5: Switch Tag\\nSUPER+SHIFT+1..5: Move to Tag\\nSUPER+SHIFT+S: Screenshot' | fuzzel --dmenu -p \"Keybindings: \" -w 50"
+        "SUPER,slash,spawn_shell,printf 'SUPER+Return: Terminal\\nSUPER+Space: App Launcher\\nSUPER+Q: Close Window\\nSUPER+R: Reload Config\\nSUPER+D: Noctalia Launcher\\nSUPER+S: Control Center\\nSUPER+Comma: Settings\\nSUPER+F: Fullscreen\\nSUPER+Backslash: Toggle Floating\\nSUPER+H/J/K/L: Focus Window\\nSUPER+1..5: Switch Tag' | fuzzel --dmenu -p \"Keybindings: \" -w 50"
 
         # Noctalia IPC Binds
         "SUPER,d,spawn,noctalia msg panel-toggle launcher"
@@ -80,7 +80,7 @@
         "SUPER,l,focusdir,right"
         "SUPER,j,focusdir,down"
         "SUPER,k,focusdir,up"
-        "SUPER,Tab,focusstack,next"
+        "ALT,Tab,focusstack,next"
         "SUPER,u,focuslast"
 
         # Swap Window (Vim keys)
