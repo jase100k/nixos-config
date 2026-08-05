@@ -3,13 +3,22 @@
 {
   wayland.windowManager.mango = {
     enable = true;
+
+    # Auto-load Noctalia's dynamically generated theme file
+    extraConfig = ''
+      include ~/.config/mango/noctalia.conf
+    '';
+
+    # Clean autostart without brittle sleep delays
     autostart_sh = ''
       noctalia &
-      sleep 1 && alacritty &
-      sleep 2 && floorp &
-      sleep 3 && steam &
     '';
+
     settings = {
+      # Window Aesthetics & Layout
+      border_width = 2;
+      corner_radius = 8;
+
       # Blur (let Noctalia handle layer effects)
       blur = 1;
       blur_layer = 0;
@@ -24,12 +33,11 @@
       # Shadows (let Noctalia handle layer shadows)
       shadows = 1;
       layer_shadows = 0;
-      shadow_only_floating = 0;
+      shadow_only_floating = 1;
       shadows_size = 4;
       shadows_blur = 12;
       shadows_position_x = 2;
       shadows_position_y = 2;
-      shadowscolor = "0x000000ff";
 
       # Tags
       tagrule = [
@@ -45,126 +53,135 @@
         "name:DP-2,width:3440,height:1440,refresh:144,x:0,y:0,scale:1,vrr:1"
       ];
 
-      # Keybindings
+      # Keybindings (Unified on SUPER modifier to avoid app shortcut conflicts)
       bind = [
-        # Core
-        "ALT,Return,spawn,alacritty"
-        "ALT,space,spawn,fuzzel"
-        "ALT,Q,killclient"
+        # Core Launchers & App Control
+        "SUPER,Return,spawn,alacritty"
+        "SUPER,space,spawn,fuzzel"
+        "SUPER,Q,killclient"
         "SUPER,M,quit"
-        "ALT,r,reload_config"
+        "SUPER,r,reload_config"
 
-        # Noctalia IPC binds
-        "SUPER,space,spawn,noctalia msg panel-toggle launcher"
+        # Keybindings Cheatsheet Launcher (SUPER + /)
+        "SUPER,slash,spawn_shell,echo -e 'SUPER+Return\tLaunch Terminal (Alacritty)\nSUPER+Space\tApp Launcher (Fuzzel)\nSUPER+Q\tClose Window\nSUPER+R\tReload MangoWM Config\nSUPER+D\tNoctalia App Launcher\nSUPER+S\tNoctalia Control Center\nSUPER+Comma\tNoctalia Settings\nSUPER+F\tToggle Fullscreen\nSUPER+Backslash\tToggle Floating\nSUPER+H/J/K/L\tFocus Left / Down / Up / Right\nSUPER+SHIFT+H/J/K/L\tSwap Window Left / Down / Up / Right\nSUPER+1..5\tSwitch to Tag 1..5\nSUPER+SHIFT+1..5\tMove Window to Tag 1..5\nSUPER+SHIFT+S\tScreenshot Area (Satty)' | fuzzel --dmenu -p \"Keybindings: \" -w 60"
+
+        # Noctalia IPC Binds
+        "SUPER,d,spawn,noctalia msg panel-toggle launcher"
         "SUPER,s,spawn,noctalia msg panel-toggle control-center"
         "SUPER,comma,spawn,noctalia msg settings-toggle"
 
-        # Media keys
+        # Media Keys
         "NONE,XF86AudioRaiseVolume,spawn,wpctl set-volume @DEFAULT_SINK@ 5%+"
         "NONE,XF86AudioLowerVolume,spawn,wpctl set-volume @DEFAULT_SINK@ 5%-"
         "NONE,XF86AudioMute,spawn,wpctl set-mute @DEFAULT_SINK@ toggle"
 
-        # Focus (vim-style)
-        "ALT,h,focusdir,left"
-        "ALT,l,focusdir,right"
-        "ALT,j,focusdir,down"
-        "ALT,k,focusdir,up"
+        # Focus (Vim keys)
+        "SUPER,h,focusdir,left"
+        "SUPER,l,focusdir,right"
+        "SUPER,j,focusdir,down"
+        "SUPER,k,focusdir,up"
         "SUPER,Tab,focusstack,next"
         "SUPER,u,focuslast"
 
-        # Swap window (vim-style)
+        # Swap Window (Vim keys)
         "SUPER+SHIFT,h,exchange_client,left"
         "SUPER+SHIFT,l,exchange_client,right"
         "SUPER+SHIFT,j,exchange_client,down"
         "SUPER+SHIFT,k,exchange_client,up"
 
-        # Move floating window (vim-style)
+        # Move Floating Window
         "CTRL+SHIFT,h,movewin,-50,+0"
         "CTRL+SHIFT,l,movewin,+50,+0"
         "CTRL+SHIFT,j,movewin,+0,+50"
         "CTRL+SHIFT,k,movewin,+0,-50"
 
-        # Resize floating window (vim-style)
+        # Resize Floating Window
         "CTRL+ALT,h,resizewin,-50,+0"
         "CTRL+ALT,l,resizewin,+50,+0"
         "CTRL+ALT,j,resizewin,+0,+50"
         "CTRL+ALT,k,resizewin,+0,-50"
 
-        # Window states
-        "ALT,f,togglefullscreen"
-        "ALT,a,togglemaximizescreen"
-        "ALT,backslash,togglefloating"
-        "ALT+SHIFT,f,togglefakefullscreen"
+        # Window States
+        "SUPER,f,togglefullscreen"
+        "SUPER,a,togglemaximizescreen"
+        "SUPER,backslash,togglefloating"
+        "SUPER+SHIFT,f,togglefakefullscreen"
         "SUPER,g,toggleglobal"
         "SUPER,i,minimized"
         "SUPER+SHIFT,I,restore_minimized"
         "SUPER,o,toggleoverlay"
-        "ALT,z,toggle_scratchpad"
-        "ALT,Tab,toggleoverview"
+        "SUPER,z,toggle_scratchpad"
+        "SUPER,Tab,toggleoverview"
 
-        # Tag switching
+        # Tag Switching (SUPER + 1..5)
+        "SUPER,1,view,1"
+        "SUPER,2,view,2"
+        "SUPER,3,view,3"
+        "SUPER,4,view,4"
+        "SUPER,5,view,5"
         "SUPER,Left,viewtoleft"
         "SUPER,Right,viewtoright"
-        "CTRL,Left,viewtoleft_have_client"
-        "CTRL,Right,viewtoright_have_client"
-        "CTRL+SUPER,Left,tagtoleft"
-        "CTRL+SUPER,Right,tagtoright"
 
-        "CTRL,1,view,1"
-        "CTRL,2,view,2"
-        "CTRL,3,view,3"
-        "CTRL,4,view,4"
-        "CTRL,5,view,5"
+        # Move Window to Tag (SUPER + SHIFT + 1..5)
+        "SUPER+SHIFT,1,tag,1"
+        "SUPER+SHIFT,2,tag,2"
+        "SUPER+SHIFT,3,tag,3"
+        "SUPER+SHIFT,4,tag,4"
+        "SUPER+SHIFT,5,tag,5"
 
-        # Move windows to tags
-        "ALT,1,tag,1"
-        "ALT,2,tag,2"
-        "ALT,3,tag,3"
-        "ALT,4,tag,4"
-        "ALT,5,tag,5"
-
-        # Layout switching
-        "ALT,t,setlayout,tile"
-        "ALT,s,setlayout,scroller"
+        # Layout Switching
+        "SUPER,t,setlayout,tile"
+        "SUPER,b,setlayout,scroller"
         "SUPER,n,switch_layout"
-
-        # Scroller
-        "ALT,e,set_proportion,1.0"
+        "SUPER,e,set_proportion,1.0"
         "SUPER,x,switch_proportion_preset"
 
-        # Screenshots (Wayland grim + slurp + satty + wl-clipboard)
-        "ALT,p,spawn_shell,mkdir -p $HOME/Pictures/Screenshots && g=$(slurp) && [ -n \"$g\" ] && f=$HOME/Pictures/Screenshots/$(date +%Y%m%d%H%M%S).png && grim -g \"$g\" \"$f\" && wl-copy --type image/png < \"$f\""
-        "ALT+SHIFT,p,spawn_shell,mkdir -p $HOME/Pictures/Screenshots && f=$HOME/Pictures/Screenshots/$(date +%Y%m%d%H%M%S).png && grim \"$f\" && wl-copy --type image/png < \"$f\""
-        "ALT+CTRL,p,spawn_shell,f=$(mktemp -t shot-XXXXXX.png) && grim \"$f\" && wl-copy --type image/png < \"$f\" && rm -f \"$f\""
+        # Screenshots
         "SUPER+SHIFT,s,spawn_shell,mkdir -p $HOME/Pictures/Screenshots && g=$(slurp) && [ -n \"$g\" ] && grim -g \"$g\" - | satty --filename - --output-filename $HOME/Pictures/Screenshots/$(date +%Y%m%d%H%M%S).png"
       ];
 
-      # Scroll to switch tags
+      # Scroll to Switch Tags
       axisbind = [
         "SUPER,UP,viewtoleft_have_client"
         "SUPER,DOWN,viewtoright_have_client"
       ];
 
-      # Mouse bindings
+      # Mouse Bindings
       mousebind = [
         "SUPER,btn_left,moveresize,curmove"
         "SUPER,btn_right,moveresize,curresize"
         "NONE,btn_middle,togglemaximizescreen"
       ];
 
-      # Window rules for Steam games
+      # Floating & Application Rules
       windowrule = [
+        # Steam & Games
         "isfullscreen:1,title:^(.*) - Steam$"
+        "isfloating:1,title:^Steam - News$"
+        "isfloating:1,title:^Friends List$"
 
-        # Tag 1 - terminals
+        # System Applets & Audio Control
+        "isfloating:1,appid:^pavucontrol$"
+        "isfloating:1,appid:^pwvucontrol$"
+        "isfloating:1,appid:^nm-connection-editor$"
+        "isfloating:1,appid:^blueman-manager$"
+        "isfloating:1,appid:^lact$"
+
+        # Security & Authentication Dialogs
+        "isfloating:1,appid:^org.kde.polkit-kde-authentication-agent-1$"
+        "isfloating:1,appid:^polkit-gnome-authentication-agent-1$"
+
+        # File Dialogs & Screenshot Annotator
+        "isfloating:1,title:^Open File$"
+        "isfloating:1,title:^Save File$"
+        "isfloating:1,title:^Select a Directory$"
+        "isfloating:1,appid:^com.nobody.satty$"
+
+        # Tag Routing
         "tags:1,appid:^Alacritty$"
         "tags:1,appid:^org.kde.konsole$"
-
-        # Tag 2 - web browsers
         "tags:2,appid:^floorp$"
         "tags:2,appid:^io.github.Aylur.floorp$"
-
-        # Tag 3 - steam
         "tags:3,appid:^steam$"
         "tags:3,appid:^steam_app$"
       ];

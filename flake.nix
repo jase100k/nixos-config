@@ -54,9 +54,9 @@
 
   outputs = { self, nixpkgs, nix-cachyos-kernel, mangowm, niri, millennium, noctalia, antigravity-nix, home-manager, plasma-manager, gaming-assetocorsa-fix, ... }@inputs: {
     nixosConfigurations.nixos-gaming = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
       specialArgs = { inherit inputs; };
       modules = [
+        { nixpkgs.hostPlatform = "x86_64-linux"; }
         { disabledModules = [ "programs/wayland/mango.nix" ]; }
         ./hosts/nixos-gaming
 
