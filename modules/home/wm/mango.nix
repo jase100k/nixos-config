@@ -6,7 +6,7 @@
 
     # Auto-load Noctalia's dynamically generated theme file
     extraConfig = ''
-      include ~/.config/mango/noctalia.conf
+      source=~/.config/mango/noctalia.conf
     '';
 
     # Clean autostart without brittle sleep delays
@@ -16,8 +16,8 @@
 
     settings = {
       # Window Aesthetics & Layout
-      border_width = 2;
-      corner_radius = 8;
+      borderpx = 2;
+      border_radius = 8;
 
       # Blur (let Noctalia handle layer effects)
       blur = 1;
@@ -63,7 +63,7 @@
         "SUPER,r,reload_config"
 
         # Keybindings Cheatsheet Launcher (SUPER + /)
-        "SUPER,slash,spawn_shell,echo -e 'SUPER+Return\tLaunch Terminal (Alacritty)\nSUPER+Space\tApp Launcher (Fuzzel)\nSUPER+Q\tClose Window\nSUPER+R\tReload MangoWM Config\nSUPER+D\tNoctalia App Launcher\nSUPER+S\tNoctalia Control Center\nSUPER+Comma\tNoctalia Settings\nSUPER+F\tToggle Fullscreen\nSUPER+Backslash\tToggle Floating\nSUPER+H/J/K/L\tFocus Left / Down / Up / Right\nSUPER+SHIFT+H/J/K/L\tSwap Window Left / Down / Up / Right\nSUPER+1..5\tSwitch to Tag 1..5\nSUPER+SHIFT+1..5\tMove Window to Tag 1..5\nSUPER+SHIFT+S\tScreenshot Area (Satty)' | fuzzel --dmenu -p \"Keybindings: \" -w 60"
+        "SUPER,slash,spawn_shell,echo -e 'SUPER+Return: Terminal\\nSUPER+Space: App Launcher\\nSUPER+Q: Close Window\\nSUPER+R: Reload Config\\nSUPER+D: Noctalia Launcher\\nSUPER+S: Control Center\\nSUPER+Comma: Noctalia Settings\\nSUPER+F: Fullscreen\\nSUPER+Backslash: Toggle Floating\\nSUPER+H/J/K/L: Focus Window\\nSUPER+SHIFT+H/J/K/L: Move Window\\nSUPER+1..5: Switch Tag\\nSUPER+SHIFT+1..5: Move to Tag\\nSUPER+SHIFT+S: Screenshot' | fuzzel --dmenu -p \"Keybindings: \" -w 50"
 
         # Noctalia IPC Binds
         "SUPER,d,spawn,noctalia msg panel-toggle launcher"
