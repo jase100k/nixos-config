@@ -2,7 +2,7 @@
 
 let
   mango-cheatsheet = pkgs.writeShellScriptBin "mango-cheatsheet" ''
-    printf "SUPER+Return\tTerminal (Alacritty)\nSUPER+Space\tApp Launcher (Fuzzel)\nSUPER+W\tWaypaper GUI Wallpaper Picker\nSUPER+D\tNoctalia App Launcher\nSUPER+S\tNoctalia Control Center\nSUPER+Comma\tNoctalia Settings\nSUPER+SHIFT+S\tScreenshot Area (Satty)\nSUPER+Q\tClose Window\nSUPER+R\tReload MangoWM Config\nSUPER+M\tQuit MangoWM\nSUPER+/\tKeybindings Cheatsheet\nSUPER+F\tToggle Fullscreen\nSUPER+A\tToggle Maximize Screen\nSUPER+\\\tToggle Floating\nSUPER+SHIFT+F\tToggle Fake Fullscreen\nSUPER+G\tToggle Global Window\nSUPER+I\tMinimize Window\nSUPER+SHIFT+I\tRestore Minimized\nSUPER+O\tToggle Overlay Window\nSUPER+Z\tToggle Scratchpad\nSUPER+Tab\tToggle Overview\nALT+Tab\tFocus Next Window\nSUPER+H/J/K/L\tFocus Left/Down/Up/Right\nSUPER+SHIFT+H/J/K/L\tMove/Swap Window\nCTRL+SHIFT+H/J/K/L\tMove Floating Window\nCTRL+ALT+H/J/K/L\tResize Floating Window\nSUPER+1..5\tSwitch to Tag 1..5\nSUPER+SHIFT+1..5\tMove Window to Tag 1..5\nSUPER+T\tSet Tile Layout\nSUPER+B\tSet Scroller Layout\nSUPER+N\tSwitch Layout Preset" | ${pkgs.fuzzel}/bin/fuzzel --dmenu -p "Keybindings: " -w 65
+    printf "SUPER+Return\tTerminal (Alacritty)\nSUPER+Space\tApp Launcher (Fuzzel)\nSUPER+W\tWaypaper GUI Wallpaper Picker\nSUPER+D\tNoctalia App Launcher\nSUPER+S\tNoctalia Control Center\nSUPER+Comma\tNoctalia Settings\nSUPER+V\tNoctalia Clipboard History\nSUPER+P\tQuick Region Screenshot\nSUPER+ALT+P\tQuick Fullscreen Screenshot\nSUPER+SHIFT+S\tAnnotated Screenshot (Satty)\nSUPER+Q\tClose Window\nSUPER+R\tReload MangoWM Config\nSUPER+M\tQuit MangoWM\nSUPER+/\tKeybindings Cheatsheet\nSUPER+F\tToggle Fullscreen\nSUPER+A\tToggle Maximize Screen\nSUPER+\\\tToggle Floating\nSUPER+SHIFT+F\tToggle Fake Fullscreen\nSUPER+G\tToggle Global Window\nSUPER+I\tMinimize Window\nSUPER+SHIFT+I\tRestore Minimized\nSUPER+O\tToggle Overlay Window\nSUPER+Z\tToggle Scratchpad\nSUPER+Tab\tToggle Overview\nALT+Tab\tFocus Next Window\nSUPER+H/J/K/L\tFocus Left/Down/Up/Right\nSUPER+SHIFT+H/J/K/L\tMove/Swap Window\nCTRL+SHIFT+H/J/K/L\tMove Floating Window\nCTRL+ALT+H/J/K/L\tResize Floating Window\nSUPER+1..5\tSwitch to Tag 1..5\nSUPER+SHIFT+1..5\tMove Window to Tag 1..5\nSUPER+T\tSet Tile Layout\nSUPER+B\tSet Scroller Layout\nSUPER+N\tSwitch Layout Preset" | ${pkgs.fuzzel}/bin/fuzzel --dmenu -p "Keybindings: " -w 65
   '';
 in
 {
@@ -76,6 +76,7 @@ in
           "SUPER,d,spawn,noctalia msg panel-toggle launcher"
           "SUPER,s,spawn,noctalia msg panel-toggle control-center"
           "SUPER,comma,spawn,noctalia msg settings-toggle"
+          "SUPER,v,spawn,noctalia msg panel-toggle clipboard"
 
           "NONE,XF86AudioRaiseVolume,spawn,wpctl set-volume @DEFAULT_SINK@ 5%+"
           "NONE,XF86AudioLowerVolume,spawn,wpctl set-volume @DEFAULT_SINK@ 5%-"
@@ -134,6 +135,8 @@ in
           "SUPER,e,set_proportion,1.0"
           "SUPER,x,switch_proportion_preset"
 
+          "SUPER,p,spawn,noctalia msg screenshot-region"
+          "SUPER+ALT,p,spawn,noctalia msg screenshot-fullscreen"
           "SUPER+SHIFT,s,spawn_shell,mkdir -p $HOME/Pictures/Screenshots && g=$(slurp) && [ -n \"$g\" ] && grim -g \"$g\" - | satty --filename - --output-filename $HOME/Pictures/Screenshots/$(date +%Y%m%d%H%M%S).png"
         ];
 

@@ -8,6 +8,7 @@
       openssh
       yazi
       orca-slicer
+      wl-clipboard
     ];
 
     programs.zsh = {
@@ -36,6 +37,10 @@
         search = "nix search nixpkgs";
         nixcommit = "sudo git -C /etc/nixos add -A && sudo git -C /etc/nixos commit";
         orca-slicer = "GTK_THEME=Adwaita:dark orca-slicer";
+        c = "wl-copy";
+        copy = "wl-copy";
+        p = "wl-paste";
+        paste = "wl-paste";
       };
 
       oh-my-zsh = {

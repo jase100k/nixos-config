@@ -181,7 +181,8 @@
 
           "Alt+F".action.fullscreen-window = [];
           "Mod+F".action.maximize-column = [];
-          "Mod+V".action.toggle-window-floating = [];
+          "Mod+Backslash".action.toggle-window-floating = [];
+          "Mod+V".action.spawn = [ "sh" "-c" "noctalia msg panel-toggle clipboard" ];
           "Mod+Shift+F".action.fullscreen-window = [];
 
           "Mod+1".action.focus-workspace = "term";
@@ -212,10 +213,8 @@
           "Mod+BracketLeft".action.consume-or-expel-window-left = [];
           "Mod+BracketRight".action.consume-or-expel-window-right = [];
 
-          "Print".action.screenshot = [];
-          "Alt+P".action.spawn = [ "sh" "-c" "mkdir -p $HOME/Pictures/Screenshots && g=$(slurp) && [ -n \"$g\" ] && f=$HOME/Pictures/Screenshots/$(date +%Y%m%d%H%M%S).png && grim -g \"$g\" \"$f\" && wl-copy --type image/png < \"$f\"" ];
-          "Alt+Shift+P".action.spawn = [ "sh" "-c" "mkdir -p $HOME/Pictures/Screenshots && f=$HOME/Pictures/Screenshots/$(date +%Y%m%d%H%M%S).png && grim \"$f\" && wl-copy --type image/png < \"$f\"" ];
-          "Alt+Ctrl+P".action.spawn = [ "sh" "-c" "f=$(mktemp -t shot-XXXXXX.png) && grim \"$f\" && wl-copy --type image/png < \"$f\" && rm -f \"$f\"" ];
+          "Mod+P".action.spawn = [ "sh" "-c" "noctalia msg screenshot-region" ];
+          "Mod+Alt+P".action.spawn = [ "sh" "-c" "noctalia msg screenshot-fullscreen" ];
           "Super+Shift+S".action.spawn = [ "sh" "-c" "mkdir -p $HOME/Pictures/Screenshots && g=$(slurp) && [ -n \"$g\" ] && grim -g \"$g\" - | satty --filename - --output-filename $HOME/Pictures/Screenshots/$(date +%Y%m%d%H%M%S).png" ];
 
           "Mod+O".action.spawn = [ "sh" "-c" "noctalia msg window-switcher" ];
