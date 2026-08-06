@@ -50,6 +50,18 @@
       url = "path:./pkgs/gaming-assetocorsa-fix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Zen Browser - modern Firefox derivative
+    zen-browser = {
+      url = "github:0xc000022070/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # Walker - GTK4 Wayland application runner
+    walker = {
+      url = "github:abenz1267/walker";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, nix-cachyos-kernel, mangowm, niri, millennium, noctalia, antigravity-nix, home-manager, plasma-manager, gaming-assetocorsa-fix, ... }@inputs: {

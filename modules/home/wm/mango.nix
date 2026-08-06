@@ -2,7 +2,7 @@
 
 let
   mango-cheatsheet = pkgs.writeShellScriptBin "mango-cheatsheet" ''
-    printf "SUPER+Return\tTerminal (Alacritty)\nSUPER+Space\tApp Launcher (Fuzzel)\nSUPER+D\tNoctalia App Launcher\nSUPER+S\tNoctalia Control Center\nSUPER+Comma\tNoctalia Settings\nSUPER+SHIFT+S\tScreenshot Area (Satty)\nSUPER+Q\tClose Window\nSUPER+R\tReload MangoWM Config\nSUPER+M\tQuit MangoWM\nSUPER+/\tKeybindings Cheatsheet\nSUPER+F\tToggle Fullscreen\nSUPER+A\tToggle Maximize Screen\nSUPER+\\\tToggle Floating\nSUPER+SHIFT+F\tToggle Fake Fullscreen\nSUPER+G\tToggle Global Window\nSUPER+I\tMinimize Window\nSUPER+SHIFT+I\tRestore Minimized\nSUPER+O\tToggle Overlay Window\nSUPER+Z\tToggle Scratchpad\nSUPER+Tab\tToggle Overview\nALT+Tab\tFocus Next Window\nSUPER+H/J/K/L\tFocus Left/Down/Up/Right\nSUPER+SHIFT+H/J/K/L\tMove/Swap Window\nCTRL+SHIFT+H/J/K/L\tMove Floating Window\nCTRL+ALT+H/J/K/L\tResize Floating Window\nSUPER+1..5\tSwitch to Tag 1..5\nSUPER+SHIFT+1..5\tMove Window to Tag 1..5\nSUPER+T\tSet Tile Layout\nSUPER+B\tSet Scroller Layout\nSUPER+N\tSwitch Layout Preset" | ${pkgs.fuzzel}/bin/fuzzel --dmenu -p "Keybindings: " -w 65
+    printf "SUPER+Return\tTerminal (Alacritty)\nSUPER+Space\tApp Launcher (Fuzzel)\nSUPER+W\tWaypaper GUI Wallpaper Picker\nSUPER+D\tNoctalia App Launcher\nSUPER+S\tNoctalia Control Center\nSUPER+Comma\tNoctalia Settings\nSUPER+SHIFT+S\tScreenshot Area (Satty)\nSUPER+Q\tClose Window\nSUPER+R\tReload MangoWM Config\nSUPER+M\tQuit MangoWM\nSUPER+/\tKeybindings Cheatsheet\nSUPER+F\tToggle Fullscreen\nSUPER+A\tToggle Maximize Screen\nSUPER+\\\tToggle Floating\nSUPER+SHIFT+F\tToggle Fake Fullscreen\nSUPER+G\tToggle Global Window\nSUPER+I\tMinimize Window\nSUPER+SHIFT+I\tRestore Minimized\nSUPER+O\tToggle Overlay Window\nSUPER+Z\tToggle Scratchpad\nSUPER+Tab\tToggle Overview\nALT+Tab\tFocus Next Window\nSUPER+H/J/K/L\tFocus Left/Down/Up/Right\nSUPER+SHIFT+H/J/K/L\tMove/Swap Window\nCTRL+SHIFT+H/J/K/L\tMove Floating Window\nCTRL+ALT+H/J/K/L\tResize Floating Window\nSUPER+1..5\tSwitch to Tag 1..5\nSUPER+SHIFT+1..5\tMove Window to Tag 1..5\nSUPER+T\tSet Tile Layout\nSUPER+B\tSet Scroller Layout\nSUPER+N\tSwitch Layout Preset" | ${pkgs.fuzzel}/bin/fuzzel --dmenu -p "Keybindings: " -w 65
   '';
 in
 {
@@ -69,6 +69,7 @@ in
         # Core Launchers & App Control
         "SUPER,Return,spawn,alacritty"
         "SUPER,space,spawn,fuzzel"
+        "SUPER,w,spawn,waypaper"
         "SUPER,Q,killclient"
         "SUPER,M,quit"
         "SUPER,r,reload_config"
