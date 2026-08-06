@@ -1,8 +1,11 @@
 {
-  description = "NixOS Gaming Configuration";
+  description = "NixOS Gaming Configuration (Dendritic Aspect Architecture)";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
+    # Denful import-tree - recursive module tree loader for Dendritic pattern
+    import-tree.url = "github:denful/import-tree";
 
     # CachyOS kernel - do NOT override nixpkgs, needed for binary cache hits
     nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
@@ -64,7 +67,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, nix-cachyos-kernel, mangowm, niri, millennium, noctalia, antigravity-nix, home-manager, plasma-manager, gaming-assetocorsa-fix, ... }@inputs: {
+  outputs = { self, nixpkgs, nix-cachyos-kernel, mangowm, niri, millennium, noctalia, antigravity-nix, home-manager, plasma-manager, gaming-assetocorsa-fix, import-tree, ... }@inputs: {
     nixosConfigurations.nixos-gaming = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs; };
       modules = [
@@ -72,12 +75,11 @@
         { disabledModules = [ "programs/wayland/mango.nix" ]; }
         ./hosts/nixos-gaming
 
-        # MangoWM compositor
+        # Compositors & Desktop System Modules
         mangowm.nixosModules.mango
-
-        # Noctalia v5 desktop shell
         noctalia.nixosModules.default
 
+        # Home Manager Module Setup
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
@@ -90,8 +92,10 @@
             inputs.niri.homeModules.niri
             inputs.gaming-assetocorsa-fix.homeManagerModules.default
           ];
-          home-manager.users.jason = import ./modules/home;
         }
+
+        # Automatically discover and load all aspects
+        (import-tree ./aspects)
       ];
     };
   };
