@@ -16,9 +16,12 @@ in
       source=~/.config/mango/noctalia.conf
     '';
 
-    # Clean autostart without brittle sleep delays
+    # Clean autostart script
     autostart_sh = ''
       noctalia &
+      alacritty &
+      floorp &
+      steam -silent &
     '';
 
     settings = {
