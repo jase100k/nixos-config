@@ -10,7 +10,7 @@
 
   # SDDM Display Manager & Session Packages
   services.displayManager.sddm.enable = true;
-  services.displayManager.sessionPackages = [ inputs.niri.packages.x86_64-linux.niri-stable ];
+  services.displayManager.sessionPackages = [ pkgs.niri ];
   services.desktopManager.plasma6.enable = true;
 
   # MangoWM - Wayland compositor (available as SDDM session)
