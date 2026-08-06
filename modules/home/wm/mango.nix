@@ -19,6 +19,7 @@ in
     # Clean autostart script
     autostart_sh = ''
       noctalia &
+      antigravity-ide &
       alacritty &
       floorp &
       steam -silent &
@@ -188,6 +189,7 @@ in
         "isfloating:1,appid:^com.nobody.satty$"
 
         # Tag Routing
+        "tags:1,appid:^antigravity-ide$"
         "tags:1,appid:^Alacritty$"
         "tags:1,appid:^org.kde.konsole$"
         "tags:2,appid:^floorp$"
