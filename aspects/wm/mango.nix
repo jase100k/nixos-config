@@ -26,7 +26,7 @@ in
         antigravity-ide &
         alacritty &
         floorp &
-        steam -silent &
+        steam &
       '';
 
       settings = {
