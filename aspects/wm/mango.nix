@@ -32,7 +32,6 @@ in
 
 
 
-
       settings = {
         borderpx = 2;
         border_radius = 8;

@@ -16,7 +16,6 @@ let
     ACCENT=''${ACCENT:-$FG}
 
     for SETTINGS_FILE in "$HOME/.antigravity-ide/User/settings.json" "$HOME/.config/antigravity/User/settings.json" "$HOME/.config/Code/User/settings.json" "$HOME/.config/opencode/User/settings.json"; do
-
       SETTINGS_DIR=$(dirname "$SETTINGS_FILE")
       mkdir -p "$SETTINGS_DIR"
       if [ ! -f "$SETTINGS_FILE" ] || ! ${pkgs.jq}/bin/jq . "$SETTINGS_FILE" >/dev/null 2>&1; then
