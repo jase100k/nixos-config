@@ -35,18 +35,26 @@ let
             "sideBarSectionHeader.background": $bg,
             "activityBar.background": $bg,
             "activityBar.foreground": $accent,
+            "activityBar.activeBackground": $bg,
             "statusBar.background": $bg,
             "statusBar.foreground": $fg,
             "titleBar.activeBackground": $bg,
             "titleBar.activeForeground": $fg,
             "tab.activeBackground": $bg,
+            "tab.activeForeground": $fg,
             "tab.activeBorder": $accent,
             "tab.inactiveBackground": $bg,
+            "tab.inactiveForeground": $fg,
             "panel.background": $bg,
+            "panel.border": $accent,
             "editorGroupHeader.tabsBackground": $bg,
+            "commandCenter.background": $bg,
+            "commandCenter.foreground": $fg,
+            "commandCenter.border": $accent,
             "terminal.background": $bg,
             "terminal.foreground": $fg
           }' "$SETTINGS_FILE" > "$SETTINGS_FILE.tmp" && mv "$SETTINGS_FILE.tmp" "$SETTINGS_FILE"
+
       fi
     done
   '';
