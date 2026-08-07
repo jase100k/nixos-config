@@ -15,13 +15,17 @@ let
     FG=''${FG:-#f8dcdb}
     ACCENT=''${ACCENT:-$FG}
 
+    WP_PATH=$(noctalia msg wallpaper-get 2>/dev/null)
+    if [ -n "$WP_PATH" ] && [ -f "$WP_PATH" ]; then
+      ${pkgs.awww}/bin/awww img "$WP_PATH" 2>/dev/null || true
+    fi
+
     for SETTINGS_FILE in "$HOME/.antigravity-ide/User/settings.json" "$HOME/.config/antigravity/User/settings.json" "$HOME/.config/Code/User/settings.json" "$HOME/.config/opencode/User/settings.json"; do
       SETTINGS_DIR=$(dirname "$SETTINGS_FILE")
       mkdir -p "$SETTINGS_DIR"
       if [ ! -f "$SETTINGS_FILE" ] || ! ${pkgs.jq}/bin/jq . "$SETTINGS_FILE" >/dev/null 2>&1; then
         echo '{"workbench.colorCustomizations":{}}' > "$SETTINGS_FILE"
       fi
-
 
         ${pkgs.jq}/bin/jq \
           --arg bg "$BG" \
@@ -57,10 +61,9 @@ let
             "terminal.foreground": $fg
           }' "$SETTINGS_FILE" > "$SETTINGS_FILE.tmp" && cat "$SETTINGS_FILE.tmp" > "$SETTINGS_FILE" && rm -f "$SETTINGS_FILE.tmp"
 
-
-      fi
     done
   '';
+
 
   noctalia-theme-watcher = pkgs.writeShellScriptBin "noctalia-theme-watcher" ''
     ${noctalia-sync-theme}/bin/noctalia-sync-theme
