@@ -26,7 +26,8 @@ let
           --arg bg "$BG" \
           --arg fg "$FG" \
           --arg accent "$ACCENT" \
-          '.["workbench.colorCustomizations"] = {
+          '.["workbench.colorTheme"] = "Default Dark Modern" |
+           .["workbench.colorCustomizations"] = {
             "editor.background": $bg,
             "editor.foreground": $fg,
             "sideBar.background": $bg,
@@ -53,7 +54,8 @@ let
             "commandCenter.border": $accent,
             "terminal.background": $bg,
             "terminal.foreground": $fg
-          }' "$SETTINGS_FILE" > "$SETTINGS_FILE.tmp" && mv "$SETTINGS_FILE.tmp" "$SETTINGS_FILE"
+          }' "$SETTINGS_FILE" > "$SETTINGS_FILE.tmp" && cat "$SETTINGS_FILE.tmp" > "$SETTINGS_FILE" && rm -f "$SETTINGS_FILE.tmp"
+
 
       fi
     done
