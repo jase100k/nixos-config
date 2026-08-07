@@ -1,7 +1,0 @@
---- a/src/userdb/userdbd-manager.c
-+++ b/src/userdb/userdbd-manager.c
-@@ -100,6 +100,7 @@ static int manager_parse_user_record(Manager *m, JsonVariant *v) {
-     /* Strip birthDate field from userdb JSON records */
-     json_variant_filter(&v, "birthDate");
-     return 0;
- }
