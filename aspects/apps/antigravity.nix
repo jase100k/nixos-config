@@ -18,13 +18,19 @@ let
     ACCENT=''${ACCENT:-$FG}
 
     for SETTINGS_FILE in "$HOME/.config/antigravity/User/settings.json" "$HOME/.config/Code/User/settings.json" "$HOME/.config/opencode/User/settings.json"; do
-      if [ -f "$SETTINGS_FILE" ]; then
+      SETTINGS_DIR=$(dirname "$SETTINGS_FILE")
+      if [ -d "$SETTINGS_DIR" ]; then
+        if [ ! -f "$SETTINGS_FILE" ] || ! ${pkgs.jq}/bin/jq . "$SETTINGS_FILE" >/dev/null 2>&1; then
+          echo '{"workbench.colorCustomizations":{}}' > "$SETTINGS_FILE"
+        fi
+
         ${pkgs.jq}/bin/jq \
           --arg bg "$BG" \
           --arg fg "$FG" \
           --arg accent "$ACCENT" \
           '.["workbench.colorCustomizations"] = {
             "editor.background": $bg,
+            "editor.foreground": $fg,
             "sideBar.background": $bg,
             "sideBar.foreground": $fg,
             "sideBarTitle.foreground": $fg,
@@ -38,6 +44,8 @@ let
             "tab.activeBackground": $bg,
             "tab.activeBorder": $accent,
             "tab.inactiveBackground": $bg,
+            "panel.background": $bg,
+            "editorGroupHeader.tabsBackground": $bg,
             "terminal.background": $bg,
             "terminal.foreground": $fg
           }' "$SETTINGS_FILE" > "$SETTINGS_FILE.tmp" && mv "$SETTINGS_FILE.tmp" "$SETTINGS_FILE"
@@ -45,6 +53,7 @@ let
     done
   '';
 in
+
 {
   home-manager.users.jason = {
     home.packages = [
