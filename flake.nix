@@ -60,14 +60,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Liberated systemd source repository
-    liberated-systemd = {
-      url = "github:Jeffrey-Sardina/liberated-systemd";
-      flake = false;
-    };
   };
 
-  outputs = { self, nixpkgs, nix-cachyos-kernel, mangowm, niri, millennium, noctalia, antigravity-nix, home-manager, plasma-manager, gaming-assetocorsa-fix, liberated-systemd, import-tree, ... }@inputs: {
+  outputs = { self, nixpkgs, nix-cachyos-kernel, mangowm, niri, millennium, noctalia, antigravity-nix, home-manager, plasma-manager, gaming-assetocorsa-fix, import-tree, ... }@inputs: {
+
 
     nixosConfigurations.nixos-gaming = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs; };
