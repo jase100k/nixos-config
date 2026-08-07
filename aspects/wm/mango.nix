@@ -66,7 +66,7 @@ in
         bind = [
           "SUPER,Return,spawn,alacritty"
           "SUPER,space,spawn,fuzzel"
-          "SUPER,w,spawn,noctalia msg panel-open wallpaper"
+          "SUPER,w,spawn,noctalia msg settings-open wallpaper"
           "SUPER,Q,killclient"
 
           "SUPER,M,quit"
