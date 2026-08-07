@@ -54,15 +54,16 @@ let
   noctalia-theme-watcher = pkgs.writeShellScriptBin "noctalia-theme-watcher" ''
     ${noctalia-sync-theme}/bin/noctalia-sync-theme
 
-    THEME_FILE="$HOME/.config/alacritty/themes/noctalia.toml"
-    THEME_DIR=$(dirname "$THEME_FILE")
+    THEME_DIR="$HOME/.config/alacritty/themes"
     mkdir -p "$THEME_DIR"
-    touch "$THEME_FILE"
 
-    ${pkgs.inotify-tools}/bin/inotifywait -m -e close_write,moved_to "$THEME_FILE" | while read -r dir events file; do
-      ${noctalia-sync-theme}/bin/noctalia-sync-theme
+    ${pkgs.inotify-tools}/bin/inotifywait -m -e close_write,moved_to,create "$THEME_DIR" | while read -r dir events file; do
+      if [ "$file" = "noctalia.toml" ]; then
+        ${noctalia-sync-theme}/bin/noctalia-sync-theme
+      fi
     done
   '';
+
 in
 {
   home-manager.users.jason = {
