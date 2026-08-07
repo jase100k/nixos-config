@@ -15,50 +15,48 @@ let
     FG=''${FG:-#f8dcdb}
     ACCENT=''${ACCENT:-$FG}
 
-    for SETTINGS_FILE in "$HOME/.antigravity-ide/User/settings.json" "$HOME/.config/antigravity/User/settings.json" "$HOME/.config/Code/User/settings.json" "$HOME/.config/opencode/User/settings.json"; do
-      SETTINGS_DIR=$(dirname "$SETTINGS_FILE")
-      mkdir -p "$SETTINGS_DIR"
-      if [ ! -f "$SETTINGS_FILE" ] || ! ${pkgs.jq}/bin/jq . "$SETTINGS_FILE" >/dev/null 2>&1; then
-        echo '{"workbench.colorCustomizations":{}}' > "$SETTINGS_FILE"
-      fi
+    SETTINGS_FILE="$HOME/.antigravity-ide/User/settings.json"
+    SETTINGS_DIR=$(dirname "$SETTINGS_FILE")
+    mkdir -p "$SETTINGS_DIR"
+    if [ ! -f "$SETTINGS_FILE" ] || ! ${pkgs.jq}/bin/jq . "$SETTINGS_FILE" >/dev/null 2>&1; then
+      echo '{"workbench.colorCustomizations":{}}' > "$SETTINGS_FILE"
+    fi
 
-        ${pkgs.jq}/bin/jq \
-          --arg bg "$BG" \
-          --arg fg "$FG" \
-          --arg accent "$ACCENT" \
-          '.["workbench.colorTheme"] = "Default Dark Modern" |
-           .["workbench.colorCustomizations"] = {
-            "editor.background": $bg,
-            "editor.foreground": $fg,
-            "sideBar.background": $bg,
-            "sideBar.foreground": $fg,
-            "sideBarTitle.foreground": $fg,
-            "sideBarSectionHeader.background": $bg,
-            "activityBar.background": $bg,
-            "activityBar.foreground": $accent,
-            "activityBar.activeBackground": $bg,
-            "statusBar.background": $bg,
-            "statusBar.foreground": $fg,
-            "titleBar.activeBackground": $bg,
-            "titleBar.activeForeground": $fg,
-            "tab.activeBackground": $bg,
-            "tab.activeForeground": $fg,
-            "tab.activeBorder": $accent,
-            "tab.inactiveBackground": $bg,
-            "tab.inactiveForeground": $fg,
-            "panel.background": $bg,
-            "panel.border": $accent,
-            "editorGroupHeader.tabsBackground": $bg,
-            "commandCenter.background": $bg,
-            "commandCenter.foreground": $fg,
-            "commandCenter.border": $accent,
-            "terminal.background": $bg,
-            "terminal.foreground": $fg
-          }' "$SETTINGS_FILE" > "$SETTINGS_FILE.tmp" && cat "$SETTINGS_FILE.tmp" > "$SETTINGS_FILE" && rm -f "$SETTINGS_FILE.tmp"
+    ${pkgs.jq}/bin/jq \
+      --arg bg "$BG" \
+      --arg fg "$FG" \
+      --arg accent "$ACCENT" \
+      '.["workbench.colorTheme"] = "Default Dark Modern" |
+       .["workbench.colorCustomizations"] = {
+        "editor.background": $bg,
+        "editor.foreground": $fg,
+        "sideBar.background": $bg,
+        "sideBar.foreground": $fg,
+        "sideBarTitle.foreground": $fg,
+        "sideBarSectionHeader.background": $bg,
+        "activityBar.background": $bg,
+        "activityBar.foreground": $accent,
+        "activityBar.activeBackground": $bg,
+        "statusBar.background": $bg,
+        "statusBar.foreground": $fg,
+        "titleBar.activeBackground": $bg,
+        "titleBar.activeForeground": $fg,
+        "tab.activeBackground": $bg,
+        "tab.activeForeground": $fg,
+        "tab.activeBorder": $accent,
+        "tab.inactiveBackground": $bg,
+        "tab.inactiveForeground": $fg,
+        "panel.background": $bg,
+        "panel.border": $accent,
+        "editorGroupHeader.tabsBackground": $bg,
+        "commandCenter.background": $bg,
+        "commandCenter.foreground": $fg,
+        "commandCenter.border": $accent,
+        "terminal.background": $bg,
+        "terminal.foreground": $fg
+      }' "$SETTINGS_FILE" > "$SETTINGS_FILE.tmp" && cat "$SETTINGS_FILE.tmp" > "$SETTINGS_FILE" && rm -f "$SETTINGS_FILE.tmp"
 
-    done
-
-    for PROFILE in $(find "$HOME/.floorp" "$HOME/.config/zen" -mindepth 1 -maxdepth 1 -type d \( -name '*default*' -o -name '*Default*' -o -name '*Profile*' \) 2>/dev/null); do
+    for PROFILE in $(find "$HOME/.floorp" -mindepth 1 -maxdepth 1 -type d \( -name '*default*' -o -name '*Default*' -o -name '*Profile*' \) 2>/dev/null); do
       if [ -d "$PROFILE" ]; then
         mkdir -p "$PROFILE/chrome"
         cat << EOF > "$PROFILE/chrome/userChrome.css"
@@ -117,6 +115,7 @@ EOF
       fi
     done
   '';
+
 
 
 
