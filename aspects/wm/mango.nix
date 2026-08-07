@@ -22,12 +22,14 @@ in
       '';
 
       autostart_sh = ''
+        awww-daemon &
         noctalia &
         antigravity-ide &
         alacritty &
         floorp &
         steam &
       '';
+
 
       settings = {
         borderpx = 2;
