@@ -15,7 +15,7 @@
       monitors = All
       fill = fill
       sort = name
-      post_command = noctalia msg wallpaper-set "$wallpaper"
+      post_command = noctalia msg wallpaper-set "$wallpaper" && noctalia-sync-theme
       number_of_columns = 3
     '';
   };
