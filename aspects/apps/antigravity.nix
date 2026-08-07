@@ -2,8 +2,6 @@
 
 let
   noctalia-sync-theme = pkgs.writeShellScriptBin "noctalia-sync-theme" ''
-    sleep 0.2
-
     THEME_FILE="$HOME/.config/alacritty/themes/noctalia.toml"
     if [ ! -f "$THEME_FILE" ]; then
       exit 0
@@ -52,8 +50,20 @@ let
       fi
     done
   '';
-in
 
+  noctalia-theme-watcher = pkgs.writeShellScriptBin "noctalia-theme-watcher" ''
+    ${noctalia-sync-theme}/bin/noctalia-sync-theme
+
+    THEME_FILE="$HOME/.config/alacritty/themes/noctalia.toml"
+    THEME_DIR=$(dirname "$THEME_FILE")
+    mkdir -p "$THEME_DIR"
+    touch "$THEME_FILE"
+
+    ${pkgs.inotify-tools}/bin/inotifywait -m -e close_write,moved_to "$THEME_FILE" | while read -r dir events file; do
+      ${noctalia-sync-theme}/bin/noctalia-sync-theme
+    done
+  '';
+in
 {
   home-manager.users.jason = {
     home.packages = [
@@ -61,12 +71,30 @@ in
       inputs.antigravity-nix.packages.${pkgs.stdenv.hostPlatform.system}.google-antigravity-ide
       inputs.antigravity-nix.packages.${pkgs.stdenv.hostPlatform.system}.google-antigravity-cli
       noctalia-sync-theme
+      noctalia-theme-watcher
       pkgs.jq
+      pkgs.inotify-tools
     ];
+
+    systemd.user.services.noctalia-antigravity-sync = {
+      Unit = {
+        Description = "Noctalia Theme Sync Service for Antigravity & VS Code";
+        After = [ "graphical-session.target" ];
+      };
+      Service = {
+        ExecStart = "${noctalia-theme-watcher}/bin/noctalia-theme-watcher";
+        Restart = "always";
+        RestartSec = 3;
+      };
+      Install = {
+        WantedBy = [ "default.target" ];
+      };
+    };
 
     home.activation.syncNoctaliaTheme = config.home-manager.users.jason.lib.dag.entryAfter [ "writeBoundary" ] ''
       ${noctalia-sync-theme}/bin/noctalia-sync-theme
     '';
   };
 }
+
 
