@@ -4,12 +4,13 @@
   home-manager.users.jason = {
     home.packages = with pkgs; [
       waypaper
+      awww
     ];
 
     xdg.configFile."waypaper/config.ini".text = ''
       [Settings]
       language = en
-      backend = none
+      backend = awww
       folder = ~/Pictures/Wallpaper
       monitors = All
       fill = fill
@@ -19,3 +20,4 @@
     '';
   };
 }
+
