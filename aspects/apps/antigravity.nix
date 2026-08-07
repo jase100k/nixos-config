@@ -57,7 +57,67 @@ let
           }' "$SETTINGS_FILE" > "$SETTINGS_FILE.tmp" && cat "$SETTINGS_FILE.tmp" > "$SETTINGS_FILE" && rm -f "$SETTINGS_FILE.tmp"
 
     done
+
+    for PROFILE in $(find "$HOME/.floorp" "$HOME/.config/zen" -mindepth 1 -maxdepth 1 -type d \( -name '*default*' -o -name '*Default*' -o -name '*Profile*' \) 2>/dev/null); do
+      if [ -d "$PROFILE" ]; then
+        mkdir -p "$PROFILE/chrome"
+        cat << EOF > "$PROFILE/chrome/userChrome.css"
+:root {
+  --toolbar-bgcolor: $BG !important;
+  --toolbar-color: $FG !important;
+  --toolbar-bordercolor: $BG !important;
+  --toolbarbutton-hover-background: $BG !important;
+  --toolbarbutton-active-background: $BG !important;
+  --lwt-accent-color: $BG !important;
+  --lwt-text-color: $FG !important;
+
+  --toolbar-field-background-color: $BG !important;
+  --toolbar-field-focus-background-color: $BG !important;
+  --toolbar-field-color: $FG !important;
+  --toolbar-field-focus-color: $FG !important;
+  --toolbar-field-border-color: $BG !important;
+  --toolbar-field-focus-border-color: $ACCENT !important;
+  --lwt-toolbar-field-background-color: $BG !important;
+  --lwt-toolbar-field-focus-background-color: $BG !important;
+  --lwt-toolbar-field-color: $FG !important;
+  --lwt-toolbar-field-focus-color: $FG !important;
+  --urlbar-box-background: $BG !important;
+  --urlbar-box-bgcolor: $BG !important;
+  --urlbar-open-background: $BG !important;
+  --urlbar-box-focus-background: $BG !important;
+  --urlbarView-highlight-background: $BG !important;
+
+  --tab-selected-color: $FG !important;
+  --sidebar-bgcolor: $BG !important;
+  --sidebar-text-color: $FG !important;
+  --sidebar-border-color: $BG !important;
+  --bookmark-text-color: $FG !important;
+  --chrome-content-separator-color: $BG !important;
+
+  --panel-background: $BG !important;
+  --panel-color: $FG !important;
+  --panel-border-color: $BG !important;
+}
+
+#nav-bar, #PersonalToolbar, #TabsToolbar, #sidebar-box, #browser-bottombox {
+  background-color: $BG !important;
+  color: $FG !important;
+}
+
+.tab-background[selected="true"] {
+  background: $BG !important;
+  border-color: $ACCENT !important;
+}
+
+#urlbar, #urlbar-background, #urlbar-input-container {
+  background-color: $BG !important;
+  color: $FG !important;
+}
+EOF
+      fi
+    done
   '';
+
 
 
   noctalia-theme-watcher = pkgs.writeShellScriptBin "noctalia-theme-watcher" ''
