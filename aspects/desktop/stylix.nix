@@ -34,4 +34,10 @@
       size = 24;
     };
   };
+
+  home-manager.users.jason = {
+    xdg.configFile."gtk-3.0/gtk.css".force = true;
+    xdg.configFile."gtk-4.0/gtk.css".force = true;
+  };
 }
+
