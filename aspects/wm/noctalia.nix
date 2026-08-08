@@ -120,8 +120,10 @@ EOF
 EOF
         fi
       done
+      ${pkgs.pywalfox-native}/bin/pywalfox update 2>/dev/null || true
     fi
   '';
+
 
 in
 {
