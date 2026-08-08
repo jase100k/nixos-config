@@ -21,6 +21,9 @@
 
       SURFACE="$BG"
       SURFACE_VAR="$BG"
+      SECONDARY="$PRIMARY"
+      ERROR="#d95757"
+
 
       for profile in $(find ~/.floorp -mindepth 1 -maxdepth 1 -type d \( -name '*.default*' -o -name '*default*' \) 2>/dev/null); do
         if [ -d "$profile" ]; then
