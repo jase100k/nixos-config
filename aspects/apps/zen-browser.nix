@@ -4,7 +4,9 @@
   home-manager.users.jason = {
     home.packages = [
       inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
+      pkgs.pywalfox-native
     ];
+
     home.activation.zenBrowserTheme = config.home-manager.users.jason.lib.dag.entryAfter [ "writeBoundary" ] ''
       THEME_FILE="$HOME/.config/alacritty/themes/noctalia.toml"
       BG="#0f1416"
