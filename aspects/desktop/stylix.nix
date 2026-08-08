@@ -9,7 +9,9 @@
     enable = true;
     autoEnable = true; # Automatically theme all present and future supported apps
     polarity = "dark";
-    image = "/home/jason/Pictures/Wallpaper/apple-music-japan-3440x1440-26703.jpg";
+    image = ../../assets/wallpaper.jpg;
+
+
 
     fonts = {
       monospace = {
