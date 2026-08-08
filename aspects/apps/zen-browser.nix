@@ -55,21 +55,14 @@ user_pref("zen.theme.allow-system-accent-color", false);
 USERJS
 
           cat << EOF > "$profile/chrome/userChrome.css"
-:root, #main-window, body {
-  --zen-primary-color: $ACCENT !important;
-  --zen-colors-primary: $ACCENT !important;
-  --zen-colors-secondary: $BG !important;
-  --zen-colors-tertiary: $BG !important;
-  --zen-colors-border: $ACCENT !important;
-  --zen-themed-toolbar-bg: $BG !important;
-  --zen-main-browser-background: $BG !important;
-  --zen-urlbar-background: $BG !important;
-  --toolbar-bgcolor: $BG !important;
-  --toolbar-color: $FG !important;
-  --sidebar-bgcolor: $BG !important;
-  --sidebar-text-color: $FG !important;
-  --lwt-accent-color: $ACCENT !important;
-  --lwt-text-color: $FG !important;
+:root {
+  --zen-main-browser-background: var(--theme-sidebar-background, var(--theme-body-color, $BG)) !important;
+  --zen-themed-toolbar-bg: var(--theme-sidebar-background, var(--theme-body-color, $BG)) !important;
+  --zen-urlbar-background: var(--theme-secondary-color, var(--theme-sidebar-background, $BG)) !important;
+  --zen-colors-secondary: var(--theme-secondary-color, var(--theme-sidebar-background, $BG)) !important;
+  --zen-colors-tertiary: var(--theme-sidebar-background, $BG) !important;
+  --zen-primary-color: var(--theme-accent-color, $ACCENT) !important;
+  --zen-colors-border: var(--theme-accent-color, $ACCENT) !important;
 }
 
 #navigator-toolbox,
@@ -79,31 +72,36 @@ USERJS
 #sidebar-box,
 #sidebar-header,
 #browser,
-#main-window {
-  background-color: $BG !important;
-  color: $FG !important;
+#main-window,
+#zen-workspaces-button,
+#zen-appcontent-navbar-container,
+.zen-sidebar-panel {
+  background-color: var(--theme-sidebar-background, var(--theme-body-color, $BG)) !important;
+  background: var(--theme-sidebar-background, var(--theme-body-color, $BG)) !important;
+  color: var(--theme-sidebar-color, var(--theme-text-color, $FG)) !important;
+}
+
+.tab-label,
+#zen-workspaces-button,
+.sidebar-placesTree,
+.zen-current-workspace-indicator {
+  color: var(--theme-sidebar-color, var(--theme-text-color, $FG)) !important;
 }
 
 .tabbrowser-tab[selected="true"] .tab-background,
 .tab-background[selected="true"] {
-  background-color: color-mix(in srgb, $ACCENT 25%, $BG) !important;
-  border: 1px solid $ACCENT !important;
+  background-color: color-mix(in srgb, var(--theme-accent-color, $ACCENT) 25%, transparent) !important;
+  border: 1px solid var(--theme-accent-color, $ACCENT) !important;
 }
 
 .tabbrowser-tab[selected="true"] .tab-label {
-  color: $ACCENT !important;
+  color: var(--theme-accent-color, $ACCENT) !important;
   font-weight: bold !important;
 }
 
 #urlbar-background {
-  background-color: color-mix(in srgb, $ACCENT 10%, $BG) !important;
-  border: 1px solid $ACCENT !important;
-}
-
-#zen-workspaces-button,
-.zen-current-workspace-indicator {
-  color: $ACCENT !important;
-  fill: $ACCENT !important;
+  background-color: color-mix(in srgb, var(--theme-accent-color, $ACCENT) 10%, transparent) !important;
+  border: 1px solid var(--theme-accent-color, $ACCENT) !important;
 }
 EOF
         fi
