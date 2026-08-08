@@ -2,10 +2,15 @@
 
 {
   home-manager.users.jason = {
-    home.packages = [ pkgs.floorp-bin ];
+    home.packages = [ pkgs.floorp-bin pkgs.pywalfox-native ];
 
     home.activation.browserThemes = ''
+      if command -v pywalfox >/dev/null 2>&1; then
+        pywalfox install --profile-path "$HOME/.floorp" 2>/dev/null || true
+      fi
+
       THEME_FILE="$HOME/.config/alacritty/themes/noctalia.toml"
+
       BG="#0b0e14"
       FG="#d1d1c7"
       PRIMARY="#39bae6"
