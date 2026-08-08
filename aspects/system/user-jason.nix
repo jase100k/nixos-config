@@ -8,9 +8,8 @@
     shell = pkgs.zsh;
   };
 
-  home-manager.backupFileExtension = "backup";
-
   home-manager.users.jason = {
+
     home.username = "jason";
     home.homeDirectory = "/home/jason";
     home.stateVersion = "26.05";
