@@ -57,7 +57,8 @@ EOF
     if [ -f "$THEME_FILE" ]; then
       BG=$(grep -E '^\s*background\s*=' "$THEME_FILE" | head -n 1 | cut -d "'" -f 2)
       FG=$(grep -E '^\s*foreground\s*=' "$THEME_FILE" | head -n 1 | cut -d "'" -f 2)
-      ACCENT=$(grep -E '^\s*blue\s*=' "$THEME_FILE" | head -n 1 | cut -d "'" -f 2)
+      ACCENT=$(grep -E '^\s*magenta\s*=' "$THEME_FILE" | head -n 1 | cut -d "'" -f 2)
+      [ -z "$ACCENT" ] && ACCENT=$(grep -E '^\s*blue\s*=' "$THEME_FILE" | head -n 1 | cut -d "'" -f 2)
       BG=''${BG:-#141318}
       FG=''${FG:-#e6e1e9}
       ACCENT=''${ACCENT:-$FG}
@@ -68,7 +69,7 @@ EOF
           cat << EOF > "$PROFILE/chrome/userChrome.css"
 :root, #main-window, body {
   --zen-primary-color: $ACCENT !important;
-  --zen-colors-primary: $BG !important;
+  --zen-colors-primary: $ACCENT !important;
   --zen-colors-secondary: $BG !important;
   --zen-colors-tertiary: $BG !important;
   --zen-colors-border: $ACCENT !important;
@@ -79,35 +80,49 @@ EOF
   --toolbar-color: $FG !important;
   --sidebar-bgcolor: $BG !important;
   --sidebar-text-color: $FG !important;
-  --lwt-accent-color: $BG !important;
+  --lwt-accent-color: $ACCENT !important;
   --lwt-text-color: $FG !important;
 }
 
 #navigator-toolbox,
 #zen-tabbox-wrapper,
+#zen-sidebar-web-wrapper,
 .sidebar-panel,
 #sidebar-box,
 #sidebar-header,
-#zen-workspaces-button,
-#zen-appcontent-navbar-container {
+#browser,
+#main-window {
   background-color: $BG !important;
   color: $FG !important;
 }
 
+.tabbrowser-tab[selected="true"] .tab-background,
 .tab-background[selected="true"] {
-  background-color: $BG !important;
+  background-color: color-mix(in srgb, $ACCENT 25%, $BG) !important;
   border: 1px solid $ACCENT !important;
 }
 
-#urlbar, #urlbar-background, #urlbar-input-container {
-  background-color: $BG !important;
-  color: $FG !important;
+.tabbrowser-tab[selected="true"] .tab-label {
+  color: $ACCENT !important;
+  font-weight: bold !important;
+}
+
+#urlbar-background {
+  background-color: color-mix(in srgb, $ACCENT 10%, $BG) !important;
+  border: 1px solid $ACCENT !important;
+}
+
+#zen-workspaces-button,
+.zen-current-workspace-indicator {
+  color: $ACCENT !important;
+  fill: $ACCENT !important;
 }
 EOF
         fi
       done
     fi
   '';
+
 in
 {
   programs.noctalia = {
