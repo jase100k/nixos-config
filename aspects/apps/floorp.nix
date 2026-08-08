@@ -5,55 +5,29 @@
     home.packages = [ pkgs.floorp-bin ];
 
     home.activation.browserThemes = ''
-      profiles=""
-      floorp_p="$(find ~/.floorp -mindepth 1 -maxdepth 1 -type d \( -name '*.default*' -o -name '*default*' \) 2>/dev/null | head -1)"
-      zen_p="$(find ~/.config/zen -mindepth 1 -maxdepth 1 -type d \( -name '*Profile*' -o -name '*.default*' \) 2>/dev/null | head -1)"
-      [ -n "$floorp_p" ] && profiles="$profiles $floorp_p"
-      [ -n "$zen_p" ] && profiles="$profiles $zen_p"
+      THEME_FILE="$HOME/.config/alacritty/themes/noctalia.toml"
+      BG="#0b0e14"
+      FG="#d1d1c7"
+      PRIMARY="#39bae6"
 
-      for profile in $profiles; do
-        if [ -n "$profile" ]; then
+      if [ -f "$THEME_FILE" ]; then
+        BG_TMP=$(grep -E '^\s*background\s*=' "$THEME_FILE" | head -n 1 | cut -d "'" -f 2)
+        FG_TMP=$(grep -E '^\s*foreground\s*=' "$THEME_FILE" | head -n 1 | cut -d "'" -f 2)
+        PRI_TMP=$(grep -E '^\s*blue\s*=' "$THEME_FILE" | head -n 1 | cut -d "'" -f 2)
+        [ -n "$BG_TMP" ] && BG="$BG_TMP"
+        [ -n "$FG_TMP" ] && FG="$FG_TMP"
+        [ -n "$PRI_TMP" ] && PRIMARY="$PRI_TMP"
+      fi
+
+      SURFACE="$BG"
+      SURFACE_VAR="$BG"
+
+      for profile in $(find ~/.floorp -mindepth 1 -maxdepth 1 -type d \( -name '*.default*' -o -name '*default*' \) 2>/dev/null); do
+        if [ -d "$profile" ]; then
           mkdir -p "$profile/chrome"
 
-          PALETTE_DIR="$HOME/.local/state/noctalia/community-palettes"
-          CATALOG="$PALETTE_DIR/.catalog/palettes.json"
-          SETTINGS="$HOME/.local/state/noctalia/settings.toml"
-
-          PALETTE_NAME=""
-          if [ -f "$SETTINGS" ]; then
-            PALETTE_NAME=$(grep '^community_palette' "$SETTINGS" | head -1 | sed 's/^community_palette[[:space:]]*=[[:space:]]*"\(.*\)"/\1/')
-            if [ -z "$PALETTE_NAME" ]; then
-              PALETTE_NAME=$(grep '^builtin' "$SETTINGS" | head -1 | sed 's/^builtin[[:space:]]*=[[:space:]]*"\(.*\)"/\1/')
-            fi
-          fi
-
-          PALETTE_JSON=""
-          if [ -n "$PALETTE_NAME" ] && [ -f "$CATALOG" ]; then
-            PALETTE_JSON=$(jq -r --arg name "$PALETTE_NAME" '.[] | select(.name == $name) | .dark // empty' "$CATALOG" 2>/dev/null)
-          fi
-
-          if [ -z "$PALETTE_JSON" ]; then
-            PALETTE_JSON='{"primary":"#39BAE6","secondary":"#AAD94C","tertiary":"#E6B450","error":"#D95757","surface":"#0B0E14","surfaceVariant":"#1E222A"}'
-          fi
-
-          SURFACE=$(echo "$PALETTE_JSON" | jq -r '.surface // "#0B0E14"')
-          SURFACE_VAR=$(echo "$PALETTE_JSON" | jq -r '.surfaceVariant // "#1E222A"')
-          PRIMARY=$(echo "$PALETTE_JSON" | jq -r '.primary // "#39BAE6"')
-          SECONDARY=$(echo "$PALETTE_JSON" | jq -r '.secondary // "#AAD94C"')
-          TERTIARY=$(echo "$PALETTE_JSON" | jq -r '.tertiary // "#E6B450"')
-          ERROR=$(echo "$PALETTE_JSON" | jq -r '.error // "#D95757"')
-
-          R=$(printf '%d' "0x$(echo "$SURFACE" | cut -c2-3)")
-          G=$(printf '%d' "0x$(echo "$SURFACE" | cut -c4-5)")
-          B=$(printf '%d' "0x$(echo "$SURFACE" | cut -c6-7)")
-          LUMA=$(( (R * 299 + G * 587 + B * 114) / 1000 ))
-          if [ "$LUMA" -lt 128 ]; then
-            FG="#D1D1C7"
-          else
-            FG="#1e1e2e"
-          fi
-
           cat > "$profile/chrome/userChrome.css" << UACHROME
+
 :root {
   --toolbar-bgcolor: $SURFACE !important;
   --toolbar-color: $FG !important;
