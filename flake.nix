@@ -60,9 +60,15 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Stylix - universal system-wide auto-theming engine
+    stylix = {
+      url = "github:danth/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, nix-cachyos-kernel, mangowm, niri, millennium, noctalia, antigravity-nix, home-manager, plasma-manager, gaming-assetocorsa-fix, import-tree, ... }@inputs: {
+  outputs = { self, nixpkgs, nix-cachyos-kernel, mangowm, niri, millennium, noctalia, antigravity-nix, home-manager, plasma-manager, gaming-assetocorsa-fix, stylix, import-tree, ... }@inputs: {
+
 
 
     nixosConfigurations.nixos-gaming = nixpkgs.lib.nixosSystem {
