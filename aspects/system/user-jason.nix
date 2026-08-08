@@ -8,12 +8,15 @@
     shell = pkgs.zsh;
   };
 
+  home-manager.backupFileExtension = "backup";
+
   home-manager.users.jason = {
     home.username = "jason";
     home.homeDirectory = "/home/jason";
     home.stateVersion = "26.05";
     programs.home-manager.enable = true;
   };
+
 
   virtualisation.libvirtd.enable = true;
   programs.virt-manager.enable = true;
