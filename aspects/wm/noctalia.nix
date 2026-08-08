@@ -16,40 +16,42 @@ let
           mkdir -p "$PROFILE/chrome"
           cat << EOF > "$PROFILE/chrome/userChrome.css"
 :root {
-  --toolbar-bgcolor: $BG !important;
-  --toolbar-color: $FG !important;
-  --toolbar-bordercolor: $BG !important;
-  --toolbarbutton-hover-background: $BG !important;
-  --toolbarbutton-active-background: $BG !important;
-  --lwt-accent-color: $BG !important;
-  --lwt-text-color: $FG !important;
-  --toolbar-field-background-color: $BG !important;
-  --toolbar-field-focus-background-color: $BG !important;
-  --toolbar-field-color: $FG !important;
-  --toolbar-field-focus-color: $FG !important;
-  --toolbar-field-border-color: $BG !important;
-  --toolbar-field-focus-border-color: $ACCENT !important;
-  --urlbar-box-background: $BG !important;
-  --urlbar-box-bgcolor: $BG !important;
-  --tab-selected-color: $FG !important;
-  --sidebar-bgcolor: $BG !important;
-  --sidebar-text-color: $FG !important;
+  --toolbar-bgcolor: var(--theme-sidebar-background, var(--theme-body-color, $BG)) !important;
+  --toolbar-color: var(--theme-sidebar-color, var(--theme-text-color, $FG)) !important;
+  --toolbar-bordercolor: var(--theme-sidebar-background, var(--theme-body-color, $BG)) !important;
+  --toolbarbutton-hover-background: var(--theme-sidebar-background, var(--theme-body-color, $BG)) !important;
+  --toolbarbutton-active-background: var(--theme-sidebar-background, var(--theme-body-color, $BG)) !important;
+  --lwt-accent-color: var(--theme-sidebar-background, var(--theme-body-color, $BG)) !important;
+  --lwt-text-color: var(--theme-sidebar-color, var(--theme-text-color, $FG)) !important;
+  --toolbar-field-background-color: var(--theme-sidebar-background, var(--theme-body-color, $BG)) !important;
+  --toolbar-field-focus-background-color: var(--theme-sidebar-background, var(--theme-body-color, $BG)) !important;
+  --toolbar-field-color: var(--theme-sidebar-color, var(--theme-text-color, $FG)) !important;
+  --toolbar-field-focus-color: var(--theme-sidebar-color, var(--theme-text-color, $FG)) !important;
+  --toolbar-field-border-color: var(--theme-sidebar-background, var(--theme-body-color, $BG)) !important;
+  --toolbar-field-focus-border-color: var(--theme-accent-color, $ACCENT) !important;
+  --urlbar-box-background: var(--theme-sidebar-background, var(--theme-body-color, $BG)) !important;
+  --urlbar-box-bgcolor: var(--theme-sidebar-background, var(--theme-body-color, $BG)) !important;
+  --tab-selected-color: var(--theme-sidebar-color, var(--theme-text-color, $FG)) !important;
+  --sidebar-bgcolor: var(--theme-sidebar-background, var(--theme-body-color, $BG)) !important;
+  --sidebar-text-color: var(--theme-sidebar-color, var(--theme-text-color, $FG)) !important;
 }
-#nav-bar, #PersonalToolbar, #TabsToolbar, #sidebar-box, #browser-bottombox {
-  background-color: $BG !important;
-  color: $FG !important;
+#nav-bar, #PersonalToolbar, #TabsToolbar, #sidebar-box, #sidebar, #sidebar-header, #browser-bottombox {
+  background-color: var(--theme-sidebar-background, var(--theme-body-color, $BG)) !important;
+  color: var(--theme-sidebar-color, var(--theme-text-color, $FG)) !important;
 }
 .tab-background[selected="true"] {
-  background: $BG !important;
-  border-color: $ACCENT !important;
+  background: var(--theme-sidebar-background, var(--theme-body-color, $BG)) !important;
+  border-color: var(--theme-accent-color, $ACCENT) !important;
 }
 #urlbar, #urlbar-background, #urlbar-input-container {
-  background-color: $BG !important;
-  color: $FG !important;
+  background-color: var(--theme-sidebar-background, var(--theme-body-color, $BG)) !important;
+  color: var(--theme-sidebar-color, var(--theme-text-color, $FG)) !important;
 }
 EOF
         fi
       done
+      ${pkgs.pywalfox-native}/bin/pywalfox install --profile-path "$HOME/.floorp" 2>/dev/null || true
+      ${pkgs.pywalfox-native}/bin/pywalfox update 2>/dev/null || true
     fi
   '';
   zen-theme-sync = pkgs.writeShellScript "zen-theme-sync" ''
@@ -118,9 +120,11 @@ EOF
 EOF
         fi
       done
+      ${pkgs.pywalfox-native}/bin/pywalfox install --profile-path "$HOME/.config/zen" 2>/dev/null || true
       ${pkgs.pywalfox-native}/bin/pywalfox update 2>/dev/null || true
     fi
   '';
+
 
 
 in
@@ -129,6 +133,8 @@ in
     enable = true;
     recommendedServices.enable = true;
   };
+
+
 
   home-manager.users.jason = {
     xdg.configFile."noctalia/user-templates.toml".text = ''
