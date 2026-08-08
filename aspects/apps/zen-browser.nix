@@ -7,7 +7,21 @@
       pkgs.pywalfox-native
     ];
 
+    systemd.user.services.pywalfox = {
+      Unit = {
+        Description = "Pywalfox daemon for live browser theming";
+      };
+      Service = {
+        ExecStart = "${pkgs.pywalfox-native}/bin/pywalfox start";
+        Restart = "on-failure";
+      };
+      Install = {
+        WantedBy = [ "default.target" ];
+      };
+    };
+
     home.activation.zenBrowserTheme = config.home-manager.users.jason.lib.dag.entryAfter [ "writeBoundary" ] ''
+
       if command -v pywalfox >/dev/null 2>&1; then
         pywalfox install --profile-path "$HOME/.config/zen" 2>/dev/null || true
       fi
