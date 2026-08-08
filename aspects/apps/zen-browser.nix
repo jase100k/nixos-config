@@ -8,7 +8,12 @@
     ];
 
     home.activation.zenBrowserTheme = config.home-manager.users.jason.lib.dag.entryAfter [ "writeBoundary" ] ''
+      if command -v pywalfox >/dev/null 2>&1; then
+        pywalfox install --profile-path "$HOME/.config/zen" 2>/dev/null || true
+      fi
+
       THEME_FILE="$HOME/.config/alacritty/themes/noctalia.toml"
+
       BG="#0f1416"
       FG="#dee3e5"
       ACCENT="#bec5eb"
