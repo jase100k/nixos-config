@@ -4,7 +4,7 @@
   home-manager.users.jason = {
     programs.alacritty = {
       enable = true;
-      settings = {
+      settings = pkgs.lib.mkForce {
         general = {
           import = [ "~/.config/alacritty/themes/noctalia.toml" ];
         };
@@ -49,6 +49,7 @@
           { key = "PageDown"; mods = "Control|Shift"; action = "ScrollPageDown"; }
         ];
       };
+
     };
 
     xdg.configFile."alacritty/alacritty.toml".force = true;

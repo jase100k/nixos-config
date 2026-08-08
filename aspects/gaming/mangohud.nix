@@ -4,7 +4,7 @@
   home-manager.users.jason = {
     programs.mangohud = {
       enable = true;
-      settings = {
+      settings = pkgs.lib.mkForce {
         fps = true;
         cpu_temp = true;
         gpu_temp = true;
@@ -20,6 +20,7 @@
         vram_color = "B8860B";
         ram_color = "B22222";
       };
+
     };
   };
 }

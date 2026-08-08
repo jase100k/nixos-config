@@ -4,7 +4,7 @@
   home-manager.users.jason = {
     programs.fuzzel = {
       enable = true;
-      settings = {
+      settings = pkgs.lib.mkForce {
         main = {
           include = "~/.config/fuzzel/themes/noctalia";
           font = "JetBrainsMono Nerd Font:size=12";
@@ -24,6 +24,7 @@
           radius = 12;
         };
       };
+
     };
   };
 }
