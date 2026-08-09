@@ -127,14 +127,63 @@ EOF
 
 
 
+  stylix-theme-sync = pkgs.writeShellScript "stylix-theme-sync" ''
+    THEME_FILE="$HOME/.config/alacritty/themes/noctalia.toml"
+    SCHEME_FILE="$HOME/.config/noctalia/stylix-scheme.yaml"
+    if [ -f "$THEME_FILE" ]; then
+      bg=$(grep -E '^\s*background\s*=' "$THEME_FILE" | head -n 1 | awk -F "'" '{print $2}' | tr -d '#')
+      fg=$(grep -E '^\s*foreground\s*=' "$THEME_FILE" | head -n 1 | awk -F "'" '{print $2}' | tr -d '#')
+      black=$(grep -E '^\s*black\s*=' "$THEME_FILE" | head -n 1 | awk -F "'" '{print $2}' | tr -d '#')
+      red=$(grep -E '^\s*red\s*=' "$THEME_FILE" | head -n 1 | awk -F "'" '{print $2}' | tr -d '#')
+      green=$(grep -E '^\s*green\s*=' "$THEME_FILE" | head -n 1 | awk -F "'" '{print $2}' | tr -d '#')
+      yellow=$(grep -E '^\s*yellow\s*=' "$THEME_FILE" | head -n 1 | awk -F "'" '{print $2}' | tr -d '#')
+      blue=$(grep -E '^\s*blue\s*=' "$THEME_FILE" | head -n 1 | awk -F "'" '{print $2}' | tr -d '#')
+      magenta=$(grep -E '^\s*magenta\s*=' "$THEME_FILE" | head -n 1 | awk -F "'" '{print $2}' | tr -d '#')
+      cyan=$(grep -E '^\s*cyan\s*=' "$THEME_FILE" | head -n 1 | awk -F "'" '{print $2}' | tr -d '#')
+
+      bg=''${bg:-131313}
+      fg=''${fg:-e2e2e2}
+      black=''${black:-474747}
+      red=''${red:-ffb4ab}
+      green=''${green:-ffb2be}
+      yellow=''${yellow:-e4bdc2}
+      blue=''${blue:-ebbe90}
+      magenta=''${magenta:-ffb2be}
+      cyan=''${cyan:-e4bdc2}
+
+      mkdir -p "$HOME/.config/noctalia"
+      cat << EOF > "$SCHEME_FILE"
+system: "base16"
+name: "noctalia"
+author: "Noctalia Dynamic Theme Engine"
+variant: "dark"
+palette:
+  base00: "$bg"
+  base01: "1e1e1e"
+  base02: "$black"
+  base03: "919191"
+  base04: "c6c6c6"
+  base05: "$fg"
+  base06: "f0f0f0"
+  base07: "ffffff"
+  base08: "$red"
+  base09: "$yellow"
+  base0A: "$yellow"
+  base0B: "$green"
+  base0C: "$cyan"
+  base0D: "$blue"
+  base0E: "$magenta"
+  base0F: "$magenta"
+EOF
+    fi
+  '';
+
 in
 {
   programs.noctalia = {
     enable = true;
     recommendedServices.enable = true;
   };
-
-
 
   home-manager.users.jason = {
     xdg.configFile."noctalia/user-templates.toml".text = ''
@@ -150,6 +199,10 @@ in
       [templates.zen_browser]
       output_path = "~/.config/zen/userChrome.css"
       post_hook = "${zen-theme-sync}"
+
+      [templates.stylix]
+      output_path = "~/.config/noctalia/stylix-scheme.yaml"
+      post_hook = "${stylix-theme-sync}"
     '';
   };
 }

@@ -29,6 +29,12 @@
     # Do NOT follows nixpkgs - required for binary cache hits
     noctalia.url = "github:noctalia-dev/noctalia/cachix";
 
+    # Noctalia Greeter - Minimal login greeter matching Noctalia shell aesthetic
+    noctalia-greeter = {
+      url = "github:noctalia-dev/noctalia-greeter";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Google Antigravity - agentic IDE/CLI
     antigravity-nix = {
       url = "github:jacopone/antigravity-nix";
@@ -39,13 +45,6 @@
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    # Plasma Manager for declarative KDE config
-    plasma-manager = {
-      url = "github:nix-community/plasma-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "home-manager";
     };
 
     # Assetto Corsa & Content Manager fix module
@@ -67,9 +66,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, nix-cachyos-kernel, mangowm, niri, millennium, noctalia, antigravity-nix, home-manager, plasma-manager, gaming-assetocorsa-fix, stylix, import-tree, ... }@inputs: {
-
-
+  outputs = { self, nixpkgs, nix-cachyos-kernel, mangowm, niri, millennium, noctalia, noctalia-greeter, antigravity-nix, home-manager, gaming-assetocorsa-fix, stylix, import-tree, ... }@inputs: {
 
     nixosConfigurations.nixos-gaming = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs; };
@@ -81,6 +78,7 @@
         # Compositors & Desktop System Modules
         mangowm.nixosModules.mango
         noctalia.nixosModules.default
+        noctalia-greeter.nixosModules.default
 
         # Home Manager Module Setup
         home-manager.nixosModules.home-manager
@@ -90,7 +88,6 @@
           home-manager.backupFileExtension = "hm-backup";
           home-manager.extraSpecialArgs = { inherit inputs; };
           home-manager.sharedModules = [
-            inputs.plasma-manager.homeModules.plasma-manager
             inputs.mangowm.hmModules.mango
             inputs.niri.homeModules.niri
             inputs.gaming-assetocorsa-fix.homeManagerModules.default

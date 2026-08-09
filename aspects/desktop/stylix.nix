@@ -9,6 +9,9 @@
     enable = true;
     autoEnable = true; # Automatically theme all present and future supported apps
     polarity = "dark";
+    base16Scheme = if builtins.pathExists "/home/jason/.config/noctalia/stylix-scheme.yaml"
+      then "/home/jason/.config/noctalia/stylix-scheme.yaml"
+      else "${pkgs.base16-schemes}/share/themes/tokyo-night-dark.yaml";
     image = ../../assets/wallpaper.jpg;
 
 
