@@ -24,7 +24,6 @@
     winetricks
     lutris
     heroic
-    retroarch
     goverlay
     lact
     evtest
