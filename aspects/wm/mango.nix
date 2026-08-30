@@ -26,6 +26,7 @@ in
         antigravity-ide &
         alacritty &
         floorp &
+        brave &
         steam &
       '';
 
@@ -179,6 +180,8 @@ in
           "tags:1,appid:^org.kde.konsole$"
           "tags:2,appid:^floorp$"
           "tags:2,appid:^io.github.Aylur.floorp$"
+          "tags:2,appid:^brave-browser$"
+          "tags:2,appid:^brave$"
           "tags:3,appid:^steam$"
           "tags:3,appid:^steam_app$"
         ];

@@ -80,6 +80,7 @@
           { argv = [ "noctalia" ]; }
           { argv = [ "alacritty" ]; }
           { sh = "sleep 2 && floorp"; }
+          { sh = "sleep 3 && brave"; }
           { sh = "sleep 4 && steam"; }
         ];
 
@@ -118,6 +119,16 @@
 
           {
             matches = [{ app-id = "io.github.Aylur.floorp"; }];
+            open-on-workspace = "web";
+          }
+
+          {
+            matches = [{ app-id = "brave-browser"; }];
+            open-on-workspace = "web";
+          }
+
+          {
+            matches = [{ app-id = "brave"; }];
             open-on-workspace = "web";
           }
 
