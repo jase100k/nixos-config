@@ -38,9 +38,9 @@
     };
 
   fileSystems."/mnt/nas" =
-    { device = "/dev/disk/by-uuid/21612913-b1a8-4b16-8eb6-9fd822535c77";
-      fsType = "btrfs";
-      options = [ "subvol=@data" "compress=zstd" "ssd" "discard=async" "noatime" "nofail" ];
+    { device = "192.168.0.11:/mnt/hdd-storage/data";
+      fsType = "nfs";
+      options = [ "x-systemd.automount" "noauto" "x-systemd.idle-timeout=600" "nofail" ];
     };
 
   
