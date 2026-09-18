@@ -10,11 +10,13 @@
     trusted-users = [ "root" "jason" ];
     extra-substituters = [
       "https://noctalia.cachix.org"
-      "https://cachyos.cachix.org"
+      "https://attic.xuyh0120.win/lantian"
+      "https://cache.xinux.uz"
     ];
     extra-trusted-public-keys = [
       "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
-      "cachyos.cachix.org-1:95b2C3UaaPJUGlGLM22sm6lR4n9wVUqBLVn86uu03j8="
+      "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
+      "cache.xinux.uz:BXCrtqejFjWzWEB9YuGB7X2MV4ttBur1N8BkwQRdH+0="
     ];
   };
 
