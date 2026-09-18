@@ -70,6 +70,12 @@
       url = "github:baairon/torlink";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Pi - minimalist AI coding agent harness
+    pi-flake = {
+      url = "github:ChauDucToan/pi-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, nix-cachyos-kernel, mangowm, niri, millennium, noctalia, noctalia-greeter, antigravity-nix, home-manager, gaming-assetocorsa-fix, stylix, import-tree, ... }@inputs: {
@@ -97,6 +103,7 @@
             inputs.mangowm.hmModules.mango
             inputs.niri.homeModules.niri
             inputs.gaming-assetocorsa-fix.homeManagerModules.default
+            inputs.pi-flake.homeManagerModules.default
           ];
         }
 
