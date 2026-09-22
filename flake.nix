@@ -76,6 +76,9 @@
       url = "github:ChauDucToan/pi-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Pinned nixpkgs for OpenCode 1.18.29 (bypassing 1.18.30 regression)
+    nixpkgs-opencode.url = "github:NixOS/nixpkgs/d91a239ca0118ff10ee22ba54f48929c38ab8114";
   };
 
   outputs = { self, nixpkgs, nix-cachyos-kernel, mangowm, niri, millennium, noctalia, noctalia-greeter, antigravity-nix, home-manager, gaming-assetocorsa-fix, stylix, import-tree, ... }@inputs: {
