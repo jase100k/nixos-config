@@ -4,6 +4,8 @@
   programs.zsh.enable = true;
 
   home-manager.users.jason = {
+    home.sessionVariables.LLAMA_SERVER_URL = "http://127.0.0.1:8000";
+
     home.packages = with pkgs; [
       openssh
       yazi
