@@ -83,6 +83,10 @@
     # DeepSeek Harness (dsh) - community Nix packaging
     # Do NOT follows nixpkgs - required for deepseek-harness-nix.cachix.org binary cache hits
     deepseek-harness.url = "github:moraxyc/deepseek-harness.nix";
+
+    # Zed - fast code editor
+    # Do NOT follows nixpkgs - required for zed.cachix.org binary cache hits
+    zed.url = "github:zed-industries/zed";
   };
 
   outputs = { self, nixpkgs, nix-cachyos-kernel, mangowm, niri, millennium, noctalia, noctalia-greeter, antigravity-nix, home-manager, gaming-assetocorsa-fix, stylix, import-tree, ... }@inputs: {
