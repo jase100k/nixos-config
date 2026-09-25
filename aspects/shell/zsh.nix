@@ -38,6 +38,7 @@
         cleanup = "nix-collect-garbage -d";
         search = "nix search nixpkgs";
         nixcommit = "sudo git -C /etc/nixos add -A && sudo git -C /etc/nixos commit";
+        hf = "nix shell nixpkgs#python3.pkgs.huggingface-hub -c hf";
         orca-slicer = "GTK_THEME=Adwaita:dark orca-slicer";
         c = "wl-copy";
         copy = "wl-copy";

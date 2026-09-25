@@ -801,11 +801,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1790139517,
-        "narHash": "sha256-y2uK7OAbXTRBXDDFZR7wi6xWesnm9PsQe6FJZdsdpqo=",
+        "lastModified": 1790205927,
+        "narHash": "sha256-zsqbU8ZRx3l5BqRxi22gKMbzpVcYY69ZxmC/g8LOHEA=",
         "owner": "ChauDucToan",
         "repo": "pi-flake",
-        "rev": "70a3c52510fabb6df325ee39352d72c251ca0b26",
+        "rev": "497c17091ace3d8878beefcedd442c5acff2e421",
         "type": "github"
       },
       "original": {
