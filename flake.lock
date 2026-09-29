@@ -156,6 +156,22 @@
         "type": "github"
       }
     },
+    "flake-compat_2": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1767039857,
+        "narHash": "sha256-vNpUSpF5Nuw8xvDLj2KCwwksIbjua2LZCqhV1LNRDns=",
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "rev": "5edf11c44bc78a0d334f6334cdaf7d60d732daab",
+        "type": "github"
+      },
+      "original": {
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "type": "github"
+      }
+    },
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": [
@@ -832,6 +848,7 @@
         "pi-flake": "pi-flake",
         "stylix": "stylix",
         "torlink": "torlink",
+        "treehouse": "treehouse",
         "zed": "zed",
         "zen-browser": "zen-browser"
       }
@@ -1055,6 +1072,27 @@
       "original": {
         "owner": "baairon",
         "repo": "torlink",
+        "type": "github"
+      }
+    },
+    "treehouse": {
+      "inputs": {
+        "flake-compat": "flake-compat_2",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1790400010,
+        "narHash": "sha256-HtAoUrP/2toG+8LB5H79fuvBhn3lAJGOtaNKxq41DxI=",
+        "owner": "kunchenguid",
+        "repo": "treehouse",
+        "rev": "c099281010efda0bf82bbaf8d882528fcbed6acc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "kunchenguid",
+        "repo": "treehouse",
         "type": "github"
       }
     },

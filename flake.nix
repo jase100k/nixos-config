@@ -87,6 +87,12 @@
     # Zed - fast code editor
     # Do NOT follows nixpkgs - required for zed.cachix.org binary cache hits
     zed.url = "github:zed-industries/zed";
+
+    # Treehouse - reusable git worktree pool (used by firstmate)
+    treehouse = {
+      url = "github:kunchenguid/treehouse";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, nix-cachyos-kernel, mangowm, niri, millennium, noctalia, noctalia-greeter, antigravity-nix, home-manager, gaming-assetocorsa-fix, stylix, import-tree, ... }@inputs: {
